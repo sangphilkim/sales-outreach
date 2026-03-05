@@ -87,12 +87,16 @@
  ---
 
  ### **10. 보고서 로컬 저장 및 Google Docs 업로드**
-    - **함수:** `save_reports_to_google_docs(reports, lead)`
-    - 생성된 모든 문서를 로컬의 `reports` 폴더와 공유된 Google Drive 폴더에 저장
+ - **함수:** `save_reports_to_google_docs(reports, lead)`
+ - 생성된 모든 문서를 로컬의 `reports` 폴더와 공유된 Google Drive 폴더에 저장
+
+---
 
  ### **11. CRM 업데이트**
-    - **함수:** `update_crm`
-    - CRM 시스템에서 리드의 상태와 생성된 문서를 업데이트
+ - **함수:** `update_crm`
+ - CRM 시스템에서 리드의 상태와 생성된 문서를 업데이트
+
+---
 
  ### 워크플로우 종료
  - 시스템은 2단계로 돌아가 추가 리드가 있는지 확인하며, 더 이상 리드가 없을 때까지 반복. 모든 리드가 처리되면 자동화 종료
