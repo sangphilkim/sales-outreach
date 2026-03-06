@@ -1,0 +1,661 @@
+# AI 영업 아웃리치 자동화
+
+> CRM 리드 수집부터 개인화 이메일 발송까지 — B2B 영업 아웃리치의 모든 과정을 자동화합니다.
+
+**AI 영업 아웃리치 자동화**는 LangGraph 기반 멀티 에이전트 파이프라인으로, LinkedIn·기업 웹사이트·뉴스·SNS 데이터를 병렬 수집하고 AI로 분석하여 **리드당 수 시간의 조사 작업을 완전히 자동화**합니다. HubSpot, Airtable, Google Sheets 어디에나 연결하고, 리드별 맞춤형 감사 보고서·이메일·인터뷰 스크립트를 자동 생성하며, CRM까지 자동으로 업데이트합니다.
+
+---
+
+## 목차
+- [왜 이 시스템이 필요한가?](#왜-이-시스템이-필요한가)
+- [주요 기능](#주요-기능)
+- [시스템 아키텍처](#시스템-아키텍처)
+- [기술 스택](#기술-스택)
+- [생성 결과물](#생성-결과물)
+- [다른 방식과의 비교](#다른-방식과의-비교)
+- [지원 API 통합](#지원-api-통합)
+- [예상 질문](#질문)
+- [라이선스](#라이선스)
+
+---
+
+## 왜 이 시스템이 필요한가?
+
+B2B 영업팀이 매일 겪는 현실적인 문제들입니다:
+- **리드 한 건 조사에 수 시간이 걸립니다.** LinkedIn, 기업 웹사이트, 뉴스, Facebook, YouTube를 탭마다 따로 열고, 그 내용을 정리해서 메모에 붙여넣는 반복 작업이 이어집니다.
+- **조사 품질이 담당자마다 들쑥날쑥합니다.** 어제의 보고서와 오늘의 보고서가 전혀 다른 깊이를 가집니다.
+- **범용 이메일은 무시됩니다.** "귀사의 성장을 도울 수 있습니다"로 시작하는 이메일은 수신함에서 가장 먼저 삭제됩니다. 진짜 개인화는 깊은 조사 없이는 불가능합니다.
+- **CRM 업데이트는 항상 마지막으로 밀립니다.** 아웃리치 후 CRM에 결과를 기록하는 작업은 바쁜 날이면 건너뛰게 됩니다.
+- **팀이 성장해도 처리 가능한 리드 수는 그대로입니다.** 수작업 기반 프로세스는 선형으로만 확장됩니다.
+
+이 시스템은 리드 수집부터 CRM 업데이트까지 전 과정을 자동화하여, 영업팀이 **조사가 아닌 대화에 집중**할 수 있게 만듭니다.
+
+---
+
+## 주요 기능
+
+### 멀티 CRM 즉시 연동
+HubSpot, Airtable, Google Sheets를 설정값 변경만으로 전환할 수 있습니다. 사내 CRM을 사용 중이면 `LeadLoaderBase`를 상속해 두 개의 메서드만 구현하면 통합이 완료됩니다. CRM이 바뀌어도 나머지 파이프라인은 그대로입니다.
+
+### 멀티 소스 자동 리드 리서치
+- **LinkedIn 프로필 스크래핑**: RapidAPI를 통해 리드 개인 정보와 기업 프로필을 자동으로 수집합니다.
+- **기업 웹사이트 크롤링**: 사업 방향, 제품·서비스, 블로그 링크, SNS 채널을 자동 탐색합니다.
+- **블로그 콘텐츠 분석**: 게시 빈도, 주요 주제, 콘텐츠 일관성을 평가해 마케팅 활동 지수를 측정합니다.
+- **SNS 활동 분석**: Facebook, Twitter, YouTube의 참여 지표와 브랜드 일치도를 분석합니다.
+- **최신 뉴스 모니터링**: 사업 상황이나 페인 포인트를 시사하는 최근 기사를 자동 수집합니다.
+
+### LangGraph 병렬 실행
+블로그 분석, 뉴스 수집, SNS 분석이 순차적이 아닌 **동시에** 실행됩니다. LangGraph의 fan-out 패턴을 사용해 병목 없이 리드당 처리 시간을 최소화합니다.
+
+### AI 기반 리드 스코어링
+디지털 노출 품질, SNS 참여 수준, 산업 적합성, AI·자동화 도입 준비도, 기업 성장 신호(채용·투자 등)를 종합해 리드를 자동 평가·선별합니다. 
+(모든 기준은 `src/prompts.py`에서 자유롭게 변경 가능)
+
+### 3종 개인화 아웃리치 자료 자동 생성
+선별된 리드마다 바로 사용할 수 있는 세 가지 자료를 생성합니다:
+- **맞춤형 감사 보고서**: 리드 기업의 구체적인 문제점과 해결 방안을 담으며, ChromaDB에 저장된 사례 연구를 RAG로 자동 참조합니다.
+- **개인화 콜드 이메일**: 감사 보고서 링크를 포함하며, Gmail API로 직접 발송하거나 Google Docs에 초안으로 저장합니다.
+- **SPIN 기반 인터뷰 스크립트**: 리드의 상황과 과제에 맞춘 영업 통화 준비 가이드를 생성합니다.
+
+### 자동 저장 및 CRM 업데이트
+모든 보고서를 로컬 `/reports`와 Google Drive에 동시 저장하고, 처리 완료 후 CRM 레코드를 리드 상태·점수·보고서 링크와 함께 자동 업데이트합니다.
+
+---
+
+## 시스템 아키텍처
+
+이 시스템은 조건부 분기와 병렬 fan-out을 갖춘 **LangGraph 상태 머신**으로 구현되어 있습니다.(하고 싶습니다.)
+상세 워크플로우 설명 → [`docs/system-workflow.md`](./docs/system-workflow.md)  
+전체 플로우 다이어그램 → [`docs/workflow.png`](./docs/workflow.png)
+
+|
+ 단계 
+|
+ 노드 
+|
+ 설명 
+|
+|
+:---:
+|
+---
+|
+---
+|
+|
+**
+1
+**
+|
+`get_new_leads`
+|
+ 설정된 CRM에서 신규 리드 배치를 가져옵니다 
+|
+|
+**
+2
+**
+|
+`check_for_remaining_leads`
+|
+ 처리할 리드가 있으면 계속, 없으면 종료합니다 
+|
+|
+**
+3
+**
+|
+`fetch_linkedin_profile_data`
+|
+ RapidAPI로 리드 및 기업 LinkedIn 프로필을 스크랩합니다 
+|
+|
+**
+4
+**
+|
+`review_company_website`
+|
+ 기업 웹사이트를 크롤링해 미션, 제품, 블로그·소셜 링크를 수집합니다 
+|
+|
+**
+5a
+**
+|
+`analyze_blog_content`
+|
+ 블로그 게시 빈도, 주제, 일관성 분석 
+*
+(병렬 실행)
+*
+|
+|
+**
+5b
+**
+|
+`analyze_recent_news`
+|
+ 최신 뉴스 기사 수집 및 비즈니스 영향 분석 
+*
+(병렬 실행)
+*
+|
+|
+**
+5c
+**
+|
+`analyze_social_media_content`
+|
+ SNS 참여 지표 및 브랜드 일치도 분석 
+*
+(병렬 실행)
+*
+|
+|
+**
+6
+**
+|
+`generate_digital_presence_report`
+|
+ 5a·5b·5c 결과를 통합한 디지털 노출 보고서 생성 
+|
+|
+**
+7
+**
+|
+`generate_full_lead_research_report`
+|
+ 리드 프로필 + 기업 개요 + 디지털 노출을 합친 마스터 리서치 보고서 생성 
+|
+|
+**
+8
+**
+|
+`score_lead`
+|
+ 리드 점수 산정 → 자격 충족 시 9단계, 미달 시 10단계로 분기 
+|
+|
+**
+9a
+**
+|
+`generate_custom_outreach_report`
+|
+ RAG로 사례 연구를 참조한 맞춤형 감사 보고서 생성 
+|
+|
+**
+9b
+**
+|
+`generate_personalized_email`
+|
+ 개인화 콜드 이메일 작성 (Gmail 발송 또는 Google Docs 저장) 
+|
+|
+**
+9c
+**
+|
+`generate_interview_script`
+|
+ SPIN 세일즈 기반 통화 스크립트 생성 
+|
+|
+**
+10
+**
+|
+`save_reports_to_google_docs`
+|
+ 전체 보고서를 로컬 및 Google Drive에 저장 
+|
+|
+**
+11
+**
+|
+`update_CRM`
+|
+ CRM 레코드에 상태, 점수, 보고서 링크를 업데이트 
+|
+
+> 11단계 완료 후 시스템은 2단계로 돌아가 다음 리드를 처리합니다. 모든 리드가 소진될 때까지 자동 반복합니다.
+
+---
+
+## 기술 스택
+
+|
+ 레이어 
+|
+ 기술 
+|
+ 역할 
+|
+|
+---
+|
+---
+|
+---
+|
+|
+**
+워크플로우 오케스트레이션
+**
+|
+[
+LangGraph
+](
+https://langchain-ai.github.io/langgraph/
+)
+|
+ 조건부 분기·병렬 실행을 갖춘 상태 기반 에이전트 그래프 
+|
+|
+**
+LLM 프레임워크
+**
+|
+[
+LangChain
+](
+https://python.langchain.com/
+)
+|
+ LLM 추상화, 툴 호출, 체인 구성 
+|
+|
+**
+언어 모델
+**
+|
+[
+Google Gemini (대체 고민중)
+](
+https://ai.google.dev/
+)
+|
+ 텍스트 생성 및 임베딩 
+|
+|
+**
+벡터 데이터베이스
+**
+|
+[
+ChromaDB
+](
+https://www.trychroma.com/
+)
+|
+ 사례 연구 RAG 검색을 위한 로컬 벡터 스토어 
+|
+|
+**
+CRM 클라이언트
+**
+|
+ HubSpot SDK, PyAirtable 
+|
+ 네이티브 CRM API 연동 
+|
+|
+**
+Google API
+**
+|
+ Gmail, Docs, Sheets, Drive 
+|
+ 이메일 발송 및 문서 관리 
+|
+|
+**
+LinkedIn 데이터
+**
+|
+ RapidAPI (Fresh LinkedIn) 
+|
+ 프로필·기업 데이터 추출 
+|
+|
+**
+웹 검색
+**
+|
+ Serper API 
+|
+ 뉴스·콘텐츠 탐색 
+|
+|
+**
+웹 스크래핑
+**
+|
+ BeautifulSoup4, Unstructured 
+|
+ HTML 파싱 및 콘텐츠 추출 
+|
+
+---
+
+## 생성 결과물
+
+처리된 각 리드에 대해 다음 문서들이 자동 생성됩니다. 실제 출력 예시는 [`/reports`](./reports/) 폴더에서 확인할 수 있습니다.
+
+|
+ 보고서 파일명 
+|
+ 내용 
+|
+|
+---
+|
+---
+|
+|
+`Blog Analysis Report`
+|
+ 블로그 콘텐츠 품질, 게시 빈도, 핵심 주제 분석 
+|
+|
+`News Analysis Report`
+|
+ 최신 뉴스 기사 및 비즈니스 상황 분석 
+|
+|
+`Youtube Analysis Report`
+|
+ YouTube 채널 활동 수치 및 콘텐츠 일치도 
+|
+|
+`Digital Presence Report`
+|
+ 전 채널 디지털 성과 통합 요약 및 개선 권고안 
+|
+|
+`General Lead Research Report`
+|
+ 리드 배경, 기업 개요, 디지털 노출 종합 프로필 
+|
+|
+`Global Lead Analysis Report`
+|
+ 모든 분석을 통합한 마스터 리서치 보고서 
+|
+|
+`Personalized Email`
+|
+ 감사 보고서 링크가 포함된 개인화 콜드 이메일 
+|
+|
+`Interview Script`
+|
+ SPIN 세일즈 기반 통화 준비 가이드 
+|
+
+---
+
+## 다른 방식과의 비교
+
+|
+|
+ 수작업 SDR 프로세스 
+|
+ 기본 이메일 자동화 도구 
+|
+**
+이 시스템
+**
+|
+|
+---
+|
+:---:
+|
+:---:
+|
+:---:
+|
+|
+ 리드 조사 자동화 
+|
+ ❌ 
+|
+ ❌ 
+|
+ ✅ 
+|
+|
+ 멀티 소스 병렬 분석 
+|
+ ❌ 
+|
+ ❌ 
+|
+ ✅ 
+|
+|
+ AI 기반 리드 스코어링 
+|
+ ❌ 
+|
+ 부분적 
+|
+ ✅ 
+|
+|
+ 진짜 개인화 (보고서 기반) 
+|
+ ❌ 
+|
+ ❌ 
+|
+ ✅ 
+|
+|
+ RAG 사례 연구 참조 
+|
+ ❌ 
+|
+ ❌ 
+|
+ ✅ 
+|
+|
+ SPIN 인터뷰 스크립트 생성 
+|
+ ❌ 
+|
+ ❌ 
+|
+ ✅ 
+|
+|
+ CRM 자동 업데이트 
+|
+ ❌ 
+|
+ 부분적 
+|
+ ✅ 
+|
+|
+ 멀티 CRM 지원 
+|
+ N/A 
+|
+ 제한적 
+|
+ ✅ (4종) 
+|
+|
+ 프롬프트 커스터마이징 
+|
+ N/A 
+|
+ ❌ 
+|
+ ✅ 
+|
+
+수작업 SDR 프로세스 대비 리드당 조사 시간을 대폭 절감하며, 범용 이메일 도구와 달리 **리드의 실제 비즈니스 상황에 기반한 진짜 개인화**를 제공합니다.(하고 싶습니다.)
+
+---
+
+## 지원 API 통합
+
+|
+ 서비스 
+|
+ 역할 
+|
+ 설정 방법 
+|
+|
+---
+|
+---
+|
+---
+|
+|
+**
+Google Gemini
+**
+|
+ LLM 텍스트 생성 및 임베딩 
+|
+[
+API 키 발급
+](
+https://ai.google.dev/gemini-api/docs/api-key
+)
+|
+|
+**
+Google API Suite
+**
+|
+ Gmail 발송, Docs·Drive 저장, Sheets CRM 
+|
+[
+OAuth 퀵스타트
+](
+https://developers.google.com/gmail/api/quickstart/python
+)
+ — Gmail, Docs, Drive API 모두 활성화 필요 
+|
+|
+**
+RapidAPI · Fresh LinkedIn
+**
+|
+ LinkedIn 프로필·기업 데이터 스크래핑 
+|
+[
+API 키 발급
+](
+https://rapidapi.com/freshdata-freshdata-default/api/fresh-linkedin-profile-data
+)
+|
+|
+**
+Serper
+**
+|
+ Google 웹 검색 (뉴스·콘텐츠) 
+|
+[
+API 키 발급
+](
+https://serper.dev
+)
+|
+|
+**
+HubSpot
+**
+|
+ CRM 연동 
+|
+[
+프라이빗 앱 생성
+](
+https://www.hubspot.com/
+)
+ — 
+[
+설정 튜토리얼
+](
+https://www.youtube.com/watch?v=hSipSbiwc2s
+)
+|
+|
+**
+Airtable
+**
+|
+ CRM 연동 
+|
+[
+계정 생성
+](
+https://www.airtable.com/
+)
+ 후 연락처 베이스 구성 
+|
+
+---
+
+## 예상 질문
+
+<details>
+<summary><strong>기본 LLM으로 우리가 결제하지 않은 Google Gemini를 왜 쓰나요?</strong></summary>
+
+네. Google과 연동이 어떤 것들이 잘 되는지 실험을 했는데 Gemini가 가장 만족할만한 결과물을 보여줘서 우선 선택했습니다. 하지만, 지금 LangChain 기반으로 구축되어 있어 OpenAI GPT-4, Claude, Groq, Ollama 등 LangChain이 지원하는 모든 LLM으로 교체가능하고 실험을 좀 더 해 보려고 합니다.
+</details>
+
+<details>
+<summary><strong>위에서 언급한 RapidAPI, Serper API를 모두 구독해야 하나요?</strong></summary>
+
+네. 지금 LinkedIn 데이터를 가져오기 위해 새로운 에이전트를 만드는데 드는 시간, 비용적인 부분을 고려했을때 사오는게 더 좋겠다는 판단입니다. Serper API도 마찬가지이고 지금은 실험단계지만 제대로 작동한다면 HubSpot과 Airtable에서 Free플랜에서 업그레이드 하려고 합니다.
+</details>
+
+<details>
+<summary><strong>HubSpot이나 Airtable과 같은 CRM이 없어도 사용할 수 있나요?</strong></summary>
+
+Google Sheets를 단독 CRM으로 활용할 수 있게 설계하고 있습니다. 비상게엄은 언제든지 올 수 있으니깐요.
+</details>
+
+<details>
+<summary><strong>생성된 이메일이 자동으로 발송되나요?</strong></summary>
+
+선택할 수 있습니다. 처음에는 수동으로 설정해 생성 품질을 확인한 후 Gmail API를 통해 자동 발송으로 전환하는 것을 생각하고 있습니다.
+</details>
+
+<details>
+<summary><strong>LinkedIn 스크래핑은 LinkedIn 서비스 약관 위반 아닌가요?</strong></summary>
+
+LinkedIn을 직접 스크래핑하지 않고 RapidAPI의 공식 LinkedIn 데이터 API를 사용합니다.
+</details>
+
+<details>
+<summary><strong>리드 한 건 처리에 얼마나 걸리나요?</strong></summary>
+
+병렬 실행 덕분에 리드 한 건당 평균 2~5분 내에 전체 보고서 세트가 생성되도록 하려고 합니다.
+</details>
+
+---
+
+## 라이선스
+
+이 프로젝트는 [MIT 라이선스](./LICENSE)를 따릅니다.
