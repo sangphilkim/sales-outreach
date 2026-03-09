@@ -1,12 +1,12 @@
 import os
 from langchain_community.document_loaders import DirectoryLoader
-from langchain_google_genai import GoogleGenerativeAIEmbeddings
+from langchain_openai import OpenAIEmbeddings
 from langchain_chroma import Chroma
 
 def get_vector_store():
     """Get or create the vector store."""
     database_path = "database"
-    embeddings = GoogleGenerativeAIEmbeddings(model="models/text-embedding-004")
+    embeddings = OpenAIEmbeddings(model="text-embedding-3-small")
     
     if os.path.exists(database_path) and os.listdir(database_path):
         # Use the existing vector store

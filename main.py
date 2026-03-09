@@ -37,6 +37,6 @@ if __name__ == "__main__":
 
 
     # Run the outreach automation with the provided lead name and email
-    config = {'recursion_limit': 2}
+    config = {'recursion_limit': 100}
     output = app.invoke(inputs, config)
     print(output)

@@ -27,9 +27,9 @@ def extract_linkedin_url(search_results):
     """
     
     result = invoke_llm(
-        system_prompt=EXTRACT_LINKEDIN_URL_PROMPT, 
+        system_prompt=EXTRACT_LINKEDIN_URL_PROMPT,
         user_message=str(search_results),
-        model="gemini-1.5-flash"
+        model="gpt-4o-mini"
     )
     return result
     
@@ -59,3 +59,4 @@ def scrape_linkedin(linkedin_url, is_company=False):
         return data
     else:
         print(f"Request failed with status code: {response.status_code}")
+        return {}

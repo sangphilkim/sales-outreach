@@ -52,8 +52,8 @@ def generate_company_profile(company_linkedin_info, scraped_website):
         f"# Company LinkedIn Information:\n{company_linkedin_info}"
     )
     profile_summary = invoke_llm(
-        system_prompt=CREATE_COMPANY_PROFILE, 
+        system_prompt=CREATE_COMPANY_PROFILE,
         user_message=inputs,
-        model="gemini-1.5-flash"
+        model="gpt-4o-mini"
     )
     return profile_summary

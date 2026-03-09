@@ -1,3 +1,4 @@
+import re
 from colorama import Fore, Style
 from .tools.base.markdown_scraper_tool import scrape_website_to_markdown
 from .tools.base.search_tools import get_recent_news
@@ -72,27 +73,33 @@ class OutReachAutomationNodes:
         print(Fore.YELLOW + "----- Searching Lead data on LinkedIn -----\n" + Style.RESET_ALL)
         lead_data = state["current_lead"]
         company_data = state.get("company_data", CompanyData())
-        
-        # Scrape lead linkedin profile
-        (
-            lead_profile, 
-            company_name, 
-            company_website,
-            company_linkedin_url
-        ) = research_lead_on_linkedin(lead_data.name, lead_data.email)
-        lead_data.profile = lead_profile
 
-        # Research company on linkedin
-        company_profile = research_lead_company(company_linkedin_url)
-        
-        # Update company name from LinkedIn data
-        company_data.name = company_name
-        company_data.website = company_website
-        company_data.profile = str(company_profile)
-            
+        # Scrape lead linkedin profile
+        try:
+            result = research_lead_on_linkedin(lead_data.name, lead_data.email)
+
+            if isinstance(result, str):
+                # LinkedIn lookup failed, continue with available data
+                print(Fore.RED + f"LinkedIn research failed: {result}" + Style.RESET_ALL)
+                lead_data.profile = ""
+            else:
+                lead_profile, company_name, company_website, company_linkedin_url = result
+                lead_data.profile = lead_profile
+
+                # Research company on linkedin
+                company_profile = research_lead_company(company_linkedin_url)
+
+                # Update company name from LinkedIn data
+                company_data.name = company_name
+                company_data.website = company_website
+                company_data.profile = str(company_profile)
+        except Exception as e:
+            print(Fore.RED + f"LinkedIn research error: {e}" + Style.RESET_ALL)
+            lead_data.profile = ""
+
         # Update folder name for saving reports in Drive
         self.drive_folder_name = f"{lead_data.name}_{company_data.name}"
-        
+
         return {
             "current_lead": lead_data,
             "company_data": company_data,
@@ -109,9 +116,9 @@ class OutReachAutomationNodes:
             # Scrape company website
             content = scrape_website_to_markdown(company_website)
             website_info = invoke_llm(
-                system_prompt=WEBSITE_ANALYSIS_PROMPT.format(main_url=company_website), 
+                system_prompt=WEBSITE_ANALYSIS_PROMPT.format(main_url=company_website),
                 user_message=content,
-                model="gemini-1.5-flash",
+                model="gpt-4o-mini",
                 response_format=WebsiteData
             )
 
@@ -136,9 +143,9 @@ class OutReachAutomationNodes:
         
         # Generate general lead search report
         general_lead_search_report = invoke_llm(
-            system_prompt=LEAD_SEARCH_REPORT_PROMPT, 
+            system_prompt=LEAD_SEARCH_REPORT_PROMPT,
             user_message=inputs,
-            model="gemini-1.5-flash"
+            model="gpt-4o-mini"
         )
         
         lead_search_report = Report(
@@ -157,9 +164,10 @@ class OutReachAutomationNodes:
         return {"reports": []}
     
     def analyze_blog_content(self, state: GraphState):
-        print(Fore.YELLOW + "----- Analyzing company main blog -----\n" + Style.RESET_ALL)  
-        blog_analysis_report = ""
-        
+        print(Fore.YELLOW + "----- Analyzing company main blog -----\n" + Style.RESET_ALL)
+
+        blog_analysis_report = None
+
         # Check if company has a blog
         company_data = state["company_data"]
         blog_url = company_data.social_media_links.blog
@@ -167,56 +175,61 @@ class OutReachAutomationNodes:
             blog_content = scrape_website_to_markdown(blog_url)
             prompt = BLOG_ANALYSIS_PROMPT.format(company_name=company_data.name)
             blog_analysis_report = invoke_llm(
-                system_prompt=prompt, 
+                system_prompt=prompt,
                 user_message=blog_content,
-                model="gemini-1.5-flash"
+                model="gpt-4o-mini"
             )
             blog_analysis_report = Report(
                 title="Blog Analysis Report",
                 content=blog_analysis_report,
                 is_markdown=True
             )
-        return {"reports": [blog_analysis_report]}
+
+        reports = [r for r in [blog_analysis_report] if r is not None]
+        return {"reports": reports}
     
     def analyze_social_media_content(self, state: GraphState):
         print(Fore.YELLOW + "----- Analyzing company social media accounts -----\n" + Style.RESET_ALL)
-        
+
         # Load states
         company_data = state["company_data"]
-        
+
         # Get social media urls
         facebook_url = company_data.social_media_links.facebook
         twitter_url = company_data.social_media_links.twitter
         youtube_url = company_data.social_media_links.youtube
-        
+
+        youtube_analysis_report = None
+
         # Check If company has Youtube channel
         if youtube_url:
             youtube_data = get_youtube_stats(youtube_url)
             prompt = YOUTUBE_ANALYSIS_PROMPT.format(company_name=company_data.name)
             youtube_insight = invoke_llm(
-                system_prompt=prompt, 
+                system_prompt=prompt,
                 user_message=youtube_data,
-                model="gemini-1.5-flash"
+                model="gpt-4o-mini"
             )
             youtube_analysis_report = Report(
                 title="Youtube Analysis Report",
                 content=youtube_insight,
                 is_markdown=True
             )
-            
+
         # Check If company has Facebook account
         if facebook_url:
             # TODO Add Facebook analysis part
             pass
-        
+
         # Check If company has Twitter account
         if twitter_url:
             # TODO Add Twitter analysis part
             pass
-        
+
+        reports = [r for r in [youtube_analysis_report] if r is not None]
         return {
             "company_data": company_data,
-            "reports": [youtube_analysis_report]
+            "reports": reports
         }
     
     def analyze_recent_news(self, state: GraphState):
@@ -237,9 +250,9 @@ class OutReachAutomationNodes:
         
         # Craft news analysis prompt
         news_insight = invoke_llm(
-            system_prompt=news_analysis_prompt, 
+            system_prompt=news_analysis_prompt,
             user_message=recent_news,
-            model="gemini-1.5-flash"
+            model="gpt-4o-mini"
         )
         
         news_analysis_report = Report(
@@ -287,10 +300,10 @@ class OutReachAutomationNodes:
             company_name=state["company_data"].name, date=get_current_date()
         )
         digital_presence_report = invoke_llm(
-            system_prompt=prompt, 
+            system_prompt=prompt,
             user_message=inputs,
-            model="gemini-1.5-flash"
-        ) 
+            model="gpt-4o-mini"
+        )
         
         digital_presence_report = Report(
             title="Digital Presence Report",
@@ -323,9 +336,9 @@ class OutReachAutomationNodes:
             company_name=state["company_data"].name, date=get_current_date()
         )
         full_report = invoke_llm(
-            system_prompt=prompt, 
+            system_prompt=prompt,
             user_message=inputs,
-            model="gemini-1.5-flash"
+            model="gpt-4o-mini"
         )
         
         global_research_report = Report(
@@ -353,7 +366,7 @@ class OutReachAutomationNodes:
         lead_score = invoke_llm(
             system_prompt=SCORE_LEAD_PROMPT,
             user_message=global_research_report,
-            model="gemini-1.5-pro"
+            model="gpt-4o"
         )
         return {"lead_score": lead_score.strip()}
 
@@ -378,7 +391,17 @@ class OutReachAutomationNodes:
         """
         # Checking if the lead score is 7 or higher
         print(f"Score: {state['lead_score']}")
-        is_qualified = float(state["lead_score"]) >= 7
+        try:
+            match = re.search(r'\d+\.?\d*', str(state["lead_score"]))
+            if not match:
+                print(Fore.RED + "점수를 파싱할 수 없음, 불합격 처리" + Style.RESET_ALL)
+                return "not qualified"
+            score = float(match.group())
+            is_qualified = score >= 7
+        except Exception as e:
+            print(Fore.RED + f"점수 변환 오류: {e}, 불합격 처리" + Style.RESET_ALL)
+            return "not qualified"
+
         if is_qualified:
             print(Fore.GREEN + "Lead is qualified\n" + Style.RESET_ALL)
             return "qualified"
@@ -418,7 +441,7 @@ class OutReachAutomationNodes:
         custom_outreach_report = invoke_llm(
             system_prompt=GENERATE_OUTREACH_REPORT_PROMPT,
             user_message=inputs,
-            model="gemini-1.5-pro"
+            model="gpt-4o"
         )
         
         # TODO Find better way to include correct links into the final report
@@ -438,7 +461,7 @@ class OutReachAutomationNodes:
         revised_outreach_report = invoke_llm(
             system_prompt=PROOF_READER_PROMPT,
             user_message=inputs,
-            model="gemini-1.5-flash"
+            model="gpt-4o-mini"
         )
         
         # Store report into google docs and get shareable link
@@ -449,8 +472,15 @@ class OutReachAutomationNodes:
             make_shareable=True,
             folder_shareable=True, # Set to false if only personal or true if with a team
             markdown=True
-        )  
-        
+        )
+
+        if new_doc is None:
+            print(Fore.RED + "Google Docs 저장 실패, 링크 없이 계속 진행" + Style.RESET_ALL)
+            return {
+                "custom_outreach_report_link": "",
+                "reports_folder_link": ""
+            }
+
         return {
             "custom_outreach_report_link": new_doc["shareable_url"],
             "reports_folder_link": new_doc["folder_url"]
@@ -481,7 +511,7 @@ class OutReachAutomationNodes:
         output = invoke_llm(
             system_prompt=PERSONALIZE_EMAIL_PROMPT,
             user_message=lead_data,
-            model="gemini-1.5-flash",
+            model="gpt-4o-mini",
             response_format=EmailResponse
         )
         
@@ -527,7 +557,7 @@ class OutReachAutomationNodes:
         spin_questions = invoke_llm(
             system_prompt=GENERATE_SPIN_QUESTIONS_PROMPT,
             user_message=global_research_report,
-            model="gemini-1.5-flash"
+            model="gpt-4o-mini"
         )
         
         inputs = f"""
@@ -544,7 +574,7 @@ class OutReachAutomationNodes:
         interview_script = invoke_llm(
             system_prompt=WRITE_INTERVIEW_SCRIPT_PROMPT,
             user_message=inputs,
-            model="gemini-1.5-flash"
+            model="gpt-4o-mini"
         )
         
         interview_script_doc = Report(
@@ -586,9 +616,9 @@ class OutReachAutomationNodes:
         # save new record data, ensure correct fields are used
         new_data = {
             "Status": "ATTEMPTED_TO_CONTACT", # Set lead to attempted contact
-            "Score": state["lead_score"], 
-            "Analysis Reports": state["reports_folder_link"],
-            "Outreach Report": state["custom_outreach_report_link"],
+            "Score": state["lead_score"],
+            "Analysis Reports": state.get("reports_folder_link", ""),
+            "Outreach Report": state.get("custom_outreach_report_link", ""),
             "Last Contacted": get_current_date()
         }
         self.lead_loader.update_record(state["current_lead"].id, new_data)

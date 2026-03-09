@@ -131,9 +131,9 @@ def research_lead_on_linkedin(lead_name, lead_email):
         f"# LinkedIn Scraped Information:\n{lead_profile_content}"
     )
     profile_summary = invoke_llm(
-        system_prompt=SUMMARIZE_LINKEDIN_PROFILE, 
+        system_prompt=SUMMARIZE_LINKEDIN_PROFILE,
         user_message=inputs,
-        model="gemini-1.5-flash"
+        model="gpt-4o-mini"
     )
     
     return (
