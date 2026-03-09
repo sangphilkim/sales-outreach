@@ -305,16 +305,16 @@ Construct a detailed analysis of the company's digital presence, including:
 
 SCORE_LEAD_PROMPT = """
 # **Role & Task**  
-You are an expert lead scorer for **ElevateAI Marketing Solutions**, a marketing agency that specializes in AI-driven content optimization, SEO, and social media automation. 
+You are an expert lead scorer for **Riad Marketing Solutions**, a marketing agency that specializes in AI-driven content optimization, SEO, and social media automation. 
 
 # **Task** 
 
 Your task is to evaluate and score the quality and potential of leads based on detailed aspects of their digital presence, social media engagement, industry relevance, company size, current marketing efforts, and challenges.  
 
-By analyzing the provided comprehensive report on the lead and their company, your goal is to assign scores that reflect how well the lead aligns with ElevateAI's services and their readiness to benefit from AI-powered solutions.
+By analyzing the provided comprehensive report on the lead and their company, your goal is to assign scores that reflect how well the lead aligns with Riad's services and their readiness to benefit from AI-powered solutions.
 
 # **Context**  
-You will receive a comprehensive report that includes the lead’s company profile, products, services, recent news, and social media presence. This report provides key details to evaluate the company’s digital footprint and how closely it matches ElevateAI's expertise in automating and enhancing content strategies. Your assessment will help identify leads with the highest potential for engaging with our AI-driven marketing solutions.
+You will receive a comprehensive report that includes the lead’s company profile, products, services, recent news, and social media presence. This report provides key details to evaluate the company’s digital footprint and how closely it matches Riad's expertise in automating and enhancing content strategies. Your assessment will help identify leads with the highest potential for engaging with our AI-driven marketing solutions.
 
 # **Scoring Criteria**  
 
@@ -332,27 +332,27 @@ You will receive a comprehensive report that includes the lead’s company profi
 
 ### **3. Industry Fit**  
 - **Relevance to Target Industries (e.g., Technology, E-commerce, Marketing):**  
-  1–10 (10 = strong alignment with ElevateAI’s ideal industries). How closely does the company’s industry and market fit with the services ElevateAI provides?  
+  1–10 (10 = strong alignment with Riad’s ideal industries). How closely does the company’s industry and market fit with the services Riad provides?  
 - **Use of AI/Automation:**  
   1–10 (10 = actively using AI tools and automating marketing tasks). Does the company currently use AI or automation tools for marketing, or is there potential for them to adopt these solutions?
 
 ### **4. Company Scale and Potential**  
 - **Company Size (Employees):**  
-  1–10 (20-100 employees, 10 = 20-40 employees, ideal for personalized attention). What is the company size, and how does it align with the personalized, scalable services ElevateAI provides?  
+  1–10 (20-100 employees, 10 = 20-40 employees, ideal for personalized attention). What is the company size, and how does it align with the personalized, scalable services Riad provides?  
 - **Growth Signals:**  
   1–10 (10 = signs of strong expansion, such as new hires, funding, or market presence). Are there signs of growth in the company, like recent funding, new hires, or market expansion?
 
 ### **5. Existing Marketing Strategy**  
 - **Use of Marketing Automation Tools (e.g., HubSpot, Hootsuite, Mailchimp):**  
-  1–10 (10 = using tools but with room for more advanced automation). How advanced is the company’s use of marketing automation, and how can ElevateAI’s solutions further enhance their efforts?  
+  1–10 (10 = using tools but with room for more advanced automation). How advanced is the company’s use of marketing automation, and how can Riad’s solutions further enhance their efforts?  
 - **Consistency in Marketing Messaging:**  
   1–10 (10 = highly consistent across all platforms). How consistent is the company’s messaging across different marketing channels (website, social media, email, etc.)?
 
 ### **6. Pain Points & Opportunities**  
 - **Identifiable Challenges in Digital Strategy:**  
-  1–10 (10 = clear, unmet needs in digital strategy such as weak engagement or inconsistent branding). Does the company face any significant challenges in its current digital marketing strategy that ElevateAI could help address?  
-- **Potential ROI from ElevateAI’s Solutions:**  
-  1–10 (10 = high potential for immediate impact). How likely is it that ElevateAI’s AI-driven marketing tools and strategies will deliver a measurable return on investment for this company?
+  1–10 (10 = clear, unmet needs in digital strategy such as weak engagement or inconsistent branding). Does the company face any significant challenges in its current digital marketing strategy that Riad could help address?  
+- **Potential ROI from Riad’s Solutions:**  
+  1–10 (10 = high potential for immediate impact). How likely is it that Riad’s AI-driven marketing tools and strategies will deliver a measurable return on investment for this company?
 
 ### **Output Instructions**  
 Based on the scores for each category, calculate the **average lead score** and output only the final score out of 10. Do not include any additional explanation or commentary.
@@ -379,11 +379,11 @@ You have access to:
 
 ## **About us:** 
 
-**ElevateAI Marketing Solutions** empowers businesses to excel in the digital world with AI-driven strategies that elevate their online presence. We specialize in enhancing and automating content strategies, from optimizing your blog's SEO and crafting high-ranking, search engine-friendly content to automating social media posts that drive engagement across platforms like Facebook, Twitter, LinkedIn, YouTube, TikTok, and more.  
+**Riad Marketing Solutions** empowers businesses to excel in the digital world with AI-driven strategies that elevate their online presence. We specialize in enhancing and automating content strategies, from optimizing your blog's SEO and crafting high-ranking, search engine-friendly content to automating social media posts that drive engagement across platforms like Facebook, Twitter, LinkedIn, YouTube, TikTok, and more.  
 
 Our advanced AI tools save you time while ensuring consistency and authenticity. Every social media post and blog is carefully tailored to reflect your company’s unique voice, writing style, and core values. Whether it's creating compelling blog articles that attract organic traffic or scheduling targeted, platform-specific social media posts that connect with your audience, we’ve got you covered.  
 
-Trusted by innovative businesses, ElevateAI Marketing Solutions combines cutting-edge AI technology with personalized strategies to deliver impactful, measurable results. Let us transform your digital presence into a streamlined, lead-generating, and sales-driving powerhouse effortlessly. 
+Trusted by innovative businesses, Riad Marketing Solutions combines cutting-edge AI technology with personalized strategies to deliver impactful, measurable results. Let us transform your digital presence into a streamlined, lead-generating, and sales-driving powerhouse effortlessly. 
 
 ---
 
@@ -419,7 +419,7 @@ Your report should include the following five sections:
 ---
 
 ## **Introduction**  
-At **ElevateAI Marketing Solutions**, we empower businesses to thrive in the digital age with AI-driven strategies tailored to their needs. From automating social media content and creating SEO-optimized blogs to boosting customer engagement with AI-powered agents, our solutions are designed to save time, maintain consistency, and deliver measurable results. 
+At **Riad Marketing Solutions**, we empower businesses to thrive in the digital age with AI-driven strategies tailored to their needs. From automating social media content and creating SEO-optimized blogs to boosting customer engagement with AI-powered agents, our solutions are designed to save time, maintain consistency, and deliver measurable results. 
 
 Our personalized approach and cutting-edge technology have enabled us to help companies like yours transform their digital presence into streamlined, lead-generating powerhouses. With proven expertise in enhancing marketing strategies across industries, we’re excited about the opportunity to partner with **GreenFuture Tech** to achieve measurable growth.  
 
@@ -460,7 +460,7 @@ GreenFuture Tech is a sustainable technology company specializing in renewable e
 
 ### **Expected Results and ROI**  
 
-Based on our success with **EcoSmart Solutions** (see [case study](https://elevateAI.com/case-studies/A)), a similar company in the renewable energy space:  
+Based on our success with **EcoSmart Solutions** (see [case study](https://riadcorp.com/case-studies/A)), a similar company in the renewable energy space:  
 - Increased organic traffic by 65% within six months through AI-powered content strategies.  
 - Boosted social media engagement by 40% and follower growth by 25% using automated, targeted campaigns.  
 - Reduced average response times from 6 hours to under 2 minutes with AI chatbots, leading to a 30% increase in customer satisfaction scores.  
@@ -475,14 +475,14 @@ We’d love to discuss how these tailored solutions can help GreenFuture Tech ac
 
 **Next Steps:**  
 - Reply to this email with your availability.  
-- Visit [ElevateAI Marketing Solutions](https://elevateAI.com) for more insights into our services.  
+- Visit [Riad Marketing Solutions](https://riadcorp.com) for more insights into our services.  
 
 We look forward to partnering with you to power GreenFuture Tech’s digital transformation!  
 
 --- 
 
 **Prepared by:**  Aymen  
-**ElevateAI Marketing Solutions** 
+**Riad Marketing Solutions** 
 ---
 
 # **Notes:**  
@@ -560,7 +560,7 @@ Hi [First Name],
 
 [Personalization]
 
-At ElevateAI, we specialize in helping businesses like yours streamline operations and accelerate digital growth using AI solutions. We’ve helped several businesses in the [Lead’s Company industry] unlock the potential of AI to improve efficiency and customer engagement.
+At Riad, we specialize in helping businesses like yours streamline operations and accelerate digital growth using AI solutions. We’ve helped several businesses in the [Lead’s Company industry] unlock the potential of AI to improve efficiency and customer engagement.
 
 After reviewing [Lead’s Company Name]’s digital presence, we’ve crafted a detailed audit report with key findings and insights on how we can help enhance your online strategy.
 
@@ -584,21 +584,21 @@ Aymen
 """
 
 GENERATE_SPIN_QUESTIONS_PROMPT = """
-Write personalized multiple SPIN selling questions for the provided lead, demonstrating a clear understanding of their company and specific marketing or sales challenges. Focus on how **ElevateAI Marketing Solutions** can help address these issues effectively. Keep the questions concise and highly relevant.  
+Write personalized multiple SPIN selling questions for the provided lead, demonstrating a clear understanding of their company and specific marketing or sales challenges. Focus on how **Riad Marketing Solutions** can help address these issues effectively. Keep the questions concise and highly relevant.  
 
 ## **Agency Description**  
 
-**ElevateAI Marketing Solutions** empowers businesses to thrive in the digital age with AI-driven strategies that boost online visibility and engagement. We specialize in:  
+**Riad Marketing Solutions** empowers businesses to thrive in the digital age with AI-driven strategies that boost online visibility and engagement. We specialize in:  
 - **SEO Optimization**: Crafting high-ranking, search engine-friendly blog content to drive organic traffic.  
 - **Social Media Automation**: Scheduling platform-specific posts for Facebook, LinkedIn, TikTok, and more to maximize engagement.  
 - **Content Personalization**: Ensuring every piece reflects your unique voice and brand identity.  
 
-Our AI solutions save you time and resources while delivering consistent, authentic, and impactful messaging. By blending advanced technology with tailored strategies, **ElevateAI** turns your digital presence into a powerful driver of leads, sales, and growth.  
+Our AI solutions save you time and resources while delivering consistent, authentic, and impactful messaging. By blending advanced technology with tailored strategies, **Riad** turns your digital presence into a powerful driver of leads, sales, and growth.  
 
 ## **Notes:**  
 - Return only the SPIN questions, maximum of 15. 
 - Avoid generic or vague inquiries; base them on the provided lead details and agency capabilities.  
-- Focus on uncovering pain points, implications, and opportunities where ElevateAI's solutions can add value. 
+- Focus on uncovering pain points, implications, and opportunities where Riad's solutions can add value. 
 """
 
 WRITE_INTERVIEW_SCRIPT_PROMPT = """
@@ -608,12 +608,12 @@ You are a professional interview scriptwriter. Based on SPIN selling questions, 
 # **Specific Requirements:**  
 - Include personalized details and references to the lead’s business or challenges.  
 - Include multiple relevant questions in each section.
-- Highlight the unique solutions offered by **ElevateAI Marketing Solutions**.  
+- Highlight the unique solutions offered by **Riad Marketing Solutions**.  
 - Use a conversational and approachable tone, maintaining professionalism.  
 
 # **Context:**  
 
-**ElevateAI Marketing Solutions** empowers businesses to thrive in the digital age with AI-driven strategies that enhance online visibility and engagement. Our services include:  
+**Riad Marketing Solutions** empowers businesses to thrive in the digital age with AI-driven strategies that enhance online visibility and engagement. Our services include:  
 - **Content Creation and Optimization**: High-ranking blog posts and SEO strategies that attract organic traffic.  
 - **Social Media Automation**: AI-powered scheduling for targeted, platform-specific posts.  
 - **Tailored Messaging**: Authentic, brand-specific content that aligns with company values.  
@@ -623,7 +623,7 @@ Our solutions free up your team to focus on core priorities, driving measurable 
 # **Example of interview Script:**  
 
 **Introduction:**  
-"Hi [Prospect's Name], this is Aymen from ElevateAI Marketing Solutions. How are you today?"  
+"Hi [Prospect's Name], this is Aymen from Riad Marketing Solutions. How are you today?"  
 
 **Personalized Hook:**  
 "I’ve been following [Company's Name]’s recent [initiative/project] to enhance your marketing outreach. It’s exciting to see the innovative strategies your team is implementing."  
@@ -641,10 +641,10 @@ Our solutions free up your team to focus on core priorities, driving measurable 
 "How could integrating AI-driven tools help streamline your content creation and social media strategies? What benefits do you think [Company's Name] could achieve by freeing up your team to focus on higher-value tasks?"  
 
 **Closing:**  
-"I believe ElevateAI Marketing Solutions can offer the perfect tools and strategies to address these challenges. Would you be open to a quick meeting next week to explore how we can help [Company’s Name] elevate your digital presence?"  
+"I believe Riad Marketing Solutions can offer the perfect tools and strategies to address these challenges. Would you be open to a quick meeting next week to explore how we can help [Company’s Name] elevate your digital presence?"  
 
 # **Notes:**  
 - Adapt the script based on prospect responses for a natural flow.  
-- Ensure the conversation stays focused on their challenges and how ElevateAI can provide tailored solutions.  
+- Ensure the conversation stays focused on their challenges and how Riad can provide tailored solutions.  
 - Emphasize measurable results and time-saving benefits. 
 """

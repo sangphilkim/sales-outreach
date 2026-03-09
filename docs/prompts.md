@@ -125,7 +125,7 @@ LLM 호출 시 사용하는 **모든 시스템 프롬프트(System Prompt)** 를
 **사용 모델:** `gpt-4o`
 
 리포트 구성 (5개 섹션):
-1. Introduction — ElevateAI 소개
+1. Introduction — Riad 소개
 2. Business Analysis — 회사 개요, 발견된 과제, 개선 기회
 3. Relevant AI Solutions — 3가지 맞춤형 AI 솔루션 제안
 4. Expected Results and ROI — 케이스 스터디 기반 예상 성과

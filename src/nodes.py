@@ -453,8 +453,8 @@ class OutReachAutomationNodes:
 
         **Correct Links:**
 
-        ** Our website link**: https://elevateAI.com
-        ** Case study link**: https://elevateAI.com/case-studies/A
+        ** Our website link**: https://riadcorp.com
+        ** Case study link**: https://riadcorp.com/case-studies/A
         """
         
         # Call our editor/proof-reader agent
