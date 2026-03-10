@@ -1,0 +1,31 @@
+# 인증 파일
+credentials.json
+token.json
+
+# 환경변수
+.env
+
+# 가상환경
+venv/
+venv311/
+
+# Python 캐시
+__pycache__/
+*.pyc
+*.pyo
+
+# 벡터 DB
+database/
+
+# 생성된 리포트
+reports/
+
+# 임시 파일
+temp_markdown.md
+
+# macOS 시스템 파일
+.DS_Store
+
+# 별도 파일
+customization.md
+Guide.md
