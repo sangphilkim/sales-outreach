@@ -24,7 +24,6 @@ class OutReachAutomationNodes:
     def __init__(self, loader):
         self.lead_loader = loader
         self.docs_manager = GoogleDocsManager()
-        self.drive_folder_name = ""
 
     def get_new_leads(self, state: GraphInputState):
         print(Fore.YELLOW + "----- Fetching new leads -----\n" + Style.RESET_ALL)
@@ -488,12 +487,14 @@ class OutReachAutomationNodes:
         )
         
         # Store report into google docs and get shareable link
+        lead = state["current_lead"]
+        folder_name = f"{lead.name.strip()} ({lead.id})"
         new_doc = self.docs_manager.add_document(
             content=revised_outreach_report,
             doc_title="Outreach Report",
-            folder_name=self.drive_folder_name,
+            folder_name=folder_name,
             make_shareable=True,
-            folder_shareable=True, # Set to false if only personal or true if with a team
+            folder_shareable=False, # Folder is private; only the document itself is shared via make_shareable
             markdown=True
         )
 
@@ -623,11 +624,13 @@ class OutReachAutomationNodes:
         
         # Save all reports to Google docs
         if SAVE_TO_GOOGLE_DOCS:
+            lead = state["current_lead"]
+            folder_name = f"{lead.name.strip()} ({lead.id})"
             for report in reports:
                 self.docs_manager.add_document(
                     content=report.content,
                     doc_title=report.title,
-                    folder_name=self.drive_folder_name,
+                    folder_name=folder_name,
                     markdown=report.is_markdown
                 )
 
