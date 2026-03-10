@@ -381,16 +381,28 @@ class OutReachAutomationNodes:
         )
         return {"lead_score": lead_score.strip()}
 
-    @staticmethod
-    def is_lead_qualified(state: GraphState):
-        """
-        Check if the lead is qualified based on the lead score.
-
-        @param state: The current state of the application.
-        @return: Updated state with the qualification status.
-        """
-        print(Fore.YELLOW + "----- Checking if lead is qualified -----\n" + Style.RESET_ALL)
-        return {"reports": []}
+    # NOTE: 향후 프로그램 확장 시 활용 가능한 코드
+    # 자격 여부를 state에 저장하여 update_CRM 등 하위 노드에서 참조할 때 사용
+    # 활성화 시: state.py에 is_qualified: bool 필드 추가 필요
+    #            graph.py에서 score_lead → is_lead_qualified → check_if_qualified 순서로 연결 필요
+    #
+    # @staticmethod
+    # def is_lead_qualified(state: GraphState):
+    #     """
+    #     Check if the lead is qualified based on the lead score.
+    #     Stores qualification result in state for use by downstream nodes (e.g. update_CRM).
+    #
+    #     @param state: The current state of the application.
+    #     @return: Updated state with the qualification status.
+    #     """
+    #     print(Fore.YELLOW + "----- Checking if lead is qualified -----\n" + Style.RESET_ALL)
+    #     try:
+    #         match = re.search(r'\d+\.?\d*', str(state["lead_score"]))
+    #         score = float(match.group()) if match else 0
+    #         qualified = score >= 7
+    #     except Exception:
+    #         qualified = False
+    #     return {"is_qualified": qualified}
 
     @staticmethod
     def check_if_qualified(state: GraphState):
