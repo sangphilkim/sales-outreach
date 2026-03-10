@@ -107,12 +107,12 @@ LLM 호출 시 사용하는 **모든 시스템 프롬프트(System Prompt)** 를
 **사용 모델:** `gpt-4o` (고품질 판단)
 
 평가 기준 (각 1-10점):
-1. 디지털 프레즌스 (블로그 활성도)
-2. 소셜 미디어 활동 (플랫폼 수, 게시 빈도, 참여율)
-3. 산업 적합성 (타겟 산업 일치도, AI 활용 여부)
-4. 회사 규모 및 성장 잠재력 (직원 수, 성장 신호)
-5. 기존 마케팅 전략 (자동화 도구 활용, 메시지 일관성)
-6. 페인 포인트 및 기회 (디지털 전략 약점, ROI 잠재력)
+1. 산업 및 역할 적합성 (여행사, DMC, 이벤트 기획사, MICE 회사 등 RIAD 핵심 타겟 여부)
+2. 비즈니스 활동 규모 (호텔 제안서 볼륨, 이벤트 빈도, 숙박 수요 규모)
+3. 회사 규모 (LinkedIn 직원 수 및 팀 구조)
+4. 성장 신호 (신규 클라이언트, 신시장 진출, 파트너십, 채용 등)
+5. 기술 성숙도 (전문 호텔 소싱·이벤트 숙박 플랫폼 미보유 여부 — yeyak/Ria event 도입 여지)
+6. 콘텐츠 및 디지털 활동 (블로그·소셜·뉴스 노출 — 사업 규모 및 신뢰도 간접 지표)
 
 **중요:** 최종 점수가 7 이상이면 `check_if_qualified`에서 "qualified"로 분류됨
 
@@ -125,9 +125,9 @@ LLM 호출 시 사용하는 **모든 시스템 프롬프트(System Prompt)** 를
 **사용 모델:** `gpt-4o`
 
 리포트 구성 (5개 섹션):
-1. Introduction — Riad 소개
+1. Introduction — RIAD Corporation 소개
 2. Business Analysis — 회사 개요, 발견된 과제, 개선 기회
-3. Relevant AI Solutions — 3가지 맞춤형 AI 솔루션 제안
+3. Relevant RIAD Solutions — yeyak/Ria event 맞춤형 솔루션 제안
 4. Expected Results and ROI — 케이스 스터디 기반 예상 성과
 5. Call to Action — 다음 단계 안내
 
