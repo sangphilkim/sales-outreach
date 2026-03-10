@@ -1,8 +1,11 @@
 from pydantic import BaseModel, Field
 from typing import List, Annotated
 from typing_extensions import TypedDict
-from operator import add
-    
+def reports_reducer(existing: list, update):
+    if update is None:
+        return []              # None이면 초기화 (새 lead 시작 시)
+    return existing + update   # 아니면 기존처럼 누적
+
 class SocialMediaLinks(BaseModel):
     blog: str = ""
     facebook: str = ""
@@ -39,7 +42,7 @@ class GraphState(TypedDict):
     current_lead: LeadData
     lead_score: str = ""
     company_data: CompanyData
-    reports: Annotated[list[Report], add]
+    reports: Annotated[list[Report], reports_reducer]
     reports_folder_link: str
     custom_outreach_report_link: str
     personalized_email: str

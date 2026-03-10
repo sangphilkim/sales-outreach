@@ -11,7 +11,7 @@ def scrape_website_to_markdown(url: str) -> str:
     }
 
     # Make the HTTP request
-    response = requests.get(url, headers=headers)
+    response = requests.get(url, headers=headers, timeout=10)
     if response.status_code != 200:
         raise Exception(f"Failed to fetch the URL. Status code: {response.status_code}")
 

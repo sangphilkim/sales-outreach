@@ -103,7 +103,7 @@ class OutReachAutomationNodes:
         return {
             "current_lead": lead_data,
             "company_data": company_data,
-            "reports": []
+            "reports": None  # 새 lead 시작 시 reports 초기화
         }
     
     def review_company_website(self, state: GraphState):
@@ -113,23 +113,26 @@ class OutReachAutomationNodes:
         
         company_website = company_data.website
         if company_website:
-            # Scrape company website
-            content = scrape_website_to_markdown(company_website)
-            website_info = invoke_llm(
-                system_prompt=WEBSITE_ANALYSIS_PROMPT.format(main_url=company_website),
-                user_message=content,
-                model="gpt-4o-mini",
-                response_format=WebsiteData
-            )
+            try:
+                # Scrape company website
+                content = scrape_website_to_markdown(company_website)
+                website_info = invoke_llm(
+                    system_prompt=WEBSITE_ANALYSIS_PROMPT.format(main_url=company_website),
+                    user_message=content,
+                    model="gpt-4o-mini",
+                    response_format=WebsiteData
+                )
 
-            # Extract all relevant links
-            company_data.social_media_links.blog = website_info.blog_url
-            company_data.social_media_links.facebook = website_info.facebook
-            company_data.social_media_links.twitter = website_info.twitter
-            company_data.social_media_links.youtube = website_info.youtube
-            
-            # Update company profile with website summary
-            company_data.profile = generate_company_profile(company_data.profile, website_info.summary)
+                # Extract all relevant links
+                company_data.social_media_links.blog = website_info.blog_url
+                company_data.social_media_links.facebook = website_info.facebook
+                company_data.social_media_links.twitter = website_info.twitter
+                company_data.social_media_links.youtube = website_info.youtube
+
+                # Update company profile with website summary
+                company_data.profile = generate_company_profile(company_data.profile, website_info.summary)
+            except Exception as e:
+                print(Fore.RED + f"Website scraping failed: {e}" + Style.RESET_ALL)
                  
         inputs = f"""
         # **Lead Profile:**
@@ -172,18 +175,21 @@ class OutReachAutomationNodes:
         company_data = state["company_data"]
         blog_url = company_data.social_media_links.blog
         if blog_url:
-            blog_content = scrape_website_to_markdown(blog_url)
-            prompt = BLOG_ANALYSIS_PROMPT.format(company_name=company_data.name)
-            blog_analysis_report = invoke_llm(
-                system_prompt=prompt,
-                user_message=blog_content,
-                model="gpt-4o-mini"
-            )
-            blog_analysis_report = Report(
-                title="Blog Analysis Report",
-                content=blog_analysis_report,
-                is_markdown=True
-            )
+            try:
+                blog_content = scrape_website_to_markdown(blog_url)
+                prompt = BLOG_ANALYSIS_PROMPT.format(company_name=company_data.name)
+                blog_analysis_report = invoke_llm(
+                    system_prompt=prompt,
+                    user_message=blog_content,
+                    model="gpt-4o-mini"
+                )
+                blog_analysis_report = Report(
+                    title="Blog Analysis Report",
+                    content=blog_analysis_report,
+                    is_markdown=True
+                )
+            except Exception as e:
+                print(Fore.RED + f"Blog scraping failed: {e}" + Style.RESET_ALL)
 
         reports = [r for r in [blog_analysis_report] if r is not None]
         return {"reports": reports}
@@ -234,10 +240,15 @@ class OutReachAutomationNodes:
     
     def analyze_recent_news(self, state: GraphState):
         print(Fore.YELLOW + "----- Analyzing recent news about company -----\n" + Style.RESET_ALL)
-        
+
         # Load states
         company_data = state["company_data"]
-        
+
+        # 회사명이 없으면 뉴스 검색 스킵
+        if not company_data.name:
+            print(Fore.YELLOW + "회사명 없음, 뉴스 검색 스킵" + Style.RESET_ALL)
+            return {"reports": []}
+
         # Fetch recent news using serper API
         recent_news = get_recent_news(company=company_data.name)
         number_months = 6
@@ -482,8 +493,8 @@ class OutReachAutomationNodes:
             }
 
         return {
-            "custom_outreach_report_link": new_doc["shareable_url"],
-            "reports_folder_link": new_doc["folder_url"]
+            "custom_outreach_report_link": new_doc["shareable_url"] or "",
+            "reports_folder_link": new_doc["folder_url"] or ""
         }
 
     def generate_personalized_email(self, state: GraphState):
@@ -608,7 +619,7 @@ class OutReachAutomationNodes:
                     markdown=report.is_markdown
                 )
 
-        return state
+        return {}
 
     def update_CRM(self, state: GraphState):
         print(Fore.YELLOW + "----- Updating CRM records -----\n" + Style.RESET_ALL)
@@ -622,8 +633,5 @@ class OutReachAutomationNodes:
             "Last Contacted": get_current_date()
         }
         self.lead_loader.update_record(state["current_lead"].id, new_data)
-        
-        # reset reports list
-        state["reports"] = []
-        
+
         return {"number_leads": state["number_leads"] - 1}
