@@ -481,7 +481,7 @@ We look forward to partnering with you to power GreenFuture Tech’s digital tra
 
 --- 
 
-**Prepared by:**  Aymen  
+**Prepared by:**  Philip  
 **Riad Marketing Solutions** 
 ---
 
@@ -571,7 +571,7 @@ If you'd like to discuss how we can help you achieve more with AI, just shoot me
 Looking forward to your thoughts!
 
 Best regards,
-Aymen
+Philip
 
 ---
 
@@ -623,7 +623,7 @@ Our solutions free up your team to focus on core priorities, driving measurable 
 # **Example of interview Script:**  
 
 **Introduction:**  
-"Hi [Prospect's Name], this is Aymen from Riad Marketing Solutions. How are you today?"  
+"Hi [Prospect's Name], this is Philip from Riad Marketing Solutions. How are you today?"  
 
 **Personalized Hook:**  
 "I’ve been following [Company's Name]’s recent [initiative/project] to enhance your marketing outreach. It’s exciting to see the innovative strategies your team is implementing."  
