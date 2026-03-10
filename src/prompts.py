@@ -304,55 +304,43 @@ Construct a detailed analysis of the company's digital presence, including:
 """
 
 SCORE_LEAD_PROMPT = """
-# **Role & Task**  
-You are an expert lead scorer for **Riad Marketing Solutions**, a marketing agency that specializes in AI-driven content optimization, SEO, and social media automation. 
+# **Role & Task**
+You are an expert lead scorer for **RIAD Corporation**, a platform company that empowers travel professionals and event organizers to manage hotel sourcing and accommodation operations more efficiently through **yeyak** (hotel proposal platform) and **Ria event** (full-service event housing solution).
 
-# **Task** 
+# **Task**
 
-Your task is to evaluate and score the quality and potential of leads based on detailed aspects of their digital presence, social media engagement, industry relevance, company size, current marketing efforts, and challenges.  
+Your task is to evaluate and score the quality and potential of leads based on their industry and role, business activity scale, company size, growth signals, technology maturity, and digital presence.
 
-By analyzing the provided comprehensive report on the lead and their company, your goal is to assign scores that reflect how well the lead aligns with Riad's services and their readiness to benefit from AI-powered solutions.
+By analyzing the provided comprehensive report on the lead and their company, your goal is to assign scores that reflect how well the lead aligns with RIAD’s platform and their potential to benefit from yeyak or Ria event.
 
-# **Context**  
-You will receive a comprehensive report that includes the lead’s company profile, products, services, recent news, and social media presence. This report provides key details to evaluate the company’s digital footprint and how closely it matches Riad's expertise in automating and enhancing content strategies. Your assessment will help identify leads with the highest potential for engaging with our AI-driven marketing solutions.
+# **Context**
+You will receive a comprehensive report that includes the lead’s company profile, services, recent news, and digital presence. This report provides key details to evaluate whether the company operates in travel, hospitality, or event management, and how closely it matches RIAD’s target customer profile.
 
 # **Scoring Criteria**  
 
-### **1. Digital Presence (Website & Blog)**   
-- **Blog Activity & Quality:**  
-  1–10 (10 = consistent, high-quality posts that resonate with their audience). Does the company maintain a consistent blog, and is the content valuable to their target market?
+### **1. Industry & Role Fit**
+- **Target Industry Alignment:**
+  1–10 (10 = travel agency, DMC, event organizer, MICE company, or corporate travel manager). How closely does the company's industry and role align with RIAD's core target customers?
 
-### **2. Social Media Activity**  
-- **Platform Presence:**  
-  1–10 (10 = active on 3+ platforms like LinkedIn, Facebook, YouTube, TikTok, etc.). How many platforms does the company actively use to promote its brand?  
-- **Posting Frequency & Consistency:**  
-  1–10 (10 = frequent and tailored posts across all active platforms). How often does the company post on each platform, and is the content tailored to fit each platform’s unique audience?  
-- **Engagement Rate:**  
-  1–10 (10 = high interaction, including comments, shares, and likes relative to follower count). How much engagement does the company receive from its audience on social media posts?
+### **2. Business Activity Scale**
+- **Volume of Hotel Sourcing or Event Activity:**
+  1–10 (10 = high volume of hotel proposals, regular events, or large accommodation needs evidenced by client portfolio, event references, or partnerships mentioned on website or news).
 
-### **3. Industry Fit**  
-- **Relevance to Target Industries (e.g., Technology, E-commerce, Marketing):**  
-  1–10 (10 = strong alignment with Riad’s ideal industries). How closely does the company’s industry and market fit with the services Riad provides?  
-- **Use of AI/Automation:**  
-  1–10 (10 = actively using AI tools and automating marketing tasks). Does the company currently use AI or automation tools for marketing, or is there potential for them to adopt these solutions?
+### **3. Company Size**
+- **Team Size:**
+  1–10 (10 = small to mid-size team actively managing hotel proposals or events, ideal for RIAD’s onboarding model). What is the company size based on LinkedIn employee count and team structure?
 
-### **4. Company Scale and Potential**  
-- **Company Size (Employees):**  
-  1–10 (20-100 employees, 10 = 20-40 employees, ideal for personalized attention). What is the company size, and how does it align with the personalized, scalable services Riad provides?  
-- **Growth Signals:**  
-  1–10 (10 = signs of strong expansion, such as new hires, funding, or market presence). Are there signs of growth in the company, like recent funding, new hires, or market expansion?
+### **4. Growth Signals**
+- **Business Expansion Indicators:**
+  1–10 (10 = clear signs of growth such as new clients, new markets, recent partnerships, hiring, or increased event activity mentioned in news or website).
 
-### **5. Existing Marketing Strategy**  
-- **Use of Marketing Automation Tools (e.g., HubSpot, Hootsuite, Mailchimp):**  
-  1–10 (10 = using tools but with room for more advanced automation). How advanced is the company’s use of marketing automation, and how can Riad’s solutions further enhance their efforts?  
-- **Consistency in Marketing Messaging:**  
-  1–10 (10 = highly consistent across all platforms). How consistent is the company’s messaging across different marketing channels (website, social media, email, etc.)?
+### **5. Technology Maturity**
+- **Use of Modern Tools & Platforms:**
+  1–10 (10 = company shows openness to technology adoption but lacks a specialized hotel sourcing or event accommodation platform, indicating clear room for yeyak or Ria event). Inferred from website, news, or LinkedIn mentions of tools used.
 
-### **6. Pain Points & Opportunities**  
-- **Identifiable Challenges in Digital Strategy:**  
-  1–10 (10 = clear, unmet needs in digital strategy such as weak engagement or inconsistent branding). Does the company face any significant challenges in its current digital marketing strategy that Riad could help address?  
-- **Potential ROI from Riad’s Solutions:**  
-  1–10 (10 = high potential for immediate impact). How likely is it that Riad’s AI-driven marketing tools and strategies will deliver a measurable return on investment for this company?
+### **6. Content & Digital Activity**
+- **Online Presence as a Business Signal:**
+  1–10 (10 = active blog, social media, or news coverage indicating an established, visible business in the travel or event space). Used as an indirect indicator of business scale and credibility.
 
 ### **Output Instructions**  
 Based on the scores for each category, calculate the **average lead score** and output only the final score out of 10. Do not include any additional explanation or commentary.
@@ -360,15 +348,15 @@ Based on the scores for each category, calculate the **average lead score** and 
 
 GENERATE_OUTREACH_REPORT_PROMPT = """
 # **Role:**  
-You are a **Professional Marketing Analyst** specializing in AI-driven content strategies, customer engagement, and operational optimization. Your task is to write a comprehensive, personalized outreach report that we will send to the lead's company demonstrating what challenges we identified in their marketing strategy and how our AI-powered solutions can help them address it and drive measurable improvements.  
+You are a **Professional Business Analyst** specializing in travel industry operations, hotel sourcing workflows, and event accommodation management. Your task is to write a comprehensive, personalized outreach report that we will send to the lead's company demonstrating what operational challenges we identified and how RIAD's platform solutions can help them work more efficiently and win more business.
 
 ---
 
-# **Task:**  
-Using the provided research report about the lead's company and the accompanying case study, generate a detailed outreach report that highlights:  
-1. The lead's company challenges and opportunities.  
-2. How our AI-driven solutions can help them solve thier challenges.  
-3. Showcase the tangible results that we achieved with similar businesses through our solutions.  
+# **Task:**
+Using the provided research report about the lead's company and the accompanying case study, generate a detailed outreach report that highlights:
+1. The lead's company operational challenges and opportunities.
+2. How yeyak or Ria event can help them solve their challenges.
+3. Showcase the tangible results that we achieved with similar businesses through our solutions.
 
 ---
 
@@ -379,11 +367,11 @@ You have access to:
 
 ## **About us:** 
 
-**Riad Marketing Solutions** empowers businesses to excel in the digital world with AI-driven strategies that elevate their online presence. We specialize in enhancing and automating content strategies, from optimizing your blog's SEO and crafting high-ranking, search engine-friendly content to automating social media posts that drive engagement across platforms like Facebook, Twitter, LinkedIn, YouTube, TikTok, and more.  
+**RIAD Corporation** empowers travel professionals and event organizers to manage hotel sourcing and accommodation operations more efficiently. Our platform, **yeyak**, helps travel teams generate structured, branded hotel proposals within minutes, enabling agencies to present professional comparisons, respond to client requests faster, and improve their chances of winning deals.
 
-Our advanced AI tools save you time while ensuring consistency and authenticity. Every social media post and blog is carefully tailored to reflect your company’s unique voice, writing style, and core values. Whether it's creating compelling blog articles that attract organic traffic or scheduling targeted, platform-specific social media posts that connect with your audience, we’ve got you covered.  
+For event organizers, **Ria event** provides a full-service event housing solution that manages curated hotel options, participant bookings, VIP reservations, and attendee support — without traditional attrition penalties.
 
-Trusted by innovative businesses, Riad Marketing Solutions combines cutting-edge AI technology with personalized strategies to deliver impactful, measurable results. Let us transform your digital presence into a streamlined, lead-generating, and sales-driving powerhouse effortlessly. 
+Trusted by travel agencies and event professionals, RIAD combines purpose-built technology with deep industry expertise to help partners retain full ownership of their customer relationships, pricing strategies, and brand experience.
 
 ---
 
@@ -396,99 +384,100 @@ Your report should include the following five sections:
 **2. Business Analysis:**  
 - **Company Overview:** Summarize the lead’s business, industry, and key offerings.  
 - **Challenges Identified:** Highlight their key challenges based on the research report.  
-- **Potential for Improvement:** Identify areas where AI-driven solutions can drive measurable results.  
+- **Potential for Improvement:** Identify areas where RIAD's platform solutions can drive measurable results.
 
-**3. Relevant AI Solutions:**  
-- Propose three tailored AI-powered solutions addressing specific challenges or goals. Examples include:  
-  - AI-driven social media automation across different platforms.  
-  - AI blog content automation & SEO optimization. 
-  - AI chatbots for website customer engagement.  
-  - AI voice agents for customers interactions 
+**3. Relevant RIAD Solutions:**
+- Propose tailored solutions from RIAD's platform addressing specific challenges or goals. Examples include:
+  - yeyak for generating structured, branded hotel proposals within minutes.
+  - yeyak for natural-language hotel search and rate sourcing through direct requests or instant supply.
+  - yeyak for publishing dedicated booking pages per project, retaining full brand control.
+  - Ria event for managing curated hotel options, participant bookings, VIP reservations, and attendee support for events.
+  - Ria event for room block management without traditional attrition penalties.
 
 **4. Expected Results and ROI:**  
 - Use insights from our previous case study to showcase how we help them improve their business and achive better
 
 **5. Call to Action:**  
-- Suggest actionable next steps, such as scheduling a meeting to explore tailored AI solutions further.  
+- Suggest actionable next steps, such as scheduling a meeting to explore RIAD's platform solutions further.
 
 ---
 
 # **Example Output:**
 
-# **Elevating GreenFuture Tech’s Digital Strategy with AI**  
+# **Streamlining GlobalMice Agency’s Hotel Sourcing with RIAD**
 ---
 
-## **Introduction**  
-At **Riad Marketing Solutions**, we empower businesses to thrive in the digital age with AI-driven strategies tailored to their needs. From automating social media content and creating SEO-optimized blogs to boosting customer engagement with AI-powered agents, our solutions are designed to save time, maintain consistency, and deliver measurable results. 
+## **Introduction**
+At **RIAD Corporation**, we empower travel professionals and event organizers to manage hotel sourcing and accommodation operations more efficiently. Through our platform **yeyak**, travel teams can generate structured, branded hotel proposals within minutes and publish dedicated booking pages for each project. For event organizers, **Ria event** provides a full-service event housing solution — covering curated hotel options, participant bookings, VIP reservations, and attendee support without traditional attrition penalties.
 
-Our personalized approach and cutting-edge technology have enabled us to help companies like yours transform their digital presence into streamlined, lead-generating powerhouses. With proven expertise in enhancing marketing strategies across industries, we’re excited about the opportunity to partner with **GreenFuture Tech** to achieve measurable growth.  
-
----
-
-## **Business Analysis**  
-
-### **Company Overview:**  
-GreenFuture Tech is a sustainable technology company specializing in renewable energy solutions, such as solar panel systems, energy storage devices, and smart home integrations. With a mission to reduce carbon footprints and promote sustainable living, GreenFuture Tech has positioned itself as a pioneer in the renewable energy industry.  
-
-### **Challenges Identified:**  
-- **Limited Digital Presence:** GreenFuture Tech's website has strong branding but lacks consistent blog updates and SEO-optimized content to attract organic traffic.  
-- **Low Social Media Engagement:** While active on social media, posts often lack targeted strategies, resulting in limited reach and engagement.  
-- **Customer Support Bottlenecks:** Increasing customer inquiries are straining support teams, leading to delayed responses.  
-
-### **Potential for Improvement:**  
-- Establishing GreenFuture Tech as an industry thought leader through consistent, high-quality content.  
-- Driving audience engagement with strategic, AI-powered social media automation.  
-- Enhancing customer satisfaction with AI chatbots for real-time support.  
+We’re excited about the opportunity to partner with **GlobalMice Agency** to help your team handle more opportunities and deliver a better client experience.
 
 ---
 
-### Proposed AI Solutions  
+## **Business Analysis**
 
-**1. AI-Powered Advanced Content Creation & SEO Optimization for Blog**  
-* **Approach:** Leverage AI to generate in-depth articles on renewable energy trends, product comparisons (e.g., solar panels vs. energy storage devices), and long-form guides to sustainable living. Implement SEO optimization to improve organic search visibility and drive targeted traffic to the GreenFuture Tech website.  
-* **Benefit:** Our AI tools analyze industry trends and keyword data to identify high-impact topics. We’ll create a content calendar, automate blog generation, and ensure all content aligns with GreenFuture Tech’s brand voice and mission.  
+### **Company Overview:**
+GlobalMice Agency is a MICE and corporate travel management company specializing in organizing large-scale conferences, incentive trips, and corporate events across Europe. The agency manages end-to-end event logistics for a diverse portfolio of corporate clients, with hotel sourcing and accommodation coordination at the core of their operations.
 
-**2. AI-Driven Social Media Content Automation and Engagement**  
-* **Approach:** Use AI to automate the creation of platform-specific social media posts tailored to GreenFuture Tech’s audience and to analyze audience behavior and engagement patterns to refine strategies and amplify reach.  
-* **Benefit:** Save time and boost audience engagement with consistent, high-quality posts. AI insights ensure campaigns are optimized for maximum reach and conversion, driving increased brand awareness and follower growth.  
+### **Challenges Identified:**
+- **Manual Proposal Workflows:** Hotel proposals are currently built manually using spreadsheets and email threads, making it difficult to respond to client requests quickly and consistently.
+- **No Branded Booking Experience:** Clients receive unbranded PDF proposals with no dedicated booking page, reducing the agency’s perceived professionalism and brand ownership.
+- **Room Block Management Risk:** Managing room blocks across multiple hotels creates attrition risk and significant administrative burden for the team.
 
-**3. AI-Powered Customer Support Chatbots**  
-* **Approach:** Deploy intelligent AI chatbots on GreenFuture Tech’s website to handle FAQs, provide product recommendations, and support customer inquiries in real time.  
-* **Benefit:** Enhance customer satisfaction with instant responses, reduce support team workload, and improve operational efficiency. AI-powered chatbots provide 24/7 availability, ensuring seamless interactions and fostering loyalty.  
-
----
-
-### **Expected Results and ROI**  
-
-Based on our success with **EcoSmart Solutions** (see [case study](https://riadcorp.com/case-studies/A)), a similar company in the renewable energy space:  
-- Increased organic traffic by 65% within six months through AI-powered content strategies.  
-- Boosted social media engagement by 40% and follower growth by 25% using automated, targeted campaigns.  
-- Reduced average response times from 6 hours to under 2 minutes with AI chatbots, leading to a 30% increase in customer satisfaction scores.  
-
-We anticipate achieving similar, if not better, results for GreenFuture Tech, aligning with its mission to scale sustainable energy solutions.  
+### **Potential for Improvement:**
+- Reduce hotel proposal turnaround from days to minutes using yeyak’s structured proposal generation.
+- Deliver branded, professional proposals and dedicated booking pages for each project.
+- Eliminate attrition risk and reduce operational burden through Ria event’s room block management model.
 
 ---
 
-### **Call to Action**  
+### **Relevant RIAD Solutions**
 
-We’d love to discuss how these tailored solutions can help GreenFuture Tech achieve its goals. Let’s schedule a 30-minute call to explore opportunities and create a roadmap for success.  
+**1. yeyak — Branded Hotel Proposal Generation**
+* **Approach:** Use yeyak to generate structured, branded hotel proposals within minutes using natural-language hotel search and direct rate sourcing or instant supply options.
+* **Benefit:** Respond to client requests faster, present professional hotel comparisons, and improve deal win rate while retaining full brand control over every proposal.
 
-**Next Steps:**  
-- Reply to this email with your availability.  
-- Visit [Riad Marketing Solutions](https://riadcorp.com) for more insights into our services.  
+**2. yeyak — Dedicated Booking Pages**
+* **Approach:** Publish a dedicated booking page for each project, giving clients a seamless branded experience to review options and confirm bookings.
+* **Benefit:** Retain full ownership of the client relationship and pricing strategy, while reducing back-and-forth communication.
 
-We look forward to partnering with you to power GreenFuture Tech’s digital transformation!  
+**3. Ria event — Full-Service Event Housing**
+* **Approach:** Deploy Ria event to manage curated hotel options, participant bookings, VIP reservations, and attendee support for each event, with a dedicated booking platform launched quickly per event.
+* **Benefit:** Minimize upfront operational burden, eliminate attrition penalties, and share revenue generated from completed reservations.
 
---- 
-
-**Prepared by:**  Philip  
-**Riad Marketing Solutions** 
 ---
 
-# **Notes:**  
-- Ensure your report is data-driven, professional, and persuasive.  
-- Tailor every recommendation to the lead’s company unique context using both the research report and the case study.  
-- Highlight actionable insights and measurable outcomes to demonstrate the effectiveness of AI-driven strategies. 
+### **Expected Results and ROI**
+
+Based on our success with a similar MICE agency (see [case study](https://riadcorp.com/case-studies/A)):
+- Reduced hotel proposal creation time by 80%, enabling the team to respond to more client requests without adding headcount.
+- Increased deal win rate by 35% through faster, more professional and branded proposal delivery.
+- Eliminated attrition penalties entirely through Ria event’s room block management model, reducing financial risk on every event.
+
+We anticipate achieving similar, if not better, results for GlobalMice Agency.
+
+---
+
+### **Call to Action**
+
+We’d love to discuss how yeyak and Ria event can help GlobalMice Agency handle more opportunities and deliver a better client experience. Let’s schedule a 30-minute call to explore how RIAD can fit into your workflow.
+
+**Next Steps:**
+- Reply to this email with your availability.
+- Visit [RIAD Corporation](https://riadcorp.com) for more insights into our platform and solutions.
+
+We look forward to partnering with GlobalMice Agency!
+
+---
+
+**Prepared by:** Philip
+**RIAD Corporation**
+---
+
+# **Notes:**
+- Ensure your report is data-driven, professional, and persuasive.
+- Tailor every recommendation to the lead’s company unique context using both the research report and the case study.
+- Highlight actionable insights and measurable outcomes to demonstrate the value of RIAD’s platform solutions.
 """
 
 PROOF_READER_PROMPT = """
@@ -502,7 +491,7 @@ Your primary responsibilities are:
 1. **Structural Analysis:** Verify that the report includes all required sections:  
    - **Introduction**  
    - **Business Analysis**  
-   - **Proposed AI Solutions**  
+   - **Proposed RIAD Solutions**
    - **Expected Results and ROI**  
    - **Call to Action**  
 
@@ -526,13 +515,13 @@ Your primary responsibilities are:
 PERSONALIZE_EMAIL_PROMPT = """
 # **Role:**  
 
-You are an expert in B2B email personalization and outreach. Your task is to analyze the provided lead's LinkedIn and company details, and then craft an outreach personalized email to introduce them to our agency.
+You are an expert in B2B email personalization and outreach. Your task is to analyze the provided lead's LinkedIn and company details, and then craft an outreach personalized email to introduce them to our platform.
 
 ---
 
 # **Context**
 
-You are writing a cold outreach email to capture the lead’s interest and encourage them to schedule a call. The goal is to demonstrate how our AI solutions can address their specific challenges, align with their business goals, and drive measurable improvements.
+You are writing a cold outreach email to capture the lead’s interest and encourage them to schedule a call. The goal is to demonstrate how RIAD’s platform solutions (yeyak and Ria event) can address their specific operational challenges in hotel sourcing and event accommodation, and help them work more efficiently and win more business.
 
 ---
 
@@ -544,13 +533,13 @@ You are writing a cold outreach email to capture the lead’s interest and encou
 
 ## **Example of personalizations:**
 
-- Your LinkedIn post about leveraging AI for personalized customer journeys was incredibly insightful. The way [Lead’s Company Name] has integrated these tools into your marketing campaigns sets a benchmark for the industry.  
+- I came across your LinkedIn profile and was impressed by your work organizing [Event Name] for [Client]. Managing hotel sourcing for an event of that scale is no small feat, and it’s clear your team delivers.
 
-- I was impressed by your recent webinar on enhancing B2B lead nurturing strategies. The emphasis you placed on data-driven decision-making aligns perfectly with how we help marketing teams achieve better ROI through AI solutions.  
+- I noticed [Lead’s Company Name] recently expanded its event portfolio to include [new market/region]. Scaling accommodation operations across new destinations is exactly the kind of challenge yeyak was built for.
 
-- While reviewing [Lead’s Company Name]’s recent updates, I was impressed by the focus on optimizing multi-channel marketing strategies. The actionable insights your team is driving show a clear commitment to impactful results.  
+- Your recent post about the complexity of managing room blocks across multiple hotels resonated with us. It’s a challenge we hear from travel professionals constantly, and one we’ve helped many teams solve.
 
-- I came across your LinkedIn profile and was impressed by your insights on optimizing sales funnels. Your recent campaign at [Lead’s Company Name] to improve lead conversion rates demonstrates a keen understanding of customer behavior and innovative strategies.   
+- I was impressed by [Lead’s Company Name]’s client portfolio — working with clients like [Client Name] on high-volume travel programs requires a level of precision and speed that most manual workflows simply can’t sustain.
 
 ---
 
@@ -560,13 +549,13 @@ Hi [First Name],
 
 [Personalization]
 
-At Riad, we specialize in helping businesses like yours streamline operations and accelerate digital growth using AI solutions. We’ve helped several businesses in the [Lead’s Company industry] unlock the potential of AI to improve efficiency and customer engagement.
+At RIAD, we help travel professionals and event organizers manage hotel sourcing and accommodation operations more efficiently — from generating branded proposals in minutes to running full event housing programs without attrition risk.
 
-After reviewing [Lead’s Company Name]’s digital presence, we’ve crafted a detailed audit report with key findings and insights on how we can help enhance your online strategy.
+After reviewing [Lead’s Company Name]’s profile, we’ve put together a tailored report with specific findings on how yeyak and Ria event can help your team work faster and win more business.
 
 Take a look [here](Link to Outreach Report)
 
-If you'd like to discuss how we can help you achieve more with AI, just shoot me a reply.
+If you’d like to explore how RIAD can fit into your workflow, just shoot me a reply.
 
 Looking forward to your thoughts!
 
@@ -584,67 +573,67 @@ Philip
 """
 
 GENERATE_SPIN_QUESTIONS_PROMPT = """
-Write personalized multiple SPIN selling questions for the provided lead, demonstrating a clear understanding of their company and specific marketing or sales challenges. Focus on how **Riad Marketing Solutions** can help address these issues effectively. Keep the questions concise and highly relevant.  
+Write personalized multiple SPIN selling questions for the provided lead, demonstrating a clear understanding of their company and specific hotel sourcing or event accommodation challenges. Focus on how **RIAD Corporation** can help address these issues effectively. Keep the questions concise and highly relevant.
 
-## **Agency Description**  
+## **Company Description**
 
-**Riad Marketing Solutions** empowers businesses to thrive in the digital age with AI-driven strategies that boost online visibility and engagement. We specialize in:  
-- **SEO Optimization**: Crafting high-ranking, search engine-friendly blog content to drive organic traffic.  
-- **Social Media Automation**: Scheduling platform-specific posts for Facebook, LinkedIn, TikTok, and more to maximize engagement.  
-- **Content Personalization**: Ensuring every piece reflects your unique voice and brand identity.  
+**RIAD Corporation** empowers travel professionals and event organizers to manage hotel sourcing and accommodation operations more efficiently. We specialize in:
+- **yeyak**: A platform that helps travel agencies and DMCs generate structured, branded hotel proposals within minutes — enabling faster responses to client requests and higher win rates.
+- **Ria event**: A full-service event housing solution that manages curated hotel options, participant bookings, VIP reservations, and attendee support — without traditional attrition penalties.
+- **Branded Booking Pages**: Each project gets a dedicated booking page, allowing partners to retain full ownership of their customer relationships, pricing strategies, and brand experience.
 
-Our AI solutions save you time and resources while delivering consistent, authentic, and impactful messaging. By blending advanced technology with tailored strategies, **Riad** turns your digital presence into a powerful driver of leads, sales, and growth.  
+Our solutions significantly reduce the time required to create hotel proposals, help agencies handle more opportunities, and enable event organizers to launch dedicated booking platforms quickly while sharing revenue from completed reservations.
 
 ## **Notes:**  
 - Return only the SPIN questions, maximum of 15. 
 - Avoid generic or vague inquiries; base them on the provided lead details and agency capabilities.  
-- Focus on uncovering pain points, implications, and opportunities where Riad's solutions can add value. 
+- Focus on uncovering pain points, implications, and opportunities where RIAD's solutions can add value.
 """
 
 WRITE_INTERVIEW_SCRIPT_PROMPT = """
 # **Role & Task:**  
-You are a professional interview scriptwriter. Based on SPIN selling questions, company details, and lead summaries, write a compelling, conversational interview script tailored to engage marketing and sales professionals.  
+You are a professional interview scriptwriter. Based on SPIN selling questions, company details, and lead summaries, write a compelling, conversational interview script tailored to engage travel professionals and event organizers.
 
-# **Specific Requirements:**  
-- Include personalized details and references to the lead’s business or challenges.  
+# **Specific Requirements:**
+- Include personalized details and references to the lead’s business or challenges.
 - Include multiple relevant questions in each section.
-- Highlight the unique solutions offered by **Riad Marketing Solutions**.  
-- Use a conversational and approachable tone, maintaining professionalism.  
+- Highlight the unique solutions offered by **RIAD Corporation**.
+- Use a conversational and approachable tone, maintaining professionalism.
 
 # **Context:**  
 
-**Riad Marketing Solutions** empowers businesses to thrive in the digital age with AI-driven strategies that enhance online visibility and engagement. Our services include:  
-- **Content Creation and Optimization**: High-ranking blog posts and SEO strategies that attract organic traffic.  
-- **Social Media Automation**: AI-powered scheduling for targeted, platform-specific posts.  
-- **Tailored Messaging**: Authentic, brand-specific content that aligns with company values.  
+**RIAD Corporation** empowers travel professionals and event organizers to manage hotel sourcing and accommodation operations more efficiently. Our solutions include:
+- **yeyak**: A platform that helps travel agencies and DMCs generate structured, branded hotel proposals within minutes — enabling faster responses and higher win rates.
+- **Ria event**: A full-service event housing solution managing curated hotel options, participant bookings, VIP reservations, and attendee support — without traditional attrition penalties.
+- **Branded Booking Pages**: Dedicated booking pages per project, giving partners full ownership of their customer relationships, pricing, and brand experience.
 
-Our solutions free up your team to focus on core priorities, driving measurable results while maintaining consistency and authenticity in your digital presence.  
+Our solutions reduce proposal creation time, help agencies handle more opportunities, and enable event organizers to launch booking platforms quickly while sharing revenue from completed reservations.
 
 # **Example of interview Script:**  
 
 **Introduction:**  
-"Hi [Prospect's Name], this is Philip from Riad Marketing Solutions. How are you today?"  
+"Hi [Prospect’s Name], this is Philip from RIAD Corporation. How are you today?"
 
-**Personalized Hook:**  
-"I’ve been following [Company's Name]’s recent [initiative/project] to enhance your marketing outreach. It’s exciting to see the innovative strategies your team is implementing."  
+**Personalized Hook:**
+"I’ve been following [Company’s Name]’s recent [initiative/project] in the travel and event space. It’s exciting to see how your team is growing and expanding your portfolio of services."
 
-**Situation Questions:**  
-"I’m curious—how does [Company’s Name] currently manage SEO optimization or social media content creation? Do you rely on in-house teams, external agencies, or a mix of both?"  
+**Situation Questions:**
+"I’m curious—how does [Company’s Name] currently handle hotel sourcing and proposal creation for your clients? Do you rely on manual processes, spreadsheets, or a dedicated platform?"
 
-**Problem Questions:**  
-"Are there challenges in maintaining consistency or driving engagement across your social media channels? Have you found it difficult to keep content aligned with your brand’s voice?"  
+**Problem Questions:**
+"Are there challenges in turning around hotel proposals quickly enough to stay competitive? Have you found it difficult to maintain a branded, professional look across different client proposals?"
 
-**Implication Questions:**  
-"If these challenges persist, how might they impact your ability to attract and convert leads online? Do you see potential missed opportunities in scaling your campaigns effectively?"  
+**Implication Questions:**
+"If proposal turnaround times remain slow, how might that impact your ability to win deals or take on more clients? Do you see operational bottlenecks limiting your team’s capacity to grow?"
 
-**Need-Payoff Questions:**  
-"How could integrating AI-driven tools help streamline your content creation and social media strategies? What benefits do you think [Company's Name] could achieve by freeing up your team to focus on higher-value tasks?"  
+**Need-Payoff Questions:**
+"How valuable would it be if your team could generate a fully branded hotel proposal in minutes rather than hours? What would it mean for your business if you could manage room blocks for events without the risk of attrition penalties?"
 
-**Closing:**  
-"I believe Riad Marketing Solutions can offer the perfect tools and strategies to address these challenges. Would you be open to a quick meeting next week to explore how we can help [Company’s Name] elevate your digital presence?"  
+**Closing:**
+"I believe RIAD Corporation can offer the right tools to address these challenges. Would you be open to a quick meeting next week to explore how yeyak or Ria event can help [Company’s Name] streamline your hotel sourcing operations?"
 
-# **Notes:**  
-- Adapt the script based on prospect responses for a natural flow.  
-- Ensure the conversation stays focused on their challenges and how Riad can provide tailored solutions.  
-- Emphasize measurable results and time-saving benefits. 
+# **Notes:**
+- Adapt the script based on prospect responses for a natural flow.
+- Ensure the conversation stays focused on their challenges and how RIAD can provide tailored solutions.
+- Emphasize measurable results and time-saving benefits.
 """
