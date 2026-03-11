@@ -13,4 +13,5 @@ google-auth-httplib2
 colorama
 python-dotenv
 bs4
+html2text
 unstructured
