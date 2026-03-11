@@ -42,8 +42,8 @@ def research_lead_on_linkedin(lead_name, lead_email):
     # extract company name from pro email
     company_name = extract_company_name(lead_email)
         
-    # Find lead LinkedIn URL by searching on Google (site:linkedin.com/in 으로 개인 프로필만 검색)
-    query = f"site:linkedin.com/in {lead_name} {company_name}"
+    # Find lead LinkedIn URL by searching on Google 'LinkedIn {{lead name}} {{company name}}'
+    query = f"LinkedIn {lead_name} {company_name}"
     search_results = google_search(query)
     lead_linkedin_url = extract_linkedin_url_base(search_results)
     # URL 유효성 검사: 빈 값이거나 LinkedIn 개인 프로필 형식이 아니면 중단
@@ -123,8 +123,11 @@ def research_lead_on_linkedin(lead_name, lead_email):
     
     # Extract the exact company name and LinkedIn & website url for later research
     company_name = profile_data.get('company', '')
-    company_website = profile_data.get('company_website', '')
     company_linkedin_url = profile_data.get('company_linkedin_url', '')
+    company_website = profile_data.get('company_website', '')
+    # 스킴 없는 URL 정규화 (LinkedIn API가 www.xxx.com 형태로 반환하는 경우 대비)
+    if company_website and not company_website.startswith(('http://', 'https://')):
+        company_website = 'https://' + company_website
     
     # Get Lead Linkedin profile summary
     inputs = (

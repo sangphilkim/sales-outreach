@@ -1,14 +1,26 @@
 import os
+import re
 import requests
 from src.utils import invoke_llm
 
 def extract_linkedin_url_base(search_results):
     """
-    Extracts the LinkedIn URL from the search results.
+    Extracts the LinkedIn personal profile URL from the search results.
+    1차: 직접 /in/ URL 탐색
+    2차: /posts/ URL에서 username 추출 후 /in/ URL 구성
     """
+    # 1차: 직접 /in/ URL 탐색
     for result in search_results:
         if 'linkedin.com/in' in result['link']:
             return result['link']
+
+    # 2차: /posts/{username}_ 패턴에서 username 추출 후 /in/ URL 구성
+    for result in search_results:
+        match = re.search(r'linkedin\.com/posts/([a-zA-Z0-9_-]+)_', result['link'])
+        if match:
+            username = match.group(1)
+            return f"https://www.linkedin.com/in/{username}"
+
     return ""
 
 
