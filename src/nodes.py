@@ -387,7 +387,9 @@ class OutReachAutomationNodes:
             user_message=global_research_report,
             model="gpt-4o"
         )
-        return {"lead_score": lead_score.strip()}
+        # LLM이 "**Final Score: 8.5**" 형태로 반환하는 경우 숫자만 추출
+        match = re.search(r'\d+\.?\d*', lead_score.strip())
+        return {"lead_score": match.group() if match else lead_score.strip()}
 
     # NOTE: 향후 프로그램 확장 시 활용 가능한 코드
     # 자격 여부를 state에 저장하여 update_CRM 등 하위 노드에서 참조할 때 사용
