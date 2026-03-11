@@ -29,7 +29,11 @@ class OutReachAutomationNodes:
         print(Fore.YELLOW + "----- Fetching new leads -----\n" + Style.RESET_ALL)
         
         # Fetch new leads using the provided loader
-        raw_leads = self.lead_loader.fetch_records()
+        # leads_ids가 있으면 해당 ID만, 없으면 모든 NEW 리드 조회
+        leads_ids = state.get("leads_ids", [])
+        raw_leads = self.lead_loader.fetch_records(
+            lead_ids=leads_ids if leads_ids else None
+        )
         
         # Structure the leads
         leads = [
