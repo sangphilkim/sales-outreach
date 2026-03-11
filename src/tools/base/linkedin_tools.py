@@ -44,10 +44,24 @@ def scrape_linkedin(linkedin_url, is_company=False):
     """
     if is_company:
         url = "https://fresh-linkedin-profile-data.p.rapidapi.com/get-company-by-linkedinurl"
+        querystring = {"linkedin_url": linkedin_url}
     else:
-        url = "https://fresh-linkedin-profile-data.p.rapidapi.com/get-linkedin-profile"
-
-    querystring = {"linkedin_url": linkedin_url}
+        # 개인 프로필: /get-linkedin-profile → /enrich-lead 로 엔드포인트 변경됨 (2025)
+        url = "https://fresh-linkedin-profile-data.p.rapidapi.com/enrich-lead"
+        querystring = {
+            "linkedin_url": linkedin_url,
+            "include_skills": "false",
+            "include_certifications": "false",
+            "include_publications": "false",
+            "include_honors": "false",
+            "include_volunteers": "false",
+            "include_projects": "false",
+            "include_patents": "false",
+            "include_courses": "false",
+            "include_organizations": "false",
+            "include_profile_status": "false",
+            "include_company_public_url": "false",
+        }
     headers = {
       "x-rapidapi-key": os.getenv("RAPIDAPI_KEY"),
       "x-rapidapi-host": "fresh-linkedin-profile-data.p.rapidapi.com"
@@ -59,4 +73,6 @@ def scrape_linkedin(linkedin_url, is_company=False):
         return data
     else:
         print(f"Request failed with status code: {response.status_code}")
+        print(f"LinkedIn URL used: {linkedin_url}")
+        print(f"Response body: {response.text}")
         return {}
