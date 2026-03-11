@@ -45,6 +45,6 @@ class GraphState(TypedDict):
     reports: Annotated[list[Report], reports_reducer]
     reports_folder_link: str
     custom_outreach_report_link: str
-    personalized_email: str
-    interview_script: str
+    # personalized_email: str  # reports 리스트 방식으로 변경되며 미사용 (dead code). 향후 직접 state 저장 방식으로 전환 시 재활성화
+    # interview_script: str    # reports 리스트 방식으로 변경되며 미사용 (dead code). 향후 직접 state 저장 방식으로 전환 시 재활성화
     number_leads: int

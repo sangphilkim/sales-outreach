@@ -43,7 +43,8 @@ def get_channel_videos_stats(channel_id):
     subscriber_count = int(channel_response["items"][0]["statistics"]["subscriberCount"])
 
     # Fetch the last 15 videos
-    video_ids = []
+    # video_ids: 초기에 통계 계산에 사용하려 했으나 all_video_ids로 대체됨 (dead code)
+    # video_ids = []
     videos_request = youtube.search().list(
         part="id,snippet",
         channelId=channel_id,
@@ -55,7 +56,7 @@ def get_channel_videos_stats(channel_id):
     videos_data = []
     for item in videos_response["items"]:
         if item["id"]["kind"] == "youtube#video":
-            video_ids.append(item["id"]["videoId"])
+            # video_ids.append(item["id"]["videoId"])  # dead code: all_video_ids로 대체됨
             videos_data.append({
                 "title": item["snippet"]["title"],
                 "description": item["snippet"]["description"],

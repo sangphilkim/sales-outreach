@@ -96,8 +96,8 @@ class OutReachAutomationNodes:
             print(Fore.RED + f"LinkedIn research error: {e}" + Style.RESET_ALL)
             lead_data.profile = ""
 
-        # Update folder name for saving reports in Drive
-        self.drive_folder_name = f"{lead_data.name}_{company_data.name}"
+        # drive_folder_name: 공통 폴더명으로 사용하려 했으나 각 노드에서 직접 생성하는 방식으로 변경됨 (dead code)
+        # self.drive_folder_name = f"{lead_data.name}_{company_data.name}"
 
         return {
             "current_lead": lead_data,
@@ -469,6 +469,8 @@ class OutReachAutomationNodes:
         )
         
         # TODO Find better way to include correct links into the final report
+        # TODO Case study link: 실제 URL 생성 후 아래 주석 해제하여 사용
+        # ** Case study link**: https://riadcorp.com/case-studies/실제URL
         # Proof read generated report
         inputs = f"""
         {custom_outreach_report}
@@ -478,7 +480,6 @@ class OutReachAutomationNodes:
         **Correct Links:**
 
         ** Our website link**: https://riadcorp.com
-        ** Case study link**: https://riadcorp.com/case-studies/A
         """
         
         # Call our editor/proof-reader agent
