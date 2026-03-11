@@ -1,4 +1,7 @@
 import os
+import warnings
+from colorama import Fore, Style
+warnings.filterwarnings("ignore", message="Pydantic serializer warnings.*", category=UserWarning)
 from dotenv import load_dotenv
 from src.graph import OutReachAutomation
 from src.state import *
@@ -38,5 +41,5 @@ if __name__ == "__main__":
 
     # Run the outreach automation with the provided lead name and email
     config = {'recursion_limit': 100}
-    output = app.invoke(inputs, config)
-    print(output)
+    app.invoke(inputs, config)
+    print(Fore.GREEN + "✅ Outreach automation completed." + Style.RESET_ALL)
