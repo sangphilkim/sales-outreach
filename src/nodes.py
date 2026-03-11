@@ -71,7 +71,7 @@ class OutReachAutomationNodes:
     def fetch_linkedin_profile_data(self, state: GraphState):
         print(Fore.YELLOW + "----- Searching Lead data on LinkedIn -----\n" + Style.RESET_ALL)
         lead_data = state["current_lead"]
-        company_data = state.get("company_data", CompanyData())
+        company_data = CompanyData()  # 새 lead 시작 시 company_data 초기화
 
         # Scrape lead linkedin profile
         try:
@@ -102,7 +102,9 @@ class OutReachAutomationNodes:
         return {
             "current_lead": lead_data,
             "company_data": company_data,
-            "reports": None  # 새 lead 시작 시 reports 초기화
+            "reports": None,              # 새 lead 시작 시 reports 초기화
+            "reports_folder_link": "",    # 새 lead 시작 시 링크 초기화
+            "custom_outreach_report_link": "",  # 새 lead 시작 시 링크 초기화
         }
     
     def review_company_website(self, state: GraphState):
