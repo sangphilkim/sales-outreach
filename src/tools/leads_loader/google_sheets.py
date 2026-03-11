@@ -40,6 +40,15 @@ class GoogleSheetLeadLoader(LeadLoaderBase):
             print(f"Error fetching records from Google Sheets: {e}")
             return []
 
+    @staticmethod
+    def _col_index_to_letter(index):
+        """Convert a 0-based column index to a Google Sheets column letter (A, B, ..., Z, AA, AB, ...)."""
+        result = ""
+        while index >= 0:
+            result = chr(65 + index % 26) + result
+            index = index // 26 - 1
+        return result
+
     def update_record(self, id, fields_to_update):
         try:
             # Fetch the header row to identify column indices
@@ -54,7 +63,7 @@ class GoogleSheetLeadLoader(LeadLoaderBase):
             for field, value in fields_to_update.items():
                 if field in headers:
                     col_index = headers.index(field)
-                    col_letter = chr(65 + col_index)  # Convert index to column letter
+                    col_letter = self._col_index_to_letter(col_index)  # Supports AA, AB, ... beyond Z
                     range_ = f"{self.sheet_name}!{col_letter}{id}"
                     updates.append({
                         "range": range_,
