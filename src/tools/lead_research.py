@@ -1,6 +1,6 @@
 from src.utils import invoke_llm
 from .base.search_tools import google_search
-from .base.linkedin_tools import extract_linkedin_url, scrape_linkedin
+from .base.linkedin_tools import extract_linkedin_url_base, scrape_linkedin
 
 
 SUMMARIZE_LINKEDIN_PROFILE = """
@@ -42,10 +42,10 @@ def research_lead_on_linkedin(lead_name, lead_email):
     # extract company name from pro email
     company_name = extract_company_name(lead_email)
         
-    # Find lead LinkedIn URL by searching on Google 'LinkedIn {{lead name}} {{company name}}'
-    query = f"LinkedIn {lead_name} {company_name}"
+    # Find lead LinkedIn URL by searching on Google (site:linkedin.com/in 으로 개인 프로필만 검색)
+    query = f"site:linkedin.com/in {lead_name} {company_name}"
     search_results = google_search(query)
-    lead_linkedin_url = extract_linkedin_url(search_results)
+    lead_linkedin_url = extract_linkedin_url_base(search_results)
     # URL 유효성 검사: 빈 값이거나 LinkedIn 개인 프로필 형식이 아니면 중단
     if not lead_linkedin_url or "linkedin.com/in/" not in lead_linkedin_url:
         return "Lead LinkedIn URL not found."
