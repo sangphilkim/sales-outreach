@@ -409,7 +409,7 @@ Your report should include the following five sections:
   - Ria event for room block management without traditional attrition penalties.
 
 **4. Expected Results and ROI:**  
-- Use insights from our previous case study to showcase how we help them improve their business and achive better
+- Use insights from our previous case study to showcase how we help them improve their business and achieve better
 
 **5. Call to Action:**  
 - Suggest actionable next steps, such as scheduling a meeting to explore RIAD's platform solutions further.

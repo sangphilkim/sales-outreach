@@ -46,7 +46,8 @@ def research_lead_on_linkedin(lead_name, lead_email):
     query = f"LinkedIn {lead_name} {company_name}"
     search_results = google_search(query)
     lead_linkedin_url = extract_linkedin_url(search_results)
-    if not lead_linkedin_url:
+    # URL 유효성 검사: 빈 값이거나 LinkedIn 개인 프로필 형식이 아니면 중단
+    if not lead_linkedin_url or "linkedin.com/in/" not in lead_linkedin_url:
         return "Lead LinkedIn URL not found."
 
     # Scrape lead LinkedIn profile

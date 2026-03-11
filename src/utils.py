@@ -44,14 +44,16 @@ def get_report(reports, report_name: str):
             return report.content
     return ""
 
-def save_reports_locally(reports):
-    # Define the local folder path
-    reports_folder = "reports"
-    
+def save_reports_locally(reports, lead_name=""):
+    # Define the local folder path (리드별 서브폴더로 구분하여 덮어쓰기 방지)
+    safe_name = lead_name.strip().replace(" ", "_") if lead_name else "unknown"
+    timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+    reports_folder = os.path.join("reports", f"{safe_name}_{timestamp}")
+
     # Create folder if it does not exist
     if not os.path.exists(reports_folder):
         os.makedirs(reports_folder)
-    
+
     # Save each report as a file in the folder
     for report in reports:
         file_path = os.path.join(reports_folder, f"{report.title}.txt")

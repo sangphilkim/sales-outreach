@@ -85,8 +85,11 @@ class OutReachAutomationNodes:
                 lead_profile, company_name, company_website, company_linkedin_url = result
                 lead_data.profile = lead_profile
 
-                # Research company on linkedin
-                company_profile = research_lead_company(company_linkedin_url)
+                # Research company on linkedin (URL 있을 때만 호출)
+                if company_linkedin_url:
+                    company_profile = research_lead_company(company_linkedin_url)
+                else:
+                    company_profile = {}
 
                 # Update company name from LinkedIn data
                 company_data.name = company_name
@@ -210,18 +213,22 @@ class OutReachAutomationNodes:
 
         # Check If company has Youtube channel
         if youtube_url:
-            youtube_data = get_youtube_stats(youtube_url)
-            prompt = YOUTUBE_ANALYSIS_PROMPT.format(company_name=company_data.name)
-            youtube_insight = invoke_llm(
-                system_prompt=prompt,
-                user_message=youtube_data,
-                model="gpt-4o-mini"
-            )
-            youtube_analysis_report = Report(
-                title="Youtube Analysis Report",
-                content=youtube_insight,
-                is_markdown=True
-            )
+            try:
+                youtube_data = get_youtube_stats(youtube_url)
+                prompt = YOUTUBE_ANALYSIS_PROMPT.format(company_name=company_data.name)
+                youtube_insight = invoke_llm(
+                    system_prompt=prompt,
+                    user_message=youtube_data,
+                    model="gpt-4o-mini"
+                )
+                youtube_analysis_report = Report(
+                    title="Youtube Analysis Report",
+                    content=youtube_insight,
+                    is_markdown=True
+                )
+            except Exception as e:
+                print(Fore.RED + f"YouTube analysis failed: {e}" + Style.RESET_ALL)
+                # youtube_analysis_report = None 유지 → 이후 필터링에서 제외
 
         # Check If company has Facebook account
         if facebook_url:
@@ -622,8 +629,9 @@ class OutReachAutomationNodes:
         # Load all reports
         reports = state["reports"]
         
-        # Ensure reports are saved locally
-        save_reports_locally(reports)
+        # Ensure reports are saved locally (리드별 폴더에 저장)
+        lead_name = state["current_lead"].name if state.get("current_lead") else ""
+        save_reports_locally(reports, lead_name=lead_name)
         
         # Save all reports to Google docs
         if SAVE_TO_GOOGLE_DOCS:

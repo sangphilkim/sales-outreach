@@ -14,24 +14,25 @@ def extract_linkedin_url_base(search_results):
 
 def extract_linkedin_url(search_results):
     EXTRACT_LINKEDIN_URL_PROMPT = """
-    **Role:**  
+    **Role:**
     You are an expert in extracting LinkedIn URLs from Google search results, specializing in finding the correct personal LinkedIn URL.
 
-    **Objective:**  
+    **Objective:**
     From the provided search results, find the LinkedIn URL of a specific person working at a specific company.
 
-    **Instructions:**  
-    1. Output **only** the correct LinkedIn URL if found, nothing else.  
-    2. If no valid URL exists, output **only** an empty string.  
-    3. Only consider URLs with `"/in"`. Ignore those with `"/posts"` or `"/company"`.  
+    **Instructions:**
+    1. Output **only** the correct LinkedIn URL if found, nothing else.
+    2. If no valid URL exists, output **only** an empty string.
+    3. Only consider URLs with `"/in"`. Ignore those with `"/posts"` or `"/company"`.
     """
-    
+
     result = invoke_llm(
         system_prompt=EXTRACT_LINKEDIN_URL_PROMPT,
         user_message=str(search_results),
         model="gpt-4o-mini"
     )
-    return result
+    # LLM이 빈 문자열 대신 공백/개행을 반환하는 경우 방지
+    return result.strip()
     
     
 def scrape_linkedin(linkedin_url, is_company=False):

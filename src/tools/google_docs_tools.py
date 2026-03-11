@@ -130,9 +130,9 @@ class GoogleDocsManager:
 
     def _convert_markdown_to_google_doc(self, markdown_content, title):
         """Convert Markdown content to a Google Document."""
+        temp_file_path = "temp_markdown.md"
         try:
             # Save the Markdown content as a temporary file
-            temp_file_path = "temp_markdown.md"
             with open(temp_file_path, "w") as file:
                 file.write(markdown_content)
 
@@ -141,10 +141,11 @@ class GoogleDocsManager:
             media = MediaFileUpload(temp_file_path, mimetype="text/markdown")
             file = self.drive_service.files().create(body=file_metadata, media_body=media, fields="id").execute()
 
-            # Cleanup the temporary file
-            os.remove(temp_file_path)
-
             return file.get("id")
         except Exception as e:
             print(f"Failed to convert Markdown to Google Doc: {e}")
             return None
+        finally:
+            # 예외 발생 여부와 관계없이 임시 파일 항상 삭제
+            if os.path.exists(temp_file_path):
+                os.remove(temp_file_path)
