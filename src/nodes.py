@@ -505,9 +505,10 @@ class OutReachAutomationNodes:
         # Store report into google docs and get shareable link
         lead = state["current_lead"]
         folder_name = f"[agent] {lead.name.strip()} ({lead.id})"
+        company_name = state['company_data'].name or lead.email.split('@')[1]
         new_doc = self.docs_manager.add_document(
             content=revised_outreach_report,
-            doc_title=f"Tailored Insights for {state['company_data'].name}",
+            doc_title=f"Tailored Insights for {company_name}",
             folder_name=folder_name,
             make_shareable=True,
             folder_shareable=False, # Folder is private; only the document itself is shared via make_shareable
