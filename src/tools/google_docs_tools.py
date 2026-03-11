@@ -82,7 +82,8 @@ class GoogleDocsManager:
         """
         try:
             # Search for the folder
-            query = f"mimeType='application/vnd.google-apps.folder' and name='{folder_name}' and trashed=false"
+            escaped_name = folder_name.replace("'", "\\'")
+            query = f"mimeType='application/vnd.google-apps.folder' and name='{escaped_name}' and trashed=false"
             results = self.drive_service.files().list(q=query, spaces='drive', fields="files(id, name, webViewLink)").execute()
             files = results.get('files', [])
             
