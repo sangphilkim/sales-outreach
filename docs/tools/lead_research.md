@@ -13,7 +13,7 @@
 |------|------|
 | `src.utils.invoke_llm` | LLM 호출 추상화 함수 |
 | `base.search_tools.google_search` | 구글 검색 |
-| `base.linkedin_tools.extract_linkedin_url` | LLM 기반 LinkedIn URL 추출 |
+| `base.linkedin_tools.extract_linkedin_url_base` | 규칙 기반 LinkedIn URL 추출 |
 | `base.linkedin_tools.scrape_linkedin` | LinkedIn 프로필 스크래핑 |
 
 ---
@@ -63,15 +63,20 @@ extract_company_name("john@acme.com")  # → "acme.com"
 
 **처리 파이프라인:**
 ```
-이메일 → 회사명 추출
+이메일 → 회사명(도메인) 추출
   ↓
-구글 검색: "LinkedIn {리드이름} {회사명}"
+구글 검색: "LinkedIn {리드이름} {회사도메인}"
   ↓
-LLM으로 LinkedIn URL 추출
+규칙 기반 LinkedIn URL 추출
+  (1차: /in/ URL 직접 탐색 → 2차: /posts/ URL에서 username 추출)
+  ↓
+URL 유효성 검사 (빈 값 또는 linkedin.com/in/ 형식 아닌 경우 중단)
   ↓
 LinkedIn 개인 프로필 스크래핑
   ↓
 핵심 정보 구조화 (경력, 학력, 스킬, 자격증 등)
+  ↓
+회사 웹사이트 URL 정규화 (스킴 없는 경우 https:// 자동 추가)
   ↓
 LLM으로 300단어 프로필 요약 생성
   ↓

@@ -141,3 +141,4 @@ if result:
 - 마크다운 변환은 임시 파일(`temp_markdown.md`)을 생성하고 자동으로 삭제합니다.
 - 폴더가 없으면 자동으로 생성합니다.
 - 동일한 이름의 폴더가 여러 개 있으면 첫 번째 폴더를 사용합니다.
+- `folder_name`에 `'` (apostrophe)가 포함된 경우 Drive API 쿼리용으로 자동 이스케이프 처리됩니다 (예: `O'Brien` → `O\'Brien`).

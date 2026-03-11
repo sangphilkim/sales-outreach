@@ -12,7 +12,10 @@
 
 | 항목 | 설명 |
 |------|------|
-| `langchain_community.document_loaders.DirectoryLoader` | 문서 로더 |
+| `langchain_community.document_loaders.DirectoryLoader` | 디렉토리 문서 로더 |
+| `langchain_community.document_loaders.TextLoader` | .md, .txt 로더 |
+| `langchain_community.document_loaders.PyPDFLoader` | .pdf 로더 (`pypdf` 패키지 필요) |
+| `langchain_community.document_loaders.Docx2txtLoader` | .docx 로더 (`docx2txt` 패키지 필요) |
 | `langchain_openai.OpenAIEmbeddings` | OpenAI 임베딩 모델 |
 | `langchain_chroma.Chroma` | ChromaDB 벡터 스토어 |
 | `OPENAI_API_KEY` | 환경변수 — OpenAI API 키 |
@@ -31,6 +34,20 @@
 ---
 
 ## 함수
+
+### `load_documents(path)`
+
+확장자별 적합한 로더를 사용해 문서를 로드합니다.
+
+| 확장자 | 로더 | 필요 패키지 |
+|--------|------|------------|
+| `.md`, `.txt` | `TextLoader` | 없음 |
+| `.pdf` | `PyPDFLoader` | `pypdf` |
+| `.docx` | `Docx2txtLoader` | `docx2txt` |
+
+**반환값:** `Document` 객체 리스트
+
+---
 
 ### `get_vector_store()`
 
@@ -68,7 +85,8 @@ database/ 폴더 존재 여부 확인
 
 ## 케이스 스터디 추가 방법
 
-1. `data/case_studies/` 폴더에 새 문서 파일 추가 (`.txt`, `.md` 등)
+1. `data/case_studies/` 폴더에 새 문서 파일 추가
+   - 지원 형식: `.md`, `.txt`, `.pdf`, `.docx`
 2. `database/` 폴더 삭제 → 다음 실행 시 자동 재생성
 
 ---
