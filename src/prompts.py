@@ -4,7 +4,7 @@ The provided webpage content is scraped from: {main_url}.
 # Tasks
 
 ## 1- Summarize webpage content:
-Write a 500 words comprehensive summary in markdow format about the content of the webpage, focus on relevant information related to company mission, products and services.
+Write a 500 words comprehensive summary in markdown format about the content of the webpage, focus on relevant information related to company mission, products and services.
 
 ## 2- Extract and categorize the following links:
 1. Blog URL: Extract the main blog URL of the company. 
@@ -17,7 +17,7 @@ If the link is relative (e.g., "/blog"), prepend it with {main_url} to form an a
 * Ensure the summary is organized in markdown format.
 """
 
-LEAD_SEARCH_REPORT_PROMPT = f"""
+LEAD_SEARCH_REPORT_PROMPT = """
 # **Role:**
 
 You are a Professional Business Analyst tasked with crafting a comprehensive report based on the LinkedIn profiles of both an individual and their company and the content of their website. 
@@ -42,6 +42,7 @@ This report should include the following:
 * **Education:** List the lead's relevant educational background, including fields of study and the duration of their studies.
 * **Skills & Expertise:** Identify the lead’s main areas of expertise, including any specific skills they bring to their role.
 * **Key Insights:** Offer insights into the lead’s leadership qualities, relevant achievements, or experience that can be beneficial for future collaboration or partnerships.
+* **Operational Relevance:** Identify whether the lead’s current or past roles involve hotel sourcing, event accommodation, group travel, or MICE operations. Note any direct experience with managing accommodation for clients or events, as this indicates alignment with RIAD Corporation’s target customer profile.
 
 ---
 
@@ -74,7 +75,7 @@ You are given the content of the **{company_name}** company blog to analyze, inc
 The overall blog score will be based on:
 1. **Number of Posts**: Quantity of posts within a given timeframe.
 2. **Activity**: Regularity of publishing (e.g., weekly, monthly).
-3. **Relevancy**: Alignment of blog topics with the company’s services.
+3. **Relevancy**: Alignment of blog topics with the company’s services. For relevancy scoring, high relevancy (8–10) means the blog covers travel, hospitality, event management, MICE, or hotel sourcing topics — indicating the company operates in RIAD Corporation’s target industry.
 
 ---
 
@@ -132,7 +133,7 @@ The overall channel score will be based on:
 1. **Number of Videos:** Quantity of videos uploaded within a given timeframe.
 2. **Activity:** Regularity of uploads (e.g., weekly, monthly).
 3. **Engagement:** Viewer interaction metrics such as number of subscribers, videos views, likes.
-4. **Relevancy:** Alignment of video topics with the company’s services.
+4. **Relevancy:** Alignment of video topics with the company’s services. For relevancy scoring, high relevancy (8–10) means the channel covers travel, hospitality, event management, MICE, or hotel sourcing topics — indicating the company operates in RIAD Corporation’s target industry.
 
 ---
 
@@ -188,7 +189,12 @@ Your tasks will include the following:
 
 * **Only include relevant news from the last {number_months} months. Today’s date is {date}.**
 
-* **Identify Relevant News:** Focus on extracting relevant and interesting news related to the company’s specific business activities.
+* **Identify Relevant News:** Focus on extracting relevant and interesting news related to the company’s specific business activities. Prioritize RIAD-relevant signals such as:
+  - New event contracts, MICE projects, conferences, or incentive trip announcements
+  - Hotel partnerships, accommodation deals, or room block agreements
+  - Expansion into new travel destinations or markets
+  - New corporate travel programs or group travel initiatives
+  - Any mention of accommodation challenges, hotel sourcing processes, or room block management
 
 * **Filter Irrelevant Mentions:** Exclude any generic irrelevant information, such as "5 best CRM tools" lists or broad market analyses.
 
@@ -249,7 +255,7 @@ Provide a consolidated set of actionable steps to improve the company's digital 
 
 GLOBAL_LEAD_RESEARCH_REPORT_PROMPT = """
 # **Role:**  
-You are a Professional Marketing Analyst with expertise in lead qualification, engagement strategies, and digital presence evaluation. Your role involves analyzing lead profiles, company information, and digital presence reports to create detailed and actionable insights.
+You are a Professional Business Analyst with expertise in travel industry operations, lead qualification, and hotel sourcing or event accommodation workflows. Your role involves analyzing lead profiles, company information, and digital presence reports to create detailed and actionable insights.
 
 ---
 
@@ -291,16 +297,24 @@ Summarize relevant recent news about the company, including funding updates, pro
 Construct a detailed analysis of the company's digital presence, including:  
 - **Current State:**  
   Evaluate performance on each platform (e.g., blogs, Facebook, Twitter, YouTube). Include key metrics, examples of successful or underperforming posts, and trends.  
-- **Potential Improvements:**  
-  Provide tailored recommendations for each platform to enhance engagement, visibility, and alignment with company goals.  
+- **Potential Improvements:**
+  Provide tailored recommendations for each platform to enhance engagement, visibility, and alignment with company goals.
+
+## **IV. Hotel Sourcing & Event Operations Assessment:**
+Based on all available information, assess:
+- Whether the company organizes events, manages accommodation for clients, or handles hotel sourcing as part of their core operations.
+- Estimated scale of hotel sourcing or event activities (number of events per year, client volume, or destinations served).
+- Current tools or methods used for hotel proposals or room block management (e.g., manual spreadsheets, email threads, or a dedicated platform).
+- Any signals indicating pain points in their accommodation workflow (e.g., slow turnaround times, lack of branded proposals, manual room block management, or no dedicated booking platform).
+- Overall assessment of how well this company aligns with RIAD Corporation's target customer profile for yeyak or Ria event.
 
 ---
 
-# **Notes:**  
-- The report should be comprehensive, actionable, and formatted in markdown for clarity and usability.  
-- Include examples, observations, and metrics where applicable to support your insights and recommendations.  
-- Avoid summarizing excessively; instead, provide explicit details and actionable strategies.  
-- Use bullet points to organize the report where appropriate. Avoid lengthy paragraphs by breaking down information into easily digestible sections.   
+# **Notes:**
+- The report should be comprehensive, actionable, and formatted in markdown for clarity and usability.
+- Include examples, observations, and metrics where applicable to support your insights and recommendations.
+- Avoid summarizing excessively; instead, provide explicit details and actionable strategies.
+- Use bullet points to organize the report where appropriate. Avoid lengthy paragraphs by breaking down information into easily digestible sections.
 """
 
 SCORE_LEAD_PROMPT = """
@@ -491,7 +505,7 @@ Your primary responsibilities are:
 1. **Structural Analysis:** Verify that the report includes all required sections:  
    - **Introduction**  
    - **Business Analysis**  
-   - **Proposed RIAD Solutions**
+   - **Relevant RIAD Solutions**
    - **Expected Results and ROI**  
    - **Call to Action**  
 
