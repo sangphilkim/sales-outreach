@@ -14,7 +14,9 @@ SCOPES = [
     'https://www.googleapis.com/auth/spreadsheets',
     # For saving files into Google Docs
     "https://www.googleapis.com/auth/documents",
-    "https://www.googleapis.com/auth/drive"
+    "https://www.googleapis.com/auth/drive",
+    # For using YouTube Data API v3
+    "https://www.googleapis.com/auth/youtube.readonly"
 ]
 
 

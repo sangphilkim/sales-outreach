@@ -146,6 +146,9 @@ class GoogleDocsManager:
             # Apply professional styling
             self._apply_document_styling(doc_id)
 
+            # Insert logo at the top (if LOGO_URL is configured)
+            self._insert_logo(doc_id)
+
             return doc_id
         except Exception as e:
             print(f"Failed to convert Markdown to Google Doc: {e}")
@@ -154,6 +157,47 @@ class GoogleDocsManager:
             # 예외 발생 여부와 관계없이 임시 파일 항상 삭제
             if os.path.exists(temp_file_path):
                 os.remove(temp_file_path)
+
+    def _insert_logo(self, doc_id):
+        """Insert a logo image at the top of the Google Document."""
+        logo_url = os.getenv("LOGO_URL")
+        if not logo_url:
+            return
+        try:
+            requests = [
+                # Create a dedicated first paragraph for the logo
+                {
+                    "insertText": {
+                        "location": {"index": 1},
+                        "text": "\n"
+                    }
+                },
+                # Insert the logo image into that paragraph
+                {
+                    "insertInlineImage": {
+                        "uri": logo_url,
+                        "location": {"index": 1},
+                        "objectSize": {
+                            "height": {"magnitude": 50, "unit": "PT"},
+                            "width": {"magnitude": 150, "unit": "PT"}
+                        }
+                    }
+                },
+                # Center-align the logo paragraph (image at 1, '\n' at 2)
+                {
+                    "updateParagraphStyle": {
+                        "range": {"startIndex": 1, "endIndex": 3},
+                        "paragraphStyle": {"alignment": "CENTER"},
+                        "fields": "alignment"
+                    }
+                }
+            ]
+            self.docs_service.documents().batchUpdate(
+                documentId=doc_id,
+                body={"requests": requests}
+            ).execute()
+        except Exception as e:
+            print(f"Logo insertion failed (document still saved): {e}")
 
     def _apply_document_styling(self, doc_id):
         """Apply professional styling to a Google Document after creation."""
@@ -195,7 +239,8 @@ class GoogleDocsManager:
                         requests.append({"updateTextStyle": {
                             "range": {"startIndex": start_idx, "endIndex": text_end},
                             "textStyle": {
-                                "foregroundColor": {"color": {"rgbColor": {"red": 0.082, "green": 0.196, "blue": 0.396}}},
+                                # Brand color: #005BF3 (blue)
+                                "foregroundColor": {"color": {"rgbColor": {"red": 0.0, "green": 0.357, "blue": 0.953}}},
                                 "fontSize": {"magnitude": 22, "unit": "PT"},
                                 "bold": True,
                                 "weightedFontFamily": {"fontFamily": "Roboto"}
@@ -216,7 +261,8 @@ class GoogleDocsManager:
                         requests.append({"updateTextStyle": {
                             "range": {"startIndex": start_idx, "endIndex": text_end},
                             "textStyle": {
-                                "foregroundColor": {"color": {"rgbColor": {"red": 0.157, "green": 0.392, "blue": 0.588}}},
+                                # Brand color: #FF774C (orange)
+                                "foregroundColor": {"color": {"rgbColor": {"red": 1.0, "green": 0.467, "blue": 0.298}}},
                                 "fontSize": {"magnitude": 16, "unit": "PT"},
                                 "bold": True,
                                 "weightedFontFamily": {"fontFamily": "Roboto"}
@@ -237,7 +283,8 @@ class GoogleDocsManager:
                         requests.append({"updateTextStyle": {
                             "range": {"startIndex": start_idx, "endIndex": text_end},
                             "textStyle": {
-                                "foregroundColor": {"color": {"rgbColor": {"red": 0.267, "green": 0.267, "blue": 0.267}}},
+                                # Brand color: #005BF3 muted (lighter blue)
+                                "foregroundColor": {"color": {"rgbColor": {"red": 0.0, "green": 0.357, "blue": 0.953}}},
                                 "fontSize": {"magnitude": 13, "unit": "PT"},
                                 "bold": True,
                                 "weightedFontFamily": {"fontFamily": "Roboto"}
