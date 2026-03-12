@@ -143,11 +143,11 @@ class GoogleDocsManager:
             file = self.drive_service.files().create(body=file_metadata, media_body=media, fields="id").execute()
             doc_id = file.get("id")
 
-            # Apply professional styling
-            self._apply_document_styling(doc_id)
-
-            # Insert logo at the top (if LOGO_URL is configured)
+            # Insert logo at the top first (if LOGO_URL is configured)
             self._insert_logo(doc_id)
+
+            # Apply professional styling after logo insertion
+            self._apply_document_styling(doc_id)
 
             return doc_id
         except Exception as e:
