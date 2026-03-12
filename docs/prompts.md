@@ -64,12 +64,15 @@ LLM 호출 시 사용하는 **모든 시스템 프롬프트(System Prompt)** 를
 ### `NEWS_ANALYSIS_PROMPT`
 
 **용도:** 최근 뉴스를 분석하여 회사 관련 주요 사실 추출
-**출력 형식:** 마크다운 문자열
+**출력 형식:** 마크다운 문자열 (3섹션 구조)
 **변수:** `{company_name}`, `{number_months}`, `{date}`
 
-- 지정된 기간 이내의 관련 뉴스만 포함
-- 인수합병, 신제품 출시, 임원 변경, 파트너십 등 주요 동향 중심
-- 관련 없는 범용 기사 제외
+출력 구조:
+- **Recent News Summary** — 관련 뉴스 bullet list (날짜 포함)
+- **RIAD-Relevant Signals** — 호텔 소싱·이벤트·MICE·숙박 관련 항목만 (해당 없으면 생략)
+- **Assessment** — 1-2문장: RIAD 솔루션 필요성 시사 여부
+
+**엣지 케이스:** 관련 뉴스 없으면 `"No relevant news found for {company_name} in the past {number_months} months."` 만 반환
 
 ---
 
@@ -94,27 +97,33 @@ LLM 호출 시 사용하는 **모든 시스템 프롬프트(System Prompt)** 를
 **변수:** `{company_name}`
 
 리포트 포함 항목:
+- **0. Executive Qualification Summary** (2-3문장: strong/moderate/weak fit 판정 + 핵심 근거)
 - I. 리드 프로필 (현재 역할, 경력, 관심사)
 - II. 회사 개요 (산업, 미션, 제품/서비스, 시장 포지셔닝)
 - III. 참여 이력 (최근 뉴스, 소셜 미디어 활동)
 - IV. Hotel Sourcing & Event Operations Assessment (이벤트·숙박 운영 규모, 현재 툴/방식, 페인 포인트, RIAD 타겟 고객 적합도)
+
+**데이터 처리 규칙:**
+- LinkedIn과 웹사이트 정보 충돌 시 명시적으로 불일치 표기
+- 데이터 부족 시 "Insufficient data available" 기재 (추측 금지)
 
 ---
 
 ### `SCORE_LEAD_PROMPT`
 
 **용도:** 글로벌 리서치 리포트를 기반으로 리드 적합성 점수(1-10) 산출
-**출력 형식:** 숫자 문자열 (예: `"7.5"`)
+**출력 형식:** `FINAL SCORE: X.X` 형식으로 마지막 줄에 출력 → `nodes.py`에서 정규식으로 파싱
 **사용 모델:** `gpt-4o` (고품질 판단)
 
-평가 기준 (각 1-10점):
+평가 기준 (각 1-10점, CoT 추론 후 점수):
 1. 산업 및 역할 적합성 (여행사, DMC, 이벤트 기획사, MICE 회사 등 RIAD 핵심 타겟 여부)
 2. 비즈니스 활동 규모 (호텔 제안서 볼륨, 이벤트 빈도, 숙박 수요 규모)
-3. 회사 규모 (LinkedIn 직원 수 및 팀 구조)
+3. 회사 규모 (10-200명 소·중형 = 10점, 500명 이상 대기업 = 낮은 점수)
 4. 성장 신호 (신규 클라이언트, 신시장 진출, 파트너십, 채용 등)
 5. 기술 성숙도 (전문 호텔 소싱·이벤트 숙박 플랫폼 미보유 여부 — yeyak/Ria event 도입 여지)
 6. 콘텐츠 및 디지털 활동 (블로그·소셜·뉴스 노출 — 사업 규모 및 신뢰도 간접 지표)
 
+**데이터 부족 처리:** 특정 기준에 데이터 불충분 시 3점(보수적 기본값) 부여 후 명시
 **중요:** 최종 점수가 7 이상이면 `check_if_qualified`에서 "qualified"로 분류됨
 
 ---
@@ -163,13 +172,11 @@ LLM 호출 시 사용하는 **모든 시스템 프롬프트(System Prompt)** 를
 **용도:** SPIN 셀링 방법론 기반 맞춤형 질문 생성
 **출력 형식:** 질문 목록 문자열
 
-SPIN 구성:
-- **S**ituation — 현재 상황 파악 질문
-- **P**roblem — 문제점 발굴 질문
-- **I**mplication — 문제의 영향 탐색 질문
-- **N**eed-Payoff — 해결책의 가치 확인 질문
-
-최대 15개 질문 반환
+SPIN 구성 (카테고리별 2-3개, 총 8-12개):
+- **S**ituation (2-3개) — 현재 상황 파악 질문
+- **P**roblem (2-3개) — 문제점 발굴 질문
+- **I**mplication (2-3개) — 문제의 영향 탐색 질문
+- **N**eed-Payoff (2-3개) — 해결책의 가치 확인 질문
 
 ---
 
@@ -178,8 +185,11 @@ SPIN 구성:
 **용도:** SPIN 질문과 리드 정보를 바탕으로 영업 전화 인터뷰 스크립트 생성
 **출력 형식:** 마크다운 형식의 스크립트
 
-스크립트 구성:
-- Introduction (인사)
-- Personalized Hook (개인화 훅)
-- Situation / Problem / Implication / Need-Payoff 질문 섹션
-- Closing (미팅 제안)
+스크립트 구성 (10-15분 분량 / 1,200-1,800 words):
+- **Introduction** — 인사
+- **Discovery** — 현황 파악 질문
+- **Pain Exploration** — 문제·영향 탐색
+- **Solution Fit** — RIAD 솔루션 연결
+- **Close / Next Steps** — 미팅 제안
+
+플레이스홀더: `[LEAD_NAME]`, `[COMPANY_NAME]`
