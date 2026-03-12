@@ -141,8 +141,12 @@ class GoogleDocsManager:
             file_metadata = {"name": title, "mimeType": "application/vnd.google-apps.document"}
             media = MediaFileUpload(temp_file_path, mimetype="text/markdown")
             file = self.drive_service.files().create(body=file_metadata, media_body=media, fields="id").execute()
+            doc_id = file.get("id")
 
-            return file.get("id")
+            # Apply professional styling
+            self._apply_document_styling(doc_id)
+
+            return doc_id
         except Exception as e:
             print(f"Failed to convert Markdown to Google Doc: {e}")
             return None
@@ -150,3 +154,123 @@ class GoogleDocsManager:
             # 예외 발생 여부와 관계없이 임시 파일 항상 삭제
             if os.path.exists(temp_file_path):
                 os.remove(temp_file_path)
+
+    def _apply_document_styling(self, doc_id):
+        """Apply professional styling to a Google Document after creation."""
+        try:
+            document = self.docs_service.documents().get(documentId=doc_id).execute()
+            content  = document.get('body', {}).get('content', [])
+            requests = []
+
+            # Document margins (1 inch all sides)
+            requests.append({
+                "updateDocumentStyle": {
+                    "documentStyle": {
+                        "marginTop":    {"magnitude": 72, "unit": "PT"},
+                        "marginBottom": {"magnitude": 72, "unit": "PT"},
+                        "marginLeft":   {"magnitude": 72, "unit": "PT"},
+                        "marginRight":  {"magnitude": 72, "unit": "PT"},
+                    },
+                    "fields": "marginTop,marginBottom,marginLeft,marginRight"
+                }
+            })
+
+            for block in content:
+                if 'paragraph' not in block:
+                    continue
+
+                paragraph  = block['paragraph']
+                style_type = paragraph.get('paragraphStyle', {}).get('namedStyleType', '')
+                start_idx  = block.get('startIndex', 0)
+                end_idx    = block.get('endIndex', 0)
+                # end_idx - 1 이 start_idx 이하면 텍스트 없는 빈 단락 → updateTextStyle 적용 불가
+                text_end   = end_idx - 1
+                has_text   = text_end > start_idx
+
+                if end_idx <= start_idx:
+                    continue
+
+                if style_type == 'HEADING_1':
+                    if has_text:
+                        requests.append({"updateTextStyle": {
+                            "range": {"startIndex": start_idx, "endIndex": text_end},
+                            "textStyle": {
+                                "foregroundColor": {"color": {"rgbColor": {"red": 0.082, "green": 0.196, "blue": 0.396}}},
+                                "fontSize": {"magnitude": 22, "unit": "PT"},
+                                "bold": True,
+                                "weightedFontFamily": {"fontFamily": "Roboto"}
+                            },
+                            "fields": "foregroundColor,fontSize,bold,weightedFontFamily"
+                        }})
+                    requests.append({"updateParagraphStyle": {
+                        "range": {"startIndex": start_idx, "endIndex": end_idx},
+                        "paragraphStyle": {
+                            "spaceAbove": {"magnitude": 18, "unit": "PT"},
+                            "spaceBelow": {"magnitude": 8,  "unit": "PT"},
+                        },
+                        "fields": "spaceAbove,spaceBelow"
+                    }})
+
+                elif style_type == 'HEADING_2':
+                    if has_text:
+                        requests.append({"updateTextStyle": {
+                            "range": {"startIndex": start_idx, "endIndex": text_end},
+                            "textStyle": {
+                                "foregroundColor": {"color": {"rgbColor": {"red": 0.157, "green": 0.392, "blue": 0.588}}},
+                                "fontSize": {"magnitude": 16, "unit": "PT"},
+                                "bold": True,
+                                "weightedFontFamily": {"fontFamily": "Roboto"}
+                            },
+                            "fields": "foregroundColor,fontSize,bold,weightedFontFamily"
+                        }})
+                    requests.append({"updateParagraphStyle": {
+                        "range": {"startIndex": start_idx, "endIndex": end_idx},
+                        "paragraphStyle": {
+                            "spaceAbove": {"magnitude": 14, "unit": "PT"},
+                            "spaceBelow": {"magnitude": 6,  "unit": "PT"},
+                        },
+                        "fields": "spaceAbove,spaceBelow"
+                    }})
+
+                elif style_type == 'HEADING_3':
+                    if has_text:
+                        requests.append({"updateTextStyle": {
+                            "range": {"startIndex": start_idx, "endIndex": text_end},
+                            "textStyle": {
+                                "foregroundColor": {"color": {"rgbColor": {"red": 0.267, "green": 0.267, "blue": 0.267}}},
+                                "fontSize": {"magnitude": 13, "unit": "PT"},
+                                "bold": True,
+                                "weightedFontFamily": {"fontFamily": "Roboto"}
+                            },
+                            "fields": "foregroundColor,fontSize,bold,weightedFontFamily"
+                        }})
+
+                elif style_type == 'NORMAL_TEXT':
+                    if has_text:
+                        requests.append({"updateTextStyle": {
+                            "range": {"startIndex": start_idx, "endIndex": text_end},
+                            "textStyle": {
+                                "foregroundColor": {"color": {"rgbColor": {"red": 0.2, "green": 0.2, "blue": 0.2}}},
+                                "fontSize": {"magnitude": 11, "unit": "PT"},
+                                "weightedFontFamily": {"fontFamily": "Roboto"}
+                            },
+                            "fields": "foregroundColor,fontSize,weightedFontFamily"
+                        }})
+                    requests.append({"updateParagraphStyle": {
+                        "range": {"startIndex": start_idx, "endIndex": end_idx},
+                        "paragraphStyle": {
+                            "lineSpacing": 130,
+                            "spaceBelow": {"magnitude": 6, "unit": "PT"},
+                        },
+                        "fields": "lineSpacing,spaceBelow"
+                    }})
+
+            if requests:
+                self.docs_service.documents().batchUpdate(
+                    documentId=doc_id,
+                    body={"requests": requests}
+                ).execute()
+
+        except Exception as e:
+            # 스타일 실패해도 문서 자체는 이미 생성됨 — 파이프라인 중단 없음
+            print(f"Styling failed (document still saved): {e}")
