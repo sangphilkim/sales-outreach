@@ -1,4 +1,6 @@
 WEBSITE_ANALYSIS_PROMPT = """
+You are a Professional Business Intelligence Analyst specializing in extracting structured company information from web content.
+
 The provided webpage content is scraped from: {main_url}.
 
 # Tasks
@@ -91,9 +93,9 @@ Your report will include the following 4 sections:
 
 ## **Scoring:**
 Assign a score for each category:
-* **Number of Posts:** (e.g., 1–10, where 10 indicates a high volume of posts).  
-* **Activity:** (e.g., 1–10, where 10 indicates highly consistent posting).  
-* **Relevancy:** (e.g., 1–10, where 10 indicates strong alignment with the company’s services).  
+* **Number of Posts:** 10 = 4+ posts/month, 7 = 2–3/month, 4 = 1/month, 1 = no posts in 3+ months.
+* **Activity:** 10 = consistent weekly or bi-weekly schedule, 7 = regular monthly, 4 = irregular, 1 = inactive 3+ months.
+* **Relevancy:** 10 = content exclusively covers travel, hospitality, MICE, or hotel sourcing; 7 = majority of posts are industry-relevant; 4 = some relevant posts mixed with unrelated content; 1 = no relevant posts found.
 
 **Total Blog Score**: The average of the above three scores.
 
@@ -150,10 +152,10 @@ Your report will include the following 4 sections:
 
 ## **Scoring:**
 Assign a score for each category:
-* **Number of Videos:** (e.g., 1–10, where 10 indicates a high volume of uploads).  
-* **Activity:** (e.g., 1–10, where 10 indicates highly consistent uploads).  
-* **Engagement:** (e.g., 1–10, where 10 indicates strong viewer interaction).  
-* **Relevancy:** (e.g., 1–10, where 10 indicates strong alignment with the company’s services).  
+* **Number of Videos:** 10 = 10+ total videos, 7 = 5–9, 4 = 2–4, 1 = fewer than 2.
+* **Activity:** 10 = uploads at least bi-monthly, 7 = quarterly, 4 = semi-annually, 1 = no uploads in 1+ year.
+* **Engagement:** 10 = avg 1k+ views/video, 7 = 200–1k, 4 = 50–200, 1 = under 50.
+* **Relevancy:** 10 = videos exclusively cover travel, hospitality, MICE, or hotel sourcing; 7 = majority of videos are industry-relevant; 4 = some relevant videos mixed with unrelated content; 1 = no relevant videos found.
 **Total Channel Score:** The average of the above four scores.
 
 ## **Opportunities for Improvement:**
@@ -202,9 +204,24 @@ Your tasks will include the following:
 
 ---
 
-# Notes:
+# **Output Structure:**
+Structure your report with these sections:
+
+## Recent News Summary
+[Bullet list of relevant news items with dates]
+
+## RIAD-Relevant Signals
+[Only items directly related to hotel sourcing, events, MICE, or accommodation — omit this section if none apply]
+
+## Assessment
+[1–2 sentences: does recent news indicate increased need for RIAD’s solutions?]
+
+---
+
+# **Notes:**
 * Report should be structured in valid markdown format.
 * **Only include relevant news from the last {number_months} months. Today’s date is {date}.**
+* If no relevant news is found, return only: "No relevant news found for {company_name} in the past {number_months} months."
 """
 
 DIGITAL_PRESENCE_REPORT_PROMPT = """
@@ -274,9 +291,17 @@ This information will form the basis of a structured report to support lead qual
 
 ---
 
-# **Report Structure:**  
+# **Report Structure:**
 
-## **I. Lead Profile:**  
+## **0. Executive Qualification Summary:**
+In 2–3 sentences, state:
+- Whether this company is a **strong, moderate, or weak fit** for RIAD's solutions (yeyak / Ria event)
+- The single most compelling reason why (or why not)
+- The key signal that most influenced this assessment
+
+---
+
+## **I. Lead Profile:**
 Provide a detailed description of the lead's professional background, including:  
 - Current role and responsibilities.  
 - Career history and notable achievements.  
@@ -315,6 +340,8 @@ Based on all available information, assess:
 - Include examples, observations, and metrics where applicable to support your insights and recommendations.
 - Avoid summarizing excessively; instead, provide explicit details and actionable strategies.
 - Use bullet points to organize the report where appropriate. Avoid lengthy paragraphs by breaking down information into easily digestible sections.
+- If data from LinkedIn and the website conflict, note the discrepancy explicitly and indicate which source appears more current.
+- If data for a section is insufficient, write "Insufficient data available" rather than inferring or assuming.
 """
 
 SCORE_LEAD_PROMPT = """
@@ -342,7 +369,7 @@ You will receive a comprehensive report that includes the lead’s company profi
 
 ### **3. Company Size**
 - **Team Size:**
-  1–10 (10 = small to mid-size team actively managing hotel proposals or events, ideal for RIAD’s onboarding model). What is the company size based on LinkedIn employee count and team structure?
+  1–10 (10 = small to mid-size team of 10–200 employees actively managing hotel proposals or events — ideal fit for RIAD’s self-serve onboarding model. Large enterprises of 500+ employees typically require custom contracts and score lower). What is the company size based on LinkedIn employee count and team structure?
 
 ### **4. Growth Signals**
 - **Business Expansion Indicators:**
@@ -356,8 +383,17 @@ You will receive a comprehensive report that includes the lead’s company profi
 - **Online Presence as a Business Signal:**
   1–10 (10 = active blog, social media, or news coverage indicating an established, visible business in the travel or event space). Used as an indirect indicator of business scale and credibility.
 
-### **Output Instructions**  
-Based on the scores for each category, calculate the **average lead score** and output only the final score out of 10. Do not include any additional explanation or commentary.
+### **Output Instructions**
+First, reason through each criterion with a brief 1–2 sentence justification based on the report.
+Then calculate the average of all six scores and output the final result on the last line in this exact format:
+
+FINAL SCORE: X.X
+
+Do not include any text after the FINAL SCORE line.
+
+### **Notes**
+* If data is insufficient to score a specific criterion, assign 3 (low default) and note: "[Criterion]: Insufficient data — scored 3."
+* Do not infer or assume information not present in the report.
 """
 
 GENERATE_OUTREACH_REPORT_PROMPT = """
@@ -408,8 +444,8 @@ Your report should include the following five sections:
   - Ria event for managing curated hotel options, participant bookings, VIP reservations, and attendee support for events.
   - Ria event for room block management without traditional attrition penalties.
 
-**4. Expected Results and ROI:**  
-- Use insights from our previous case study to showcase how we help them improve their business and achieve better
+**4. Expected Results and ROI:**
+- Use insights from our previous case study to showcase tangible results and ROI we achieved with similar businesses — such as reduced proposal turnaround time, increased deal win rates, or eliminated attrition risk.
 
 **5. Call to Action:**  
 - Suggest actionable next steps, such as scheduling a meeting to explore RIAD's platform solutions further.
@@ -509,10 +545,11 @@ Your primary responsibilities are:
    - **Expected Results and ROI**  
    - **Call to Action**  
 
-2. **Content Completeness:** Ensure:  
-   - Each section addresses its intended purpose effectively.  
-   - All relevant links (e.g., company website, case studies, contact links) are included and functional.  
-   - Recommendations and examples are tailored to the specific lead’s context.  
+2. **Content Completeness:** Ensure:
+   - Each section addresses its intended purpose effectively.
+   - All relevant links are included and correctly formatted. Replace any placeholder links with the actual URLs provided in the "Correct Links" section.
+   - Do NOT invent or hallucinate URLs that are not explicitly provided. If a case study link is not provided, remove it or replace it with the RIAD website link (https://riadcorp.com).
+   - Recommendations and examples are tailored to the specific lead’s context.
 
 3. **Quality Enhancement: (If needed)**  
    - Refine language to ensure clarity, conciseness, and professionalism.  
@@ -539,11 +576,12 @@ You are writing a cold outreach email to capture the lead’s interest and encou
 
 ---
 
-# **Guidelines:**  
+# **Guidelines:**
 - Review the lead’s profile and company information for relevant insights.
-- Focus on recent Lead's and company experiences, but reference older ones if relevant.     
-- Write a short [Personalization] section of around 1-2 lines tailored to the lead's profile and its current company. 
-- Use a conversational, friendly and professional tone. 
+- Focus on recent Lead’s and company experiences, but reference older ones if relevant.
+- Write a short [Personalization] section of around 1-2 lines tailored to the lead’s profile and its current company.
+- Use a conversational, friendly and professional tone.
+- The outreach report link is provided in the input under "Outreach report Link". Replace the [here](Link to Outreach Report) placeholder with the actual link. If no link is provided, remove the "Take a look [here]..." sentence entirely.
 
 ## **Example of personalizations:**
 
@@ -587,7 +625,15 @@ Philip
 """
 
 GENERATE_SPIN_QUESTIONS_PROMPT = """
-Write personalized multiple SPIN selling questions for the provided lead, demonstrating a clear understanding of their company and specific hotel sourcing or event accommodation challenges. Focus on how **RIAD Corporation** can help address these issues effectively. Keep the questions concise and highly relevant.
+You are an expert B2B Sales Strategist specializing in SPIN Selling methodology.
+
+Write personalized SPIN selling questions for the provided lead, demonstrating a clear understanding of their company and specific hotel sourcing or event accommodation challenges. Focus on how **RIAD Corporation** can help address these issues effectively. Keep the questions concise and highly relevant.
+
+Distribute the questions across SPIN categories as follows:
+- **Situation** (2–3 questions): Understand the lead's current processes and context.
+- **Problem** (2–3 questions): Uncover pain points and difficulties they face.
+- **Implication** (2–3 questions): Explore the consequences of those problems.
+- **Need-Payoff** (2–3 questions): Surface the value of solving those problems with RIAD's solutions.
 
 ## **Company Description**
 
@@ -613,6 +659,9 @@ You are a professional interview scriptwriter. Based on SPIN selling questions, 
 - Include multiple relevant questions in each section.
 - Highlight the unique solutions offered by **RIAD Corporation**.
 - Use a conversational and approachable tone, maintaining professionalism.
+- Target total script length: 10–15 minutes when spoken aloud (~1,200–1,800 words).
+- Structure the script in clear sections: **Introduction → Discovery → Pain Exploration → Solution Fit → Close / Next Steps**.
+- Use `[LEAD_NAME]` and `[COMPANY_NAME]` placeholders where personalization is needed.
 
 # **Context:**  
 
