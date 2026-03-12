@@ -164,7 +164,7 @@ class GoogleDocsManager:
         if not logo_url:
             return
         try:
-            requests = [
+            batch_requests = [
                 # Create a dedicated first paragraph for the logo
                 {
                     "insertText": {
@@ -183,7 +183,7 @@ class GoogleDocsManager:
                         }
                     }
                 },
-                # Center-align the logo paragraph (image at 1, '\n' at 2)
+                # Center-align the logo paragraph
                 {
                     "updateParagraphStyle": {
                         "range": {"startIndex": 1, "endIndex": 3},
@@ -194,7 +194,7 @@ class GoogleDocsManager:
             ]
             self.docs_service.documents().batchUpdate(
                 documentId=doc_id,
-                body={"requests": requests}
+                body={"requests": batch_requests}
             ).execute()
         except Exception as e:
             print(f"Logo insertion failed (document still saved): {e}")
