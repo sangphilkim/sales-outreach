@@ -1,5 +1,6 @@
 import re
 from colorama import Fore, Style
+from langsmith import Client as LangSmithClient
 from .tools.base.markdown_scraper_tool import scrape_website_to_markdown
 from .tools.base.search_tools import get_recent_news
 from .tools.base.gmail_tools import GmailTools
@@ -396,7 +397,29 @@ class OutReachAutomationNodes:
         if not match:
             # fallback: 형식이 없으면 마지막 숫자 추출
             match = re.search(r'(\d+\.?\d*)(?!.*\d)', lead_score.strip())
-        return {"lead_score": match.group(1) if match else lead_score.strip()}
+
+        final_score_str = match.group(1) if match else lead_score.strip()
+
+        # LangSmith에 점수 메타데이터 기록
+        try:
+            final_score_float = float(final_score_str)
+            company_name = state["company_data"].name if state.get("company_data") else "unknown"
+            langsmith_client = LangSmithClient()
+            langsmith_client.create_run(
+                name="score_lead_result",
+                run_type="chain",
+                inputs={"company": company_name},
+                outputs={
+                    "final_score": final_score_float,
+                    "qualified": final_score_float >= 7.0,
+                    "raw_output": lead_score
+                },
+                tags=["scoring", "qualified" if final_score_float >= 7.0 else "not-qualified"]
+            )
+        except Exception:
+            pass  # LangSmith 장애 시 에이전트 계속 실행
+
+        return {"lead_score": final_score_str}
 
     # NOTE: 향후 프로그램 확장 시 활용 가능한 코드
     # 자격 여부를 state에 저장하여 update_CRM 등 하위 노드에서 참조할 때 사용

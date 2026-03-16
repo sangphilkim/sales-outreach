@@ -40,6 +40,12 @@ if __name__ == "__main__":
 
 
     # Run the outreach automation with the provided lead name and email
-    config = {'recursion_limit': 100}
+    lead_ids = inputs.get('leads_ids', [])
+    run_label = lead_ids[0] if lead_ids else "all-new-leads"
+    config = {
+        'recursion_limit': 100,
+        'run_name': f"riad-{run_label}",
+        'metadata': {'project': 'riad-agent', 'leads_ids': lead_ids}
+    }
     app.invoke(inputs, config)
     print(Fore.GREEN + "✅ Outreach automation completed." + Style.RESET_ALL)

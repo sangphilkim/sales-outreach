@@ -5,6 +5,7 @@ from langchain_core.output_parsers import StrOutputParser
 from google_auth_oauthlib.flow import InstalledAppFlow
 from google.auth.transport.requests import Request
 from google.oauth2.credentials import Credentials
+from langsmith import traceable
 
 # Set the scopes for Google API
 SCOPES = [
@@ -78,6 +79,7 @@ def get_llm_by_provider(llm_provider, model):
         raise ValueError(f"Unsupported LLM provider: {llm_provider}")
     return llm
 
+@traceable(name="invoke_llm")
 def invoke_llm(
     system_prompt,
     user_message,
