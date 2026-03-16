@@ -14,7 +14,8 @@ SCOPES = [
     'https://www.googleapis.com/auth/gmail.modify',       # Gmail 수정
     'https://www.googleapis.com/auth/spreadsheets',       # Google Sheets
     'https://www.googleapis.com/auth/documents',          # Google Docs
-    'https://www.googleapis.com/auth/drive'               # Google Drive
+    'https://www.googleapis.com/auth/drive',              # Google Drive
+    'https://www.googleapis.com/auth/youtube.readonly'    # YouTube 읽기
 ]
 ```
 
