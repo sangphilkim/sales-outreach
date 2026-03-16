@@ -360,32 +360,74 @@ You will receive a comprehensive report that includes the lead’s company profi
 # **Scoring Criteria**  
 
 ### **1. Industry & Role Fit**
-- **Target Industry Alignment:**
-  1–10 (10 = travel agency, DMC, event organizer, MICE company, or corporate travel manager). How closely does the company's industry and role align with RIAD's core target customers?
+Evaluate how central hotel sourcing or event accommodation is to the company's core business:
+- **10** = Hotel sourcing or event accommodation is the **primary service** explicitly stated on the website (e.g., DMC, MICE agency, group travel specialist, event housing provider)
+- **7** = Hotel sourcing is a **major component** of their offering listed as a key service (e.g., incentive travel agency, corporate travel manager, hospitality consultant)
+- **4** = Hotel sourcing is **occasional or peripheral** — not core (e.g., wedding planner, conference venue operator, general event agency)
+- **1** = No relevance to hotel sourcing or event accommodation (e.g., marketing agency, tech company, manufacturer)
 
 ### **2. Business Activity Scale**
-- **Volume of Hotel Sourcing or Event Activity:**
-  1–10 (10 = high volume of hotel proposals, regular events, or large accommodation needs evidenced by client portfolio, event references, or partnerships mentioned on website or news).
+Count observable volume signals from the report (website, news, LinkedIn portfolio):
+- **10** = 30+ events/year OR 1,000+ room nights mentioned OR 20+ client portfolio OR multi-country/multi-city operations stated
+- **7**  = 15–29 events/year OR 500–999 room nights OR 10–19 clients referenced
+- **4**  = 5–14 events/year OR 5–9 clients OR one volume signal found
+- **1**  = Fewer than 5 events/year OR no volume signals found in the report
+
+> Industry benchmark: average event professional manages 29 events/year (Amex GBT 2026). Score 10 targets above-average volume where platform ROI is clearest.
 
 ### **3. Company Size**
-- **Team Size:**
-  1–10 (10 = small to mid-size team of 10–200 employees actively managing hotel proposals or events — ideal fit for RIAD’s self-serve onboarding model. Large enterprises of 500+ employees typically require custom contracts and score lower). What is the company size based on LinkedIn employee count and team structure?
+Based on LinkedIn employee count:
+- **10** = 20–200 employees (optimal self-serve SaaS range — highest win rate 30–40%, CEO/Founder typically makes direct purchase decisions)
+- **7**  = 10–19 employees (operational but may have budget constraints)
+- **5**  = 5–9 employees (boutique DMC profile — solution fit but limited team resources)
+- **3**  = 201–500 employees (increasing procurement complexity, more approval layers)
+- **1**  = 500+ employees OR 1–4 employees (enterprise requires custom contracts / solo operator lacks budget)
 
 ### **4. Growth Signals**
-- **Business Expansion Indicators:**
-  1–10 (10 = clear signs of growth such as new clients, new markets, recent partnerships, hiring, or increased event activity mentioned in news or website).
+Count distinct growth signals found across news, website, and LinkedIn (new client wins, market expansion, recent partnerships, active hiring, recent funding/award):
+- **10** = 4–5 growth signals found
+- **7**  = 2–3 growth signals found
+- **4**  = 1 growth signal found
+- **1**  = No growth signals found in news, website, or LinkedIn
 
 ### **5. Technology Maturity**
-- **Use of Modern Tools & Platforms:**
-  1–10 (10 = company shows openness to technology adoption but lacks a specialized hotel sourcing or event accommodation platform, indicating clear room for yeyak or Ria event). Inferred from website, news, or LinkedIn mentions of tools used.
+Based on tool mentions in website, news, or LinkedIn (infer from context if not explicitly stated):
+- **10** = Uses general tools only (Excel/email/Google Sheets) with no hotel sourcing platform detected; SaaS-friendly signals present (mentions tools, cloud, or automation)
+- **7**  = Uses some SaaS tools (CRM, project management) but no event housing or hotel sourcing platform
+- **4**  = Uses a competing platform (Cvent, Lanyon, HRS, etc.) — displacement required
+- **1**  = No tech signals found OR uses a fully custom enterprise system
 
 ### **6. Content & Digital Activity**
-- **Online Presence as a Business Signal:**
-  1–10 (10 = active blog, social media, or news coverage indicating an established, visible business in the travel or event space). Used as an indirect indicator of business scale and credibility.
+Reference the blog score and YouTube score already computed in the digital presence report:
+- **10** = Blog score ≥ 7 AND YouTube score ≥ 7 (or one ≥ 8 with active news coverage)
+- **7**  = Blog score ≥ 7 OR YouTube score ≥ 7
+- **4**  = Blog score 4–6 OR YouTube score 4–6 (some activity, irregular)
+- **1**  = Both scores < 4 OR no digital presence detected
+
+### **7. Decision-Making Authority**
+Based on the lead's LinkedIn job title:
+- **10** = CEO, Founder, Co-Founder, Owner, Managing Director
+- **7**  = VP, Director, Head of (Events / Travel / Operations / Procurement)
+- **5**  = Senior Manager, Operations Manager, Event Manager
+- **3**  = Manager (without Senior), Coordinator, Specialist
+- **1**  = Intern, Assistant, Analyst OR title not found
 
 ### **Output Instructions**
 First, reason through each criterion with a brief 1–2 sentence justification based on the report.
-Then calculate the average of all six scores and output the final result on the last line in this exact format:
+Then calculate the **weighted score** using the formula below and output the final result on the last line in this exact format:
+
+FINAL SCORE = (C1 × 0.25) + (C2 × 0.15) + (C3 × 0.15) + (C4 × 0.10) + (C5 × 0.10) + (C6 × 0.05) + (C7 × 0.20)
+
+Where:
+- C1 = Industry & Role Fit (25%)
+- C2 = Business Activity Scale (15%)
+- C3 = Company Size (15%)
+- C4 = Growth Signals (10%)
+- C5 = Technology Maturity (10%)
+- C6 = Content & Digital Activity (5%)
+- C7 = Decision-Making Authority (20%)
+
+Output the result on the last line in this exact format:
 
 FINAL SCORE: X.X
 
