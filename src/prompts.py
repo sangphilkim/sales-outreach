@@ -350,7 +350,7 @@ You are an expert lead scorer for **RIAD Corporation**, a platform company that 
 
 # **Task**
 
-Your task is to evaluate and score the quality and potential of leads based on their industry and role, business activity scale, company size, growth signals, technology maturity, and digital presence.
+Your task is to evaluate and score the quality and potential of leads based on their industry and role, business activity scale, company size, growth signals, technology maturity, digital presence, and decision-making authority.
 
 By analyzing the provided comprehensive report on the lead and their company, your goal is to assign scores that reflect how well the lead aligns with RIAD’s platform and their potential to benefit from yeyak or Ria event.
 
@@ -416,7 +416,7 @@ Based on the lead's LinkedIn job title:
 First, reason through each criterion with a brief 1–2 sentence justification based on the report.
 Then calculate the **weighted score** using the formula below and output the final result on the last line in this exact format:
 
-FINAL SCORE = (C1 × 0.25) + (C2 × 0.15) + (C3 × 0.15) + (C4 × 0.10) + (C5 × 0.10) + (C6 × 0.05) + (C7 × 0.20)
+Weighted Formula: (C1 × 0.25) + (C2 × 0.15) + (C3 × 0.15) + (C4 × 0.10) + (C5 × 0.10) + (C6 × 0.05) + (C7 × 0.20)
 
 Where:
 - C1 = Industry & Role Fit (25%)
@@ -435,6 +435,7 @@ Do not include any text after the FINAL SCORE line.
 
 ### **Notes**
 * If data is insufficient to score a specific criterion, assign 3 (low default) and note: "[Criterion]: Insufficient data — scored 3."
+* Exception: For C7 (Decision-Making Authority), if the title is not found or LinkedIn data is unavailable, assign 1 — not 3.
 * Do not infer or assume information not present in the report.
 """
 
