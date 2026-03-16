@@ -591,19 +591,25 @@ class OutReachAutomationNodes:
         
         # Create draft email
         gmail = GmailTools()
-        gmail.create_draft_email(
-            recipient=email,
-            subject=subject,
-            email_content=personalized_email
-        )
-        
-        # Send email directly
-        if SEND_EMAIL_DIRECTLY:
-            gmail.send_email(
+        try:
+            gmail.create_draft_email(
                 recipient=email,
                 subject=subject,
                 email_content=personalized_email
             )
+        except Exception as e:
+            print(Fore.RED + f"⚠️ Gmail draft creation failed for lead {state['current_lead'].id}: {e}" + Style.RESET_ALL)
+
+        # Send email directly
+        if SEND_EMAIL_DIRECTLY:
+            try:
+                gmail.send_email(
+                    recipient=email,
+                    subject=subject,
+                    email_content=personalized_email
+                )
+            except Exception as e:
+                print(Fore.RED + f"⚠️ Gmail send failed for lead {state['current_lead'].id}: {e}" + Style.RESET_ALL)
         
         # Save email with reports for reference
         personalized_email_doc = Report(
@@ -691,6 +697,9 @@ class OutReachAutomationNodes:
             "Outreach Report": state.get("custom_outreach_report_link", ""),
             "Last Contacted": get_current_date()
         }
-        self.lead_loader.update_record(state["current_lead"].id, new_data)
+        try:
+            self.lead_loader.update_record(state["current_lead"].id, new_data)
+        except Exception as e:
+            print(Fore.RED + f"⚠️ CRM update failed for lead {state['current_lead'].id}: {e}" + Style.RESET_ALL)
 
         return {"number_leads": state["number_leads"] - 1}
