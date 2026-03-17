@@ -102,7 +102,7 @@ Assign a score for each category:
 * **Activity:** 10 = consistent weekly or bi-weekly schedule, 7 = regular monthly, 4 = irregular, 1 = inactive 3+ months.
 * **Relevancy:** 10 = content exclusively covers travel, hospitality, MICE, or hotel sourcing; 7 = majority of posts are industry-relevant; 4 = some relevant posts mixed with unrelated content; 1 = no relevant posts found.
 
-**Total Blog Score**: The average of the above three scores.
+**Total Blog Score**: (Number of Posts + Activity + Relevancy) / 3. Round to one decimal place (e.g., 7.0, 4.3).
 
 ## **Opportunities for Improvement:**
 * **Content Gaps:** Highlight areas where topics or themes are missing that could align with the company’s services.  
@@ -161,7 +161,7 @@ Assign a score for each category:
 * **Activity:** 10 = uploads at least bi-monthly, 7 = quarterly, 4 = semi-annually, 1 = no uploads in 1+ year.
 * **Engagement:** 10 = avg 1k+ views/video, 7 = 200–1k, 4 = 50–200, 1 = under 50.
 * **Relevancy:** 10 = videos exclusively cover travel, hospitality, MICE, or hotel sourcing; 7 = majority of videos are industry-relevant; 4 = some relevant videos mixed with unrelated content; 1 = no relevant videos found.
-**Total Channel Score:** The average of the above four scores.
+**Total Channel Score:** (Number of Videos + Activity + Engagement + Relevancy) / 4. Round to one decimal place (e.g., 6.5, 3.8).
 
 ## **Opportunities for Improvement:**
 * **Content Gaps:** Highlight areas where topics or themes are missing that could align with the company’s services.  
@@ -334,7 +334,7 @@ Construct a detailed analysis of the company's digital presence, including:
 ## **IV. Hotel Sourcing & Event Operations Assessment:**
 Based on all available information, assess:
 - Whether the company organizes events, manages accommodation for clients, or handles hotel sourcing as part of their core operations.
-- Estimated scale of hotel sourcing or event activities — state exact figures where available (e.g., "35 events/year", "20+ clients", "5 countries"). If exact numbers are not stated in the source, use the closest available qualifier (e.g., "10+ clients referenced on website") rather than vague terms like "large-scale", "many", or "several".
+- Estimated scale of hotel sourcing or event activities — state exact figures where available (e.g., "35 events/year", "20+ clients", "5 countries"). If exact numbers are not stated in the source, use the closest available qualifier (e.g., "approximately 10–15 clients referenced on website" — use ranges that reflect actual confidence level rather than open-ended "+" notation) rather than vague terms like "large-scale", "many", or "several".
 - Current tools or methods used for hotel proposals or room block management — name specific tools if mentioned (e.g., "Cvent", "Excel", "HRS"). If no tools are mentioned, state "No tools referenced."
 - Any signals indicating pain points in their accommodation workflow (e.g., slow turnaround times, lack of branded proposals, manual room block management, or no dedicated booking platform).
 - Overall assessment of how well this company aligns with RIAD Corporation's target customer profile for yeyak or Ria event.
@@ -349,6 +349,7 @@ Based on all available information, assess:
 - If data from LinkedIn and the website conflict, note the discrepancy explicitly and indicate which source appears more current.
 - If data for a section is insufficient, write "Insufficient data available" rather than inferring or assuming.
 - **In Section IV, always prioritize specific numbers and tool names over qualitative descriptions. Quantified data directly impacts lead scoring accuracy.**
+- **In Section III, preserve and include exact numeric scores from the Digital Presence Report (e.g., Total Blog Score: 7.3, Total Channel Score: 5.5). Do not paraphrase or omit these figures — they are used directly for lead scoring.**
 
 ## **V. Key Personalization Signals (for Outreach):**
 List the top 2–3 most specific, compelling facts about this lead or their company that would make a strong personalization hook in a cold outreach email. Prioritize:
@@ -356,8 +357,11 @@ List the top 2–3 most specific, compelling facts about this lead or their comp
 - Specific pain points implied by their workflow or operations
 - Notable client wins, partnerships, or market moves
 
-Format each signal as a single, concrete sentence. Use exact figures and names where available.
+Format each signal as a bullet point (use "-") in a single, concrete sentence. Use exact figures and names where available.
 Do NOT use vague descriptors like "impressive", "significant", or "large-scale".
+Example format:
+- [Lead's company] organized a 400-attendee incentive trip to Japan in Q3 2025.
+- No dedicated hotel sourcing platform detected — proposals likely handled via email.
 
 > If no sufficiently specific signals are available, write: "No strong personalization signals identified — use general industry relevance as hook."
 """
@@ -410,7 +414,7 @@ Count distinct growth signals found across news, website, and LinkedIn (new clie
 - **1**  = No growth signals found in news, website, or LinkedIn
 
 ### **5. Technology Maturity**
-Based on tool mentions in website, news, or LinkedIn (infer from context if not explicitly stated):
+Based on tool mentions in website, news, or LinkedIn (you may infer tool category from context, e.g., "Google Workspace" = SaaS tools, but do NOT infer hotel sourcing platform adoption if no tool is mentioned):
 - **10** = Uses general tools only (Excel/email/Google Sheets) with no hotel sourcing platform detected; SaaS-friendly signals present (mentions tools, cloud, or automation)
 - **7**  = Uses some SaaS tools (CRM, project management) but no event housing or hotel sourcing platform
 - **4**  = Uses a competing platform (Cvent, Lanyon, HRS, etc.) — displacement required
@@ -447,15 +451,18 @@ Where:
 - C6 = Content & Digital Activity (5%)
 - C7 = Decision-Making Authority (20%)
 
-Output the result on the last line in this exact format:
+Output the result on the last line in this exact format (use all caps, one decimal place):
 
 FINAL SCORE: X.X
 
+Examples: FINAL SCORE: 6.3 / FINAL SCORE: 8.0 / FINAL SCORE: 4.7
+Do not write "Final Score" or "final score" — only "FINAL SCORE" in all caps.
 Do not include any text after the FINAL SCORE line.
 
 ### **Notes**
 * If data is insufficient to score a specific criterion, assign 3 (low default) and note: "[Criterion]: Insufficient data — scored 3."
 * Exception: For C7 (Decision-Making Authority), if the title is not found or LinkedIn data is unavailable, assign 1 — not 3.
+  (Rationale: Without a confirmed title, decision-making authority cannot be assumed. Unknown = unqualified by default, as this criterion is the strongest predictor of deal velocity.)
 * Do not infer or assume information not present in the report.
 """
 
@@ -509,6 +516,7 @@ Your report should include the following five sections:
 
 **4. Expected Results and ROI:**
 - Use insights from our previous case study to showcase tangible results and ROI we achieved with similar businesses — such as reduced proposal turnaround time, increased deal win rates, or eliminated attrition risk.
+- If no case study is provided or contains no specific figures, describe the general value proposition only (e.g., faster proposals, reduced attrition risk) — do NOT invent specific percentages or metrics.
 
 **5. Call to Action:**  
 - Suggest actionable next steps, such as scheduling a meeting to explore RIAD's platform solutions further.
@@ -551,15 +559,15 @@ GlobalMice Agency is a MICE and corporate travel management company specializing
 
 ### **Relevant RIAD Solutions**
 
-**1. yeyak — Branded Hotel Proposal Generation**
+**1. Branded Hotel Proposal Generation**
 * **Approach:** Use yeyak to generate structured, branded hotel proposals within minutes using natural-language hotel search and direct rate sourcing or instant supply options.
 * **Benefit:** Respond to client requests faster, present professional hotel comparisons, and improve deal win rate while retaining full brand control over every proposal.
 
-**2. yeyak — Dedicated Booking Pages**
+**2. Dedicated Booking Pages**
 * **Approach:** Publish a dedicated booking page for each project, giving clients a seamless branded experience to review options and confirm bookings.
 * **Benefit:** Retain full ownership of the client relationship and pricing strategy, while reducing back-and-forth communication.
 
-**3. Ria event — Full-Service Event Housing**
+**3. Full-Service Event Housing**
 * **Approach:** Deploy Ria event to manage curated hotel options, participant bookings, VIP reservations, and attendee support for each event, with a dedicated booking platform launched quickly per event.
 * **Benefit:** Minimize upfront operational burden, eliminate attrition penalties, and share revenue generated from completed reservations.
 
@@ -567,12 +575,12 @@ GlobalMice Agency is a MICE and corporate travel management company specializing
 
 ### **Expected Results and ROI**
 
-Based on our success with a similar MICE agency:
-- Reduced hotel proposal creation time by 80%, enabling the team to respond to more client requests without adding headcount.
-- Increased deal win rate by 35% through faster, more professional and branded proposal delivery.
+Based on our success with a similar [COMPANY_TYPE] client:
+- Reduced hotel proposal creation time by [XX]%, enabling the team to respond to more client requests without adding headcount.
+- Increased deal win rate by [YY]% through faster, more professional and branded proposal delivery.
 - Eliminated attrition penalties entirely through Ria event’s room block management model, reducing financial risk on every event.
 
-We anticipate achieving similar, if not better, results for GlobalMice Agency.
+We anticipate achieving similar, if not better, results for [COMPANY_NAME].
 
 ---
 
@@ -622,7 +630,7 @@ Your primary responsibilities are:
 3. **Quality Enhancement: (If needed)**  
    - Refine language to ensure clarity, conciseness, and professionalism.  
    - Introduce minor enhancements, such as improved transitions or added examples, if necessary.  
-   - Add any missing or incorrect links while maintaining logical flow and accuracy.  
+   - Fix any incorrectly formatted links. Do NOT add links beyond what is provided in the "Correct Links" section.
 
 --- 
 
@@ -716,7 +724,7 @@ Distribute the questions across SPIN categories as follows:
 Our solutions significantly reduce the time required to create hotel proposals, help agencies handle more opportunities, and enable event organizers to launch dedicated booking platforms quickly while sharing revenue from completed reservations.
 
 ## **Notes:**  
-- Return only the SPIN questions, maximum of 15. 
+- Return only the SPIN questions. Do not exceed the per-category range (2–3 per category, 8–12 total).
 - Avoid generic or vague inquiries; base them on the provided lead details and agency capabilities.  
 - Focus on uncovering pain points, implications, and opportunities where RIAD's solutions can add value.
 """
@@ -731,7 +739,7 @@ You are a professional interview scriptwriter. Based on SPIN selling questions, 
 - Highlight the unique solutions offered by **RIAD Corporation**.
 - Use a conversational and approachable tone, maintaining professionalism.
 - Target total script length: 10–15 minutes when spoken aloud (~1,200–1,800 words).
-- Structure the script in clear sections: **Introduction → Discovery → Pain Exploration → Solution Fit → Close / Next Steps**.
+- Structure the script in clear sections: **Introduction → Personalized Hook → Situation Questions → Problem Questions → Implication Questions → Need-Payoff Questions → Closing**.
 - Use `[LEAD_NAME]` and `[COMPANY_NAME]` placeholders where personalization is needed.
 
 # **Context:**  
@@ -743,16 +751,19 @@ You are a professional interview scriptwriter. Based on SPIN selling questions, 
 
 Our solutions reduce proposal creation time, help agencies handle more opportunities, and enable event organizers to launch booking platforms quickly while sharing revenue from completed reservations.
 
-# **Example of interview Script:**  
+# **Example of interview Script:**
 
-**Introduction:**  
-"Hi [Prospect’s Name], this is Philip from RIAD Corporation. How are you today?"
+> ⚠️ The example below is for **structural and tone reference ONLY**.
+> Use the SPIN questions provided in the input directly as the actual questions for each corresponding section — adapt them for conversational flow, but do NOT replace them with generic alternatives.
+
+**Introduction:**
+"Hi [LEAD_NAME], this is Philip from RIAD Corporation. How are you today?"
 
 **Personalized Hook:**
-"I’ve been following [Company’s Name]’s recent [initiative/project] in the travel and event space. It’s exciting to see how your team is growing and expanding your portfolio of services."
+"I’ve been following [COMPANY_NAME]’s recent [INITIATIVE/PROJECT] in the travel and event space. It’s exciting to see how your team is growing and expanding your portfolio of services."
 
 **Situation Questions:**
-"I’m curious—how does [Company’s Name] currently handle hotel sourcing and proposal creation for your clients? Do you rely on manual processes, spreadsheets, or a dedicated platform?"
+"I’m curious—how does [COMPANY_NAME] currently handle hotel sourcing and proposal creation for your clients? Do you rely on manual processes, spreadsheets, or a dedicated platform?"
 
 **Problem Questions:**
 "Are there challenges in turning around hotel proposals quickly enough to stay competitive? Have you found it difficult to maintain a branded, professional look across different client proposals?"
@@ -764,9 +775,10 @@ Our solutions reduce proposal creation time, help agencies handle more opportuni
 "How valuable would it be if your team could generate a fully branded hotel proposal in minutes rather than hours? What would it mean for your business if you could manage room blocks for events without the risk of attrition penalties?"
 
 **Closing:**
-"I believe RIAD Corporation can offer the right tools to address these challenges. Would you be open to a quick meeting next week to explore how yeyak or Ria event can help [Company’s Name] streamline your hotel sourcing operations?"
+"I believe RIAD Corporation can offer the right tools to address these challenges. Would you be open to a quick meeting next week to explore how yeyak or Ria event can help [COMPANY_NAME] streamline your hotel sourcing operations?"
 
 # **Notes:**
+- Use the SPIN questions provided in the input as the actual questions for each section — do NOT generate new generic questions.
 - Adapt the script based on prospect responses for a natural flow.
 - Ensure the conversation stays focused on their challenges and how RIAD can provide tailored solutions.
 - Emphasize measurable results and time-saving benefits.
