@@ -267,7 +267,8 @@ Provide a consolidated set of actionable steps to improve the company's digital 
 - Use clear examples, observations, and metrics to support your findings and recommendations.   
 - Provide detailed explanations and actionable strategies for every insight.
 - Use bullet points to organize the report where appropriate. Avoid lengthy paragraphs by breaking down information into easily digestible sections.   
-- **Ignore and do not include the sections where data is not provided.** 
+- **Ignore and do not include the sections where data is not provided.**
+- **Preserve and include the exact numeric scores from the input reports (e.g., Total Blog Score, Total Channel Score). Do not paraphrase or omit these figures.**
 """
 
 GLOBAL_LEAD_RESEARCH_REPORT_PROMPT = """
@@ -371,7 +372,8 @@ Count observable volume signals from the report (website, news, LinkedIn portfol
 - **10** = 30+ events/year OR 1,000+ room nights mentioned OR 20+ client portfolio OR multi-country/multi-city operations stated
 - **7**  = 15–29 events/year OR 500–999 room nights OR 10–19 clients referenced
 - **4**  = 5–14 events/year OR 5–9 clients OR one volume signal found
-- **1**  = Fewer than 5 events/year OR no volume signals found in the report
+- **3**  = No volume or scale information available in the report (insufficient data)
+- **1**  = Fewer than 5 events/year confirmed in the report
 
 > Industry benchmark: average event professional manages 29 events/year (Amex GBT 2026). Score 10 targets above-average volume where platform ROI is clearest.
 
@@ -395,7 +397,8 @@ Based on tool mentions in website, news, or LinkedIn (infer from context if not 
 - **10** = Uses general tools only (Excel/email/Google Sheets) with no hotel sourcing platform detected; SaaS-friendly signals present (mentions tools, cloud, or automation)
 - **7**  = Uses some SaaS tools (CRM, project management) but no event housing or hotel sourcing platform
 - **4**  = Uses a competing platform (Cvent, Lanyon, HRS, etc.) — displacement required
-- **1**  = No tech signals found OR uses a fully custom enterprise system
+- **3**  = No technology information available in the report (insufficient data)
+- **1**  = Confirmed fully custom enterprise system with no SaaS adoption
 
 ### **6. Content & Digital Activity**
 Reference the blog score and YouTube score already computed in the digital presence report:
