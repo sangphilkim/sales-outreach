@@ -509,7 +509,7 @@ class OutReachAutomationNodes:
         
         # TODO Find better way to include correct links into the final report
         # TODO Case study link: 실제 URL 생성 후 아래 주석 해제하여 사용
-        # ** Case study link**: https://riadcorp.com/case-studies/실제URL
+        # ** Case study link**: https://yeyak.ai/case-studies/실제URL
         # Proof read generated report
         inputs = f"""
         {custom_outreach_report}
@@ -518,7 +518,7 @@ class OutReachAutomationNodes:
 
         **Correct Links:**
 
-        ** Our website link**: https://riadcorp.com
+        ** Our website link**: https://yeyak.ai
         """
         
         # Call our editor/proof-reader agent
@@ -564,12 +564,12 @@ class OutReachAutomationNodes:
         
         # Load reports
         reports = state["reports"]
-        general_lead_search_report = get_report(reports, "General Lead Research Report")
-        
+        global_research_report = get_report(reports, "Global Lead Analysis Report")
+
         lead_data = f"""
         # **Lead & company Information:**
 
-        {general_lead_search_report}
+        {global_research_report}
 
         # Outreach report Link:
 

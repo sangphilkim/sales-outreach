@@ -40,8 +40,13 @@ This report should include the following:
 * **Product and services:** Highlight areas where the company excels and its offered product and services.  
 
 ## **Lead Profile Summary:**
+
+> If the Lead Profile section in the input is empty, replace this entire section with a single line:
+> **"Lead Profile: LinkedIn data unavailable — profile assessment skipped."**
+> Do NOT generate, infer, or assume any profile information.
+
 * **Professional Experience:** Summarize the lead’s current and past roles, including key responsibilities and achievements. Focus on their career trajectory, skill set, and contributions at each company.
-* **Education:** List the lead's relevant educational background, including fields of study and the duration of their studies.
+* **Education:** List the lead’s relevant educational background, including fields of study and the duration of their studies.
 * **Skills & Expertise:** Identify the lead’s main areas of expertise, including any specific skills they bring to their role.
 * **Key Insights:** Offer insights into the lead’s leadership qualities, relevant achievements, or experience that can be beneficial for future collaboration or partnerships.
 * **Operational Relevance:** Identify whether the lead’s current or past roles involve hotel sourcing, event accommodation, group travel, or MICE operations. Note any direct experience with managing accommodation for clients or events, as this indicates alignment with RIAD Corporation’s target customer profile.
@@ -329,8 +334,8 @@ Construct a detailed analysis of the company's digital presence, including:
 ## **IV. Hotel Sourcing & Event Operations Assessment:**
 Based on all available information, assess:
 - Whether the company organizes events, manages accommodation for clients, or handles hotel sourcing as part of their core operations.
-- Estimated scale of hotel sourcing or event activities (number of events per year, client volume, or destinations served).
-- Current tools or methods used for hotel proposals or room block management (e.g., manual spreadsheets, email threads, or a dedicated platform).
+- Estimated scale of hotel sourcing or event activities — state exact figures where available (e.g., "35 events/year", "20+ clients", "5 countries"). If exact numbers are not stated in the source, use the closest available qualifier (e.g., "10+ clients referenced on website") rather than vague terms like "large-scale", "many", or "several".
+- Current tools or methods used for hotel proposals or room block management — name specific tools if mentioned (e.g., "Cvent", "Excel", "HRS"). If no tools are mentioned, state "No tools referenced."
 - Any signals indicating pain points in their accommodation workflow (e.g., slow turnaround times, lack of branded proposals, manual room block management, or no dedicated booking platform).
 - Overall assessment of how well this company aligns with RIAD Corporation's target customer profile for yeyak or Ria event.
 
@@ -343,6 +348,18 @@ Based on all available information, assess:
 - Use bullet points to organize the report where appropriate. Avoid lengthy paragraphs by breaking down information into easily digestible sections.
 - If data from LinkedIn and the website conflict, note the discrepancy explicitly and indicate which source appears more current.
 - If data for a section is insufficient, write "Insufficient data available" rather than inferring or assuming.
+- **In Section IV, always prioritize specific numbers and tool names over qualitative descriptions. Quantified data directly impacts lead scoring accuracy.**
+
+## **V. Key Personalization Signals (for Outreach):**
+List the top 2–3 most specific, compelling facts about this lead or their company that would make a strong personalization hook in a cold outreach email. Prioritize:
+- Recent events, expansions, or achievements (with specific details, dates, or scale)
+- Specific pain points implied by their workflow or operations
+- Notable client wins, partnerships, or market moves
+
+Format each signal as a single, concrete sentence. Use exact figures and names where available.
+Do NOT use vague descriptors like "impressive", "significant", or "large-scale".
+
+> If no sufficiently specific signals are available, write: "No strong personalization signals identified — use general industry relevance as hook."
 """
 
 SCORE_LEAD_PROMPT = """
@@ -500,6 +517,11 @@ Your report should include the following five sections:
 
 # **Example Output:**
 
+> ⚠️ **This example is for structural reference ONLY.**
+> - Do NOT copy any names (e.g., "GlobalMice Agency"), numbers (e.g., "80%", "35%"), or URLs from this example into the actual report.
+> - All performance figures must come exclusively from the provided Case Study input — do not invent or reuse figures from this example.
+> - Do NOT generate or infer any case study URLs — use only links explicitly provided in the input.
+
 # **Streamlining GlobalMice Agency’s Hotel Sourcing with RIAD**
 ---
 
@@ -545,7 +567,7 @@ GlobalMice Agency is a MICE and corporate travel management company specializing
 
 ### **Expected Results and ROI**
 
-Based on our success with a similar MICE agency (see [case study](https://riadcorp.com/case-studies/A)):
+Based on our success with a similar MICE agency:
 - Reduced hotel proposal creation time by 80%, enabling the team to respond to more client requests without adding headcount.
 - Increased deal win rate by 35% through faster, more professional and branded proposal delivery.
 - Eliminated attrition penalties entirely through Ria event’s room block management model, reducing financial risk on every event.
@@ -560,7 +582,7 @@ We’d love to discuss how yeyak and Ria event can help GlobalMice Agency handle
 
 **Next Steps:**
 - Reply to this email with your availability.
-- Visit [RIAD Corporation](https://riadcorp.com) for more insights into our platform and solutions.
+- Visit [RIAD Corporation](https://yeyak.ai) for more insights into our platform and solutions.
 
 We look forward to partnering with GlobalMice Agency!
 
@@ -594,7 +616,7 @@ Your primary responsibilities are:
 2. **Content Completeness:** Ensure:
    - Each section addresses its intended purpose effectively.
    - All relevant links are included and correctly formatted. Replace any placeholder links with the actual URLs provided in the "Correct Links" section.
-   - Do NOT invent or hallucinate URLs that are not explicitly provided. If a case study link is not provided, remove it or replace it with the RIAD website link (https://riadcorp.com).
+   - Do NOT invent or hallucinate URLs that are not explicitly provided. If a case study link is not provided, remove it or replace it with the RIAD website link (https://yeyak.ai).
    - Recommendations and examples are tailored to the specific lead’s context.
 
 3. **Quality Enhancement: (If needed)**  
@@ -623,11 +645,14 @@ You are writing a cold outreach email to capture the lead’s interest and encou
 ---
 
 # **Guidelines:**
+- The input report contains a **"Key Personalization Signals"** section — use these signals as the primary basis for the [Personalization] section of the email.
 - Review the lead’s profile and company information for relevant insights.
 - Focus on recent Lead’s and company experiences, but reference older ones if relevant.
 - Write a short [Personalization] section of around 1-2 lines tailored to the lead’s profile and its current company.
 - Use a conversational, friendly and professional tone.
-- The outreach report link is provided in the input under "Outreach report Link". Replace the [here](Link to Outreach Report) placeholder with the actual link. If no link is provided, remove the "Take a look [here]..." sentence entirely.
+- The outreach report link is provided in the input under "Outreach report Link".
+  - If the field contains a URL starting with "http", replace the [here](Link to Outreach Report) placeholder with that URL.
+  - If the field is empty or contains no URL, remove the entire "Take a look [here](Link to Outreach Report)" sentence completely — do not leave a broken link or placeholder in the email.
 
 ## **Example of personalizations:**
 
