@@ -411,10 +411,10 @@ class OutReachAutomationNodes:
                 inputs={"company": company_name},
                 outputs={
                     "final_score": final_score_float,
-                    "qualified": final_score_float >= 7.0,
+                    "qualified": final_score_float >= 6.0,
                     "raw_output": lead_score
                 },
-                tags=["scoring", "qualified" if final_score_float >= 7.0 else "not-qualified"]
+                tags=["scoring", "qualified" if final_score_float >= 6.0 else "not-qualified"]
             )
         except Exception:
             pass  # LangSmith 장애 시 에이전트 계속 실행
@@ -452,7 +452,7 @@ class OutReachAutomationNodes:
         @param state: The current state of the application.
         @return: Updated state with the qualification status.
         """
-        # Checking if the lead score is 7 or higher
+        # Checking if the lead score is 6 or higher
         print(f"Score: {state['lead_score']}")
         try:
             match = re.search(r'\d+\.?\d*', str(state["lead_score"]))
@@ -460,7 +460,7 @@ class OutReachAutomationNodes:
                 print(Fore.RED + "점수를 파싱할 수 없음, 불합격 처리" + Style.RESET_ALL)
                 return "not qualified"
             score = float(match.group())
-            is_qualified = score >= 7
+            is_qualified = score >= 6
         except Exception as e:
             print(Fore.RED + f"점수 변환 오류: {e}, 불합격 처리" + Style.RESET_ALL)
             return "not qualified"

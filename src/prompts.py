@@ -440,16 +440,16 @@ Based on the lead's LinkedIn job title:
 First, reason through each criterion with a brief 1–2 sentence justification based on the report.
 Then calculate the **weighted score** using the formula below and output the final result on the last line in this exact format:
 
-Weighted Formula: (C1 × 0.25) + (C2 × 0.15) + (C3 × 0.15) + (C4 × 0.10) + (C5 × 0.10) + (C6 × 0.05) + (C7 × 0.20)
+Weighted Formula: (C1 × 0.30) + (C2 × 0.05) + (C3 × 0.15) + (C4 × 0.10) + (C5 × 0.10) + (C6 × 0.05) + (C7 × 0.25)
 
 Where:
-- C1 = Industry & Role Fit (25%)
-- C2 = Business Activity Scale (15%)
+- C1 = Industry & Role Fit (30%)
+- C2 = Business Activity Scale (5%)
 - C3 = Company Size (15%)
 - C4 = Growth Signals (10%)
 - C5 = Technology Maturity (10%)
 - C6 = Content & Digital Activity (5%)
-- C7 = Decision-Making Authority (20%)
+- C7 = Decision-Making Authority (25%)
 
 Output the result on the last line in this exact format (use all caps, one decimal place):
 
@@ -655,8 +655,11 @@ You are writing a cold outreach email to capture the lead’s interest and encou
 # **Guidelines:**
 - The input report contains a **"Key Personalization Signals"** section — use these signals as the primary basis for the [Personalization] section of the email.
 - Review the lead’s profile and company information for relevant insights.
+- Replace [First Name] with the lead’s actual first name from the Lead Profile section of the input report.
+- Replace [Lead’s Company Name] with the actual company name from the input report.
 - Focus on recent Lead’s and company experiences, but reference older ones if relevant.
 - Write a short [Personalization] section of around 1-2 lines tailored to the lead’s profile and its current company.
+- Write one [Context] sentence that references the lead’s specific operational situation (e.g., event volume, geographic scale, or team size) based on the input report. Keep it factual — use only data present in the report.
 - Use a conversational, friendly and professional tone.
 - The outreach report link is provided in the input under "Outreach report Link".
   - If the field contains a URL starting with "http", replace the [here](Link to Outreach Report) placeholder with that URL.
@@ -680,7 +683,9 @@ Hi [First Name],
 
 [Personalization]
 
-At RIAD, we help travel professionals and event organizers manage hotel sourcing and accommodation operations more efficiently — from generating branded proposals in minutes to running full event housing programs without attrition risk.
+At RIAD, we help travel professionals and event organizers close more deals, reduce sourcing time, and run hotel accommodation programs without the risk of attrition penalties.
+
+[Context]
 
 After reviewing [Lead’s Company Name]’s profile, we’ve put together a tailored report with specific findings on how yeyak and Ria event can help your team work faster and win more business.
 
