@@ -430,7 +430,7 @@ Reference the blog score and YouTube score already computed in the digital prese
 
 ### **7. Decision-Making Authority**
 Based on the lead's LinkedIn job title:
-- **10** = CEO, Founder, Co-Founder, Owner, Managing Director
+- **10** = C-level executives (CEO, COO, CTO, CFO, CMO), Founder, Co-Founder, Owner, Managing Director
 - **7**  = VP, Director, Head of (Events / Travel / Operations / Procurement)
 - **5**  = Senior Manager, Operations Manager, Event Manager
 - **3**  = Manager (without Senior), Coordinator, Specialist
