@@ -388,9 +388,9 @@ Evaluate how central hotel sourcing or event accommodation is to the company's c
 - **10** = Hotel sourcing or event accommodation is the **primary service** explicitly stated on the website (e.g., DMC, MICE agency, group travel specialist, event housing provider)
 - **7** = Hotel sourcing is a **major component** of their offering listed as a key service (e.g., incentive travel agency, corporate travel manager, hospitality consultant)
 - **4** = Hotel sourcing is **occasional or peripheral** — not core (e.g., wedding planner, conference venue operator, general event agency)
-- **1** = No relevance to hotel sourcing or event accommodation (e.g., marketing agency, tech company, manufacturer)
+- **1** = No relevance to hotel sourcing or event accommodation (e.g., marketing agency, tech company, manufacturer, catering company)
 
-> **Note:** 7 points requires hotel sourcing to be **explicitly listed** as a key service on the website or LinkedIn. Do NOT infer based on adjacent services — catering, venue management, or general event planning alone does not qualify for 7. If hotel sourcing is not explicitly mentioned, score 4 or below.
+> **Note:** For **10 and 7 point** categories, the company type itself implies hotel sourcing involvement (e.g., DMC, MICE agency, incentive travel agency) — explicit mention of "hotel sourcing" is not required. For **4 points and below**, do NOT infer or assume hotel sourcing involvement — if hotel sourcing is not explicitly mentioned on the website or LinkedIn, score 4 or below. Catering, venue management, or general event planning alone does not qualify for 7.
 
 ### **2. Business Activity Scale**
 Count observable volume signals from the report (website, news, LinkedIn portfolio):
