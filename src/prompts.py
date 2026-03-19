@@ -301,10 +301,17 @@ This information will form the basis of a structured report to support lead qual
 # **Report Structure:**
 
 ## **0. Executive Qualification Summary:**
-In 2–3 sentences, state:
-- Whether this company is a **strong, moderate, or weak fit** for RIAD's solutions (yeyak / Ria event)
-- The single most compelling reason why (or why not)
-- The key signal that most influenced this assessment
+State the following:
+- **Company Type:** Classify the company into exactly ONE of these types based on their primary business:
+
+  - *Category A:* DMC / MICE agency / event concierge / event housing provider / group travel specialist / incentive travel company
+  - *Category B:* incentive travel agency / corporate travel manager / hotel hospitality consultant
+  - *Category C:* general event agency / conference organizer / exhibition company / trade show organizer
+  - *Category D:* catering company / wedding company / IT company / marketing agency / staffing company / manufacturing company / other
+
+- **Fit Assessment:** Whether this company is a **strong, moderate, or weak fit** for RIAD's solutions (yeyak / Ria event)
+- **Compelling Reason:** The single most compelling reason why (or why not)
+- **Key Signal:** The key signal that most influenced this assessment
 
 ---
 
@@ -384,13 +391,50 @@ You will receive a comprehensive report that includes the lead’s company profi
 # **Scoring Criteria**  
 
 ### **1. Industry & Role Fit**
-Evaluate how central hotel sourcing or event accommodation is to the company's core business:
-- **10** = Hotel sourcing or event accommodation is the **primary service** explicitly stated on the website (e.g., DMC, MICE agency, group travel specialist, event housing provider)
-- **7** = Hotel sourcing is a **major component** of their offering listed as a key service (e.g., incentive travel agency, corporate travel manager, hospitality consultant)
-- **4** = Hotel sourcing is **occasional or peripheral** — not core (e.g., wedding planner, conference venue operator, general event agency)
-- **1** = No relevance to hotel sourcing or event accommodation (e.g., marketing agency, tech company, manufacturer, catering company)
 
-> **Note:** For **10 and 7 point** categories, the company type itself implies hotel sourcing involvement (e.g., DMC, MICE agency, incentive travel agency) — explicit mention of "hotel sourcing" is not required. For **4 points and below**, do NOT infer or assume hotel sourcing involvement — if hotel sourcing is not explicitly mentioned on the website or LinkedIn, score 4 or below. Catering, venue management, or general event planning alone does not qualify for 7.
+**Pre-check — Company Type Override:**
+Read the **"Company Type"** field from Section 0 of the report and apply immediately:
+
+- Category A types (DMC / MICE agency / event concierge / event housing provider / group travel specialist / incentive travel company)
+  → Score = **10**. Skip Step 1 and Step 2.
+
+- Category B types (incentive travel agency / corporate travel manager / hotel hospitality consultant)
+  → Score = **7**. Skip Step 1 and Step 2.
+
+- Category C types (general event agency / conference organizer / exhibition company / trade show organizer)
+  → Score = **4**. Skip Step 1 and Step 2.
+
+- Category D types (catering company / wedding company / IT company / marketing agency / staffing company / manufacturing company / other)
+  → Score = **1**. Skip Step 1 and Step 2.
+
+If "Company Type" field is missing from the report → proceed to Step 1.
+
+---
+
+**Step 1 — Identify Primary Business (CoT required, fallback only):**
+In one sentence, state what this company primarily charges clients for,
+based on website and LinkedIn data only.
+
+Then classify into exactly ONE of the following categories:
+
+- **(A)** The company TYPE itself implies hotel sourcing or group accommodation as the primary service.
+  Classify as A based on company type alone — explicit mention in data is NOT required.
+  (e.g., DMC, MICE agency, event housing provider, group travel specialist, event concierge, incentive travel company)
+
+- **(B)** Hotel sourcing or group accommodation is an explicitly NAMED secondary service — separate from general event logistics
+  (e.g., incentive travel agency that lists "hotel sourcing" as a distinct service offering)
+
+- **(C)** Company does event management or travel-adjacent work, but hotel sourcing is NOT a named or listed service
+
+- **(D)** Company's primary business is outside travel/accommodation
+  (e.g., food service, catering, workplace hospitality, IT, marketing, staffing, manufacturing, consulting, wedding planner, wedding venue)
+  — classify as D regardless of any event involvement
+
+**Step 2 — Score (apply exactly):**
+- Category A → **10**
+- Category B → **7**
+- Category C → **4**
+- Category D → **1**
 
 ### **2. Business Activity Scale**
 Count observable volume signals from the report (website, news, LinkedIn portfolio):
@@ -444,16 +488,16 @@ Based on the lead's LinkedIn job title:
 First, reason through each criterion with a brief 1–2 sentence justification based on the report.
 Then calculate the **weighted score** using the formula below and output the final result on the last line in this exact format:
 
-Weighted Formula: (C1 × 0.30) + (C2 × 0.05) + (C3 × 0.15) + (C4 × 0.10) + (C5 × 0.10) + (C6 × 0.05) + (C7 × 0.25)
+Weighted Formula: (C1 × 0.35) + (C2 × 0.05) + (C3 × 0.10) + (C4 × 0.10) + (C5 × 0.05) + (C6 × 0.05) + (C7 × 0.30)
 
 Where:
-- C1 = Industry & Role Fit (30%)
+- C1 = Industry & Role Fit (35%)
 - C2 = Business Activity Scale (5%)
-- C3 = Company Size (15%)
+- C3 = Company Size (10%)
 - C4 = Growth Signals (10%)
-- C5 = Technology Maturity (10%)
+- C5 = Technology Maturity (5%)
 - C6 = Content & Digital Activity (5%)
-- C7 = Decision-Making Authority (25%)
+- C7 = Decision-Making Authority (30%)
 
 Output the result on the last line in this exact format (use all caps, one decimal place):
 
