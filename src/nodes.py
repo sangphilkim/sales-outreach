@@ -566,7 +566,13 @@ class OutReachAutomationNodes:
         reports = state["reports"]
         global_research_report = get_report(reports, "Global Lead Analysis Report")
 
+        # Extract first name safely
+        name_parts = (state["current_lead"].name or "").strip().split()
+        lead_name = name_parts[0] if name_parts else "there"
+
         lead_data = f"""
+        # **Lead First Name:** {lead_name}
+
         # **Lead & company Information:**
 
         {global_research_report}

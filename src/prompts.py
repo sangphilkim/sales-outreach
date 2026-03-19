@@ -703,7 +703,7 @@ You are writing a cold outreach email to capture the lead’s interest and encou
 # **Guidelines:**
 - The input report contains a **"Key Personalization Signals"** section — use these signals as the primary basis for the [Personalization] section of the email.
 - Review the lead’s profile and company information for relevant insights.
-- Replace [First Name] with the lead’s actual first name from the Lead Profile section of the input report.
+- The lead’s first name is explicitly provided as "**Lead First Name**" at the top of the input. Use this exact value to replace [First Name]. Do NOT leave [First Name] as a placeholder under any circumstances.
 - Replace [Lead’s Company Name] with the actual company name from the input report.
 - Focus on recent Lead’s and company experiences, but reference older ones if relevant.
 - Write a short [Personalization] section of around 1-2 lines tailored to the lead’s profile and its current company.
