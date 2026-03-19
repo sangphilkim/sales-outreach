@@ -50,6 +50,7 @@ This report should include the following:
 * **Skills & Expertise:** Identify the lead’s main areas of expertise, including any specific skills they bring to their role.
 * **Key Insights:** Offer insights into the lead’s leadership qualities, relevant achievements, or experience that can be beneficial for future collaboration or partnerships.
 * **Operational Relevance:** Identify whether the lead’s current or past roles involve hotel sourcing, event accommodation, group travel, or MICE operations. Note any direct experience with managing accommodation for clients or events, as this indicates alignment with RIAD Corporation’s target customer profile.
+* **Multiple Current Roles:** If the lead is currently employed at more than one company, list all current companies. For each, briefly assess its relevance to RIAD’s solutions (hotel sourcing / event accommodation). Clearly indicate which company has the highest RIAD relevance and should be treated as the primary company for this report.
 
 ---
 
@@ -348,6 +349,7 @@ Based on all available information, assess:
 - Use bullet points to organize the report where appropriate. Avoid lengthy paragraphs by breaking down information into easily digestible sections.
 - If data from LinkedIn and the website conflict, note the discrepancy explicitly and indicate which source appears more current.
 - If data for a section is insufficient, write "Insufficient data available" rather than inferring or assuming.
+- **Multiple Current Companies:** If the lead works at more than one company simultaneously, evaluate each company's fit with RIAD's solutions separately. Use the company with the highest RIAD relevance (hotel sourcing / event accommodation) as the primary subject of Sections II, III, IV, and V. Clearly note in Section I which company was selected as primary and why.
 - **In Section IV, always prioritize specific numbers and tool names over qualitative descriptions. Quantified data directly impacts lead scoring accuracy.**
 - **In Section III, preserve and include exact numeric scores from the Digital Presence Report (e.g., Total Blog Score: 7.3, Total Channel Score: 5.5). Do not paraphrase or omit these figures — they are used directly for lead scoring.**
 
@@ -387,6 +389,8 @@ Evaluate how central hotel sourcing or event accommodation is to the company's c
 - **7** = Hotel sourcing is a **major component** of their offering listed as a key service (e.g., incentive travel agency, corporate travel manager, hospitality consultant)
 - **4** = Hotel sourcing is **occasional or peripheral** — not core (e.g., wedding planner, conference venue operator, general event agency)
 - **1** = No relevance to hotel sourcing or event accommodation (e.g., marketing agency, tech company, manufacturer)
+
+> **Note:** 7 points requires hotel sourcing to be **explicitly listed** as a key service on the website or LinkedIn. Do NOT infer based on adjacent services — catering, venue management, or general event planning alone does not qualify for 7. If hotel sourcing is not explicitly mentioned, score 4 or below.
 
 ### **2. Business Activity Scale**
 Count observable volume signals from the report (website, news, LinkedIn portfolio):
