@@ -590,7 +590,9 @@ class OutReachAutomationNodes:
         
         # Get relevant fields
         subject = output.subject
-        personalized_email = output.email
+        personalized_email = output.email.replace("[First Name]", lead_name)
+        if state["company_data"].name:
+            personalized_email = personalized_email.replace("[Lead's Company Name]", state["company_data"].name)
         
         # Get lead email
         email = state["current_lead"].email
