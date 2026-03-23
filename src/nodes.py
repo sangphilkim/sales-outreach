@@ -411,10 +411,10 @@ class OutReachAutomationNodes:
                 inputs={"company": company_name},
                 outputs={
                     "final_score": final_score_float,
-                    "qualified": final_score_float >= 6.0,
+                    "qualified": final_score_float >= 7.0,
                     "raw_output": lead_score
                 },
-                tags=["scoring", "qualified" if final_score_float >= 6.0 else "not-qualified"]
+                tags=["scoring", "qualified" if final_score_float >= 7.0 else "not-qualified"]
             )
         except Exception:
             pass  # LangSmith 장애 시 에이전트 계속 실행
@@ -460,7 +460,7 @@ class OutReachAutomationNodes:
                 print(Fore.RED + "점수를 파싱할 수 없음, 불합격 처리" + Style.RESET_ALL)
                 return "not qualified"
             score = float(match.group())
-            is_qualified = score >= 6
+            is_qualified = score >= 7
         except Exception as e:
             print(Fore.RED + f"점수 변환 오류: {e}, 불합격 처리" + Style.RESET_ALL)
             return "not qualified"
