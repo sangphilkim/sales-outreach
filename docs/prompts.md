@@ -114,11 +114,12 @@ LLM 호출 시 사용하는 **모든 시스템 프롬프트(System Prompt)** 를
 **변수:** `{company_name}`
 
 리포트 포함 항목:
-- **0. Executive Qualification Summary** (2-3문장: strong/moderate/weak fit 판정 + 핵심 근거)
+- **0. Executive Qualification Summary** (Company Type 분류 + strong/moderate/weak fit 판정 + 핵심 근거)
 - I. 리드 프로필 (현재 역할, 경력, 관심사)
 - II. 회사 개요 (산업, 미션, 제품/서비스, 시장 포지셔닝)
 - III. 참여 이력 (최근 뉴스, 소셜 미디어 활동)
 - IV. Hotel Sourcing & Event Operations Assessment (이벤트·숙박 운영 규모, 현재 툴/방식, 페인 포인트, RIAD 타겟 고객 적합도)
+- V. Key Personalization Signals (아웃리치 이메일용 핵심 개인화 신호 2–3개, bullet point 형식)
 
 **데이터 처리 규칙:**
 - LinkedIn과 웹사이트 정보 충돌 시 명시적으로 불일치 표기
@@ -136,15 +137,15 @@ LLM 호출 시 사용하는 **모든 시스템 프롬프트(System Prompt)** 를
 
 | # | 기준 | 가중치 | 10점 기준 |
 |---|-----|-----|-------|
-| 1 | 산업 및 역할 적합성 | 25% | DMC·MICE·이벤트기획사·기업 트래블 매니저 등 핵심 타겟 완전 부합 |
-| 2 | 비즈니스 활동 규모 | 15% | 연 30개 이상 이벤트 또는 대규모 숙박 수요 명시 |
-| 3 | 회사 규모 | 15% | 20–200명 (SMB SaaS 최적 구간, win rate 30–40%) |
+| 1 | 산업 및 역할 적합성 | 35% | DMC·MICE·이벤트기획사·기업 트래블 매니저 등 핵심 타겟 완전 부합 |
+| 2 | 비즈니스 활동 규모 | 5% | 연 30개 이상 이벤트 또는 대규모 숙박 수요 명시 |
+| 3 | 회사 규모 | 10% | 20–200명 (SMB SaaS 최적 구간, win rate 30–40%) |
 | 4 | 성장 신호 | 10% | 4–5개 성장 신호 확인 (신규 시장·클라이언트·채용·펀딩·서비스 출시) |
-| 5 | 기술 성숙도 | 10% | 일반 도구만 사용 + 전문 호텔 소싱 플랫폼 없음 + SaaS 친화 신호 |
+| 5 | 기술 성숙도 | 5% | 일반 도구만 사용 + 전문 호텔 소싱 플랫폼 없음 + SaaS 친화 신호 |
 | 6 | 콘텐츠 및 디지털 활동 | 5% | 블로그 점수 ≥ 7 AND YouTube 점수 ≥ 7 |
-| 7 | 의사결정권 | 20% | CEO·Founder·MD 등 직접 구매 결정권자 |
+| 7 | 의사결정권 | 30% | C-level(CEO·COO·CTO·CFO·CMO)·Founder·MD 등 직접 구매 결정권자 |
 
-**가중 공식:** `(C1×0.25) + (C2×0.15) + (C3×0.15) + (C4×0.10) + (C5×0.10) + (C6×0.05) + (C7×0.20)`
+**가중 공식:** `(C1×0.35) + (C2×0.05) + (C3×0.10) + (C4×0.10) + (C5×0.05) + (C6×0.05) + (C7×0.30)`
 
 **데이터 부족 처리:** 특정 기준에 데이터 불충분 시 3점(보수적 기본값) 부여 후 명시 (단, C7은 데이터 없으면 1점)
 **중요:** 최종 점수가 7 이상이면 `check_if_qualified`에서 "qualified"로 분류됨
@@ -210,9 +211,11 @@ SPIN 구성 (카테고리별 2-3개, 총 8-12개):
 
 스크립트 구성 (10-15분 분량 / 1,200-1,800 words):
 - **Introduction** — 인사
-- **Discovery** — 현황 파악 질문
-- **Pain Exploration** — 문제·영향 탐색
-- **Solution Fit** — RIAD 솔루션 연결
-- **Close / Next Steps** — 미팅 제안
+- **Personalized Hook** — 리드 맞춤 오프닝
+- **Situation Questions** — 현황 파악 질문
+- **Problem Questions** — 문제 탐색
+- **Implication Questions** — 문제 영향 탐색
+- **Need-Payoff Questions** — RIAD 솔루션 가치 연결
+- **Closing** — 미팅 제안
 
 플레이스홀더: `[LEAD_NAME]`, `[COMPANY_NAME]`

@@ -87,8 +87,8 @@ check_for_remaining_leads          → 다음 리드 처리 (루프)
 
 | 반환값 | 다음 노드 |
 |--------|----------|
-| `"qualified"` (점수 ≥ 7) | `generate_custom_outreach_report` |
-| `"not qualified"` (점수 < 7) | `save_reports_to_google_docs` |
+| `"qualified"` (점수 ≥ 6) | `generate_custom_outreach_report` |
+| `"not qualified"` (점수 < 6) | `save_reports_to_google_docs` |
 
 ---
 
